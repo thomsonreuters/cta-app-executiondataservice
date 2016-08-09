@@ -1,7 +1,7 @@
 {
-  "name": "cta-app-boilerplate",
+  "name": "cta-app-executiondataservice",
   "version": "1.0.0",
-  "description": "cta app boilerplate",
+  "description": "cta app execution data service",
   "author": "CTA Team <cta@thomsonreuters.com>",
   "main": "lib/index.js",
   "scripts": {
