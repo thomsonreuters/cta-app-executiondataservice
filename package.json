@@ -1,0 +1,46 @@
+{
+  "name": "cta-app-boilerplate",
+  "version": "1.0.0",
+  "description": "cta app boilerplate",
+  "author": "CTA Team <cta@thomsonreuters.com>",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "_mocha test/index.js",
+    "codecoverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && opener ./coverage/lcov-report/index.html",
+    "docs": "jsdoc2md \"lib/**/*.js\" > DOCUMENTATION.md && jsdoc --readme README.md lib -r -d docs && opener ./docs/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.sami.int.thomsonreuters.com:compass/cta-tool-boilerplate.git"
+  },
+  "engines": {
+    "node": "4.2.2"
+  },
+  "devDependencies": {
+    "chai": "~3.4.0",
+    "eslint": "^3.2.2",
+    "eslint-config-airbnb": "^10.0.0",
+    "istanbul": "~0.4.1",
+    "jsdoc": "~3.4.0",
+    "jsdoc-to-markdown": "^1.3.6",
+    "mocha": "~2.3.4",
+    "mock-require": "^1.3.0",
+    "opener": "~1.4.0",
+    "sinon": "^1.17.5"
+  },
+  "dependencies": {
+    "cta-brick": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-brick.git",
+    "cta-common": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-common.git",
+    "cta-dblayer": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-dblayer.git",
+    "cta-expresswrapper": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-expresswrapper.git",
+    "cta-flowcontrol": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-flowcontrol.git",
+    "cta-healthcheck": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-healthcheck.git",
+    "cta-io": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-io.git#brick",
+    "cta-logger": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-logger.git",
+    "cta-messaging": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-messaging.git",
+    "cta-restapi": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-restapi.git",
+    "cta-tool": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-tool.git",
+    "lodash": "^4.14.1"
+  },
+  "license": "Apache-2.0"
+}
