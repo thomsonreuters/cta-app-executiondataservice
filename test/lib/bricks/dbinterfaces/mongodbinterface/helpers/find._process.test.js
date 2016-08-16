@@ -9,7 +9,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/dbinterfaces/mongodbinterface/helpers/', 'save.js'));
+  '/lib/bricks/dbinterfaces/mongodbinterface/helpers/', 'find.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -24,20 +24,22 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
+describe('DatabaseInterfaces - MongoDB - Find - constructor', function() {
   let helper;
   before(function() {
     helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
   });
   context('when everything ok', function() {
+    const mockId = new ObjectID();
     const inputJOB = {
       nature: {
         type: 'dbinterface',
-        quality: 'save',
+        quality: 'find',
       },
       payload: {
         type: 'execution',
-        content: {
+        query: {
+          id: mockId.toString(),
           foo: 'bar',
         },
       },
@@ -48,6 +50,11 @@ describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
+      const mongoDbQuery = _.cloneDeep(mockInputContext.data.payload.query);
+      if (mongoDbQuery.hasOwnProperty('id')) {
+        mongoDbQuery._id = new ObjectID(mockInputContext.data.payload.query.id);
+        delete mongoDbQuery.id;
+      }
       outputJOB = {
         nature: {
           type: 'database',
@@ -55,9 +62,9 @@ describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
         },
         payload: {
           collection: inputJOB.payload.type,
-          action: 'insertOne',
+          action: 'find',
           args: [
-            inputJOB.payload.content,
+            mongoDbQuery,
           ],
         },
       };
@@ -78,20 +85,12 @@ describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
 
     context('when outputContext emits done event', function() {
       it('should emit done event on inputContext', function() {
-        const doc = _.cloneDeep(inputJOB.payload.content);
+        const doc = _.cloneDeep(inputJOB.payload.query);
         doc._id = new ObjectID();
-        const response = {
-          result: {
-            n: 1,
-            ok: 1,
-          },
-          ops: [
-            doc,
-          ],
-        };
+        const response = [doc];
         mockOutputContext.emit('done', 'dblayer', response);
         sinon.assert.calledWith(mockInputContext.emit,
-          'done', helper.cementHelper.brickName, doc);
+          'done', helper.cementHelper.brickName, response);
       });
     });
   });

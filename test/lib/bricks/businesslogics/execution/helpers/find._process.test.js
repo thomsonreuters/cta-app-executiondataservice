@@ -3,13 +3,11 @@
 const appRootPath = require('app-root-path').path;
 const sinon = require('sinon');
 const nodepath = require('path');
-const ObjectID = require('bson').ObjectID;
-const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/dbinterfaces/mongodbinterface/helpers/', 'save.js'));
+  '/lib/bricks/businesslogics/execution/helpers/', 'find.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -24,7 +22,7 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
+describe('BusinessLogics - Execution - Find - _process', function() {
   let helper;
   before(function() {
     helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
@@ -32,15 +30,10 @@ describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
   context('when everything ok', function() {
     const inputJOB = {
       nature: {
-        type: 'dbinterface',
-        quality: 'save',
-      },
-      payload: {
         type: 'execution',
-        content: {
-          foo: 'bar',
-        },
+        quality: Helper.name.toLowerCase(),
       },
+      payload: {},
     };
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, inputJOB);
     let mockOutputContext;
@@ -50,15 +43,12 @@ describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
 
       outputJOB = {
         nature: {
-          type: 'database',
-          quality: 'query',
+          type: 'dbinterface',
+          quality: 'find',
         },
         payload: {
-          collection: inputJOB.payload.type,
-          action: 'insertOne',
-          args: [
-            inputJOB.payload.content,
-          ],
+          type: 'execution',
+          query: inputJOB.payload,
         },
       };
       mockOutputContext = new Context(DEFAULTCEMENTHELPER, outputJOB);
@@ -78,20 +68,10 @@ describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
 
     context('when outputContext emits done event', function() {
       it('should emit done event on inputContext', function() {
-        const doc = _.cloneDeep(inputJOB.payload.content);
-        doc._id = new ObjectID();
-        const response = {
-          result: {
-            n: 1,
-            ok: 1,
-          },
-          ops: [
-            doc,
-          ],
-        };
+        const response = {};
         mockOutputContext.emit('done', 'dblayer', response);
         sinon.assert.calledWith(mockInputContext.emit,
-          'done', helper.cementHelper.brickName, doc);
+          'done', helper.cementHelper.brickName, response);
       });
     });
   });

@@ -11,7 +11,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/dbinterfaces/mongodbinterface/helpers', 'save.js'));
+  '/lib/bricks/dbinterfaces/mongodbinterface/helpers', 'find.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -26,16 +26,16 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - Save - _validate', function() {
+describe('DatabaseInterfaces - MongoDB - Find - _validate', function() {
   let helper;
   const DEFAULTINPUTJOB = {
     nature: {
       type: 'dbinterface',
-      quality: 'save',
+      quality: 'find',
     },
     payload: {
       type: 'execution',
-      content: {
+      query: {
         foo: 'bar',
       },
     },
@@ -67,14 +67,14 @@ describe('DatabaseInterfaces - MongoDB - Save - _validate', function() {
     });
   });
 
-  context('when payload.content is not an Object', function() {
+  context('when payload.query is not an Object', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.content = null;
+    job.payload.query = null;
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
       return expect(validatePromise).to.eventually
-        .be.rejectedWith(Error, 'missing/incorrect \'content\' Object in job payload');
+        .be.rejectedWith(Error, 'missing/incorrect \'query\' Object in job payload');
     });
   });
 });
