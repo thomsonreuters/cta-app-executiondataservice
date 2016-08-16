@@ -59,8 +59,9 @@ describe('Utils - RESTAPI - Handlers - Executions - save', function() {
 
     context('when Context emits done event', function() {
       it('should send the response (res.send())', function() {
+        const mockBrickname = 'businesslogic';
         const response = { ok: 1 };
-        mockContext.emit('done', response);
+        mockContext.emit('done', mockBrickname, response);
         sinon.assert.calledWith(res.send, response);
       });
     });

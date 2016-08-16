@@ -7,7 +7,7 @@ const nodepath = require('path');
 
 const Logger = require('cta-logger');
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/base/', 'basehelper.js'));
+  '/lib/bricks/dbinterfaces/basedbinterface/', 'basehelper.js'));
 
 const DEFAULTCONFIG = require('./index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -21,7 +21,7 @@ const DEFAULTCEMENTHELPER = {
   },
 };
 
-describe('BusinessLogics - BaseHelper - constructor', function() {
+describe('DatabaseInterfaces - BaseHelper - constructor', function() {
   context('when everything ok', function() {
     let helper;
     before(function() {
