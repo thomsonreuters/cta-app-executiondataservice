@@ -10,6 +10,9 @@
 <dt><a href="#Create">Create</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
 <dd><p>Business Logic Execution Helper Create class</p>
 </dd>
+<dt><a href="#Delete">Delete</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
+<dd><p>Business Logic Execution Helper Delete class</p>
+</dd>
 <dt><a href="#FindById">FindById</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
 <dd><p>Business Logic Execution Helper FindById class</p>
 </dd>
@@ -27,6 +30,9 @@
 </dd>
 <dt><a href="#BaseDBInterface">BaseDBInterface</a> ⇐ <code>Brick</code></dt>
 <dd><p>Database Interface Base class</p>
+</dd>
+<dt><a href="#DeleteOne">DeleteOne</a> ⇐ <code><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></code></dt>
+<dd><p>Database Interface MongoDB Helper DeleteOne class</p>
 </dd>
 <dt><a href="#FindById">FindById</a> ⇐ <code><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></code></dt>
 <dd><p>Database Interface MongoDB Helper FindById class</p>
@@ -188,6 +194,49 @@ Validates Context properties specific to this HelperValidates Execution Model f
 Process the context
 
 **Kind**: instance method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Delete"></a>
+
+## Delete ⇐ <code>[BaseHelper](#BaseHelper)</code>
+Business Logic Execution Helper Delete class
+
+**Kind**: global class  
+**Extends:** <code>[BaseHelper](#BaseHelper)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| logger | <code>Logger</code> | logger instance |
+
+
+* [Delete](#Delete) ⇐ <code>[BaseHelper](#BaseHelper)</code>
+    * *[._validate(context)](#Delete+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Delete+_process)
+
+<a name="Delete+_validate"></a>
+
+### *delete._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Query Execution Model fields
+
+**Kind**: instance abstract method of <code>[Delete](#Delete)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Delete+_process"></a>
+
+### delete._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Delete](#Delete)</code>  
 **Overrides:** <code>[_process](#BaseHelper+_process)</code>  
 
 | Param | Type | Description |
@@ -522,6 +571,49 @@ Process the context
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
+<a name="DeleteOne"></a>
+
+## DeleteOne ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
+Database Interface MongoDB Helper DeleteOne class
+
+**Kind**: global class  
+**Extends:** <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| logger | <code>Logger</code> | logger instance |
+
+
+* [DeleteOne](#DeleteOne) ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
+    * *[._validate(context)](#DeleteOne+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#DeleteOne+_process)
+
+<a name="DeleteOne+_validate"></a>
+
+### *deleteOne._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates abstract query fields
+
+**Kind**: instance abstract method of <code>[DeleteOne](#DeleteOne)</code>  
+**Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="DeleteOne+_process"></a>
+
+### deleteOne._process(context)
+Process the context
+
+**Kind**: instance method of <code>[DeleteOne](#DeleteOne)</code>  
+**Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
 <a name="FindById"></a>
 
 ## FindById ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
@@ -736,6 +828,7 @@ Handler class for RESTAPI handlers : EXECUTIONS
     * [new ExecutionsHandler(cementHelper)](#new_ExecutionsHandler_new)
     * [.save(req, res, next)](#ExecutionsHandler+save)
     * [.findById(req, res, next)](#ExecutionsHandler+findById)
+    * [.delete(req, res, next)](#ExecutionsHandler+delete)
 
 <a name="new_ExecutionsHandler_new"></a>
 
@@ -762,6 +855,19 @@ Publishes request body (Execution) in an execution-save Context
 
 ### executionsHandler.findById(req, res, next)
 Publishes request params (Query) id in an execution-find Context
+
+**Kind**: instance method of <code>[ExecutionsHandler](#ExecutionsHandler)</code>  
+
+| Param |
+| --- |
+| req | 
+| res | 
+| next | 
+
+<a name="ExecutionsHandler+delete"></a>
+
+### executionsHandler.delete(req, res, next)
+Publishes request params (Query) id in an execution-deleteone Context
 
 **Kind**: instance method of <code>[ExecutionsHandler](#ExecutionsHandler)</code>  
 
