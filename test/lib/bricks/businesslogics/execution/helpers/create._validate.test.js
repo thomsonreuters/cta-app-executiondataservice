@@ -10,7 +10,7 @@ const nodepath = require('path');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers', 'find.js'));
+  '/lib/bricks/businesslogics/execution/helpers', 'create.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -25,7 +25,7 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('BusinessLogics - Execution - Find - _validate', function() {
+describe('BusinessLogics - Execution - Create - _validate', function() {
   let helper;
   const DEFAULTINPUTJOB = {
     nature: {

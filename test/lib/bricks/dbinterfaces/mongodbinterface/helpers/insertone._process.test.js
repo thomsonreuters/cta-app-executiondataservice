@@ -4,12 +4,14 @@ const appRootPath = require('app-root-path').path;
 const sinon = require('sinon');
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
+const requireSubvert = require('require-subvert')(__dirname);
 const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
-const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/dbinterfaces/mongodbinterface/helpers/', 'save.js'));
+const pathToHelper = nodepath.join(appRootPath,
+  '/lib/bricks/dbinterfaces/mongodbinterface/helpers/', 'insertone.js');
+let Helper = require(pathToHelper);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -24,30 +26,40 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
+describe('DatabaseInterfaces - MongoDB - InsertOne - constructor', function() {
   let helper;
+  const mockId = new ObjectID();
+  const inputJOB = {
+    nature: {
+      type: 'dbinterface',
+      quality: 'insertone',
+    },
+    payload: {
+      type: 'execution',
+      content: {
+        id: mockId.toString(),
+        foo: 'bar',
+      },
+    },
+  };
   before(function() {
+    const StubObjectIDModule = sinon.stub().withArgs(mockId.toString()).returns(mockId);
+    requireSubvert.subvert('bson', {
+      ObjectID: StubObjectIDModule,
+    });
+    Helper = requireSubvert.require(pathToHelper);
     helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
   });
   context('when everything ok', function() {
-    const inputJOB = {
-      nature: {
-        type: 'dbinterface',
-        quality: 'save',
-      },
-      payload: {
-        type: 'execution',
-        content: {
-          foo: 'bar',
-        },
-      },
-    };
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, inputJOB);
     let mockOutputContext;
     let outputJOB;
+    let mongoDbDocument;
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
+      mongoDbDocument = _.omit(inputJOB.payload.content, ['id']);
+      mongoDbDocument._id = new ObjectID(inputJOB.payload.content.id);
       outputJOB = {
         nature: {
           type: 'database',
@@ -57,7 +69,7 @@ describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
           collection: inputJOB.payload.type,
           action: 'insertOne',
           args: [
-            inputJOB.payload.content,
+            mongoDbDocument,
           ],
         },
       };
@@ -78,20 +90,43 @@ describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
 
     context('when outputContext emits done event', function() {
       it('should emit done event on inputContext', function() {
-        const doc = _.cloneDeep(inputJOB.payload.content);
-        doc._id = new ObjectID();
         const response = {
           result: {
             n: 1,
             ok: 1,
           },
           ops: [
-            doc,
+            mongoDbDocument,
           ],
         };
+
+        const result = _.cloneDeep(mongoDbDocument);
+        result.id = mongoDbDocument._id.toString();
+        delete result._id;
+
         mockOutputContext.emit('done', 'dblayer', response);
         sinon.assert.calledWith(mockInputContext.emit,
-          'done', helper.cementHelper.brickName, doc);
+          'done', helper.cementHelper.brickName, result);
+      });
+    });
+
+    context('when outputContext emits reject event', function() {
+      it('should emit reject event on inputContext', function() {
+        const error = new Error('mockError');
+        const brickName = 'dblayer';
+        mockOutputContext.emit('reject', brickName, error);
+        sinon.assert.calledWith(mockInputContext.emit,
+          'reject', brickName, error);
+      });
+    });
+
+    context('when outputContext emits error event', function() {
+      it('should emit error event on inputContext', function() {
+        const error = new Error('mockError');
+        const brickName = 'dblayer';
+        mockOutputContext.emit('error', brickName, error);
+        sinon.assert.calledWith(mockInputContext.emit,
+          'error', brickName, error);
       });
     });
   });

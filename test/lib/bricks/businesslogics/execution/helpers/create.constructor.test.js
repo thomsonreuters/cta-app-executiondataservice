@@ -7,9 +7,9 @@ const nodepath = require('path');
 
 const Logger = require('cta-logger');
 const Base = require(nodepath.join(appRootPath,
-  '/lib/bricks/dbinterfaces/basedbinterface/', 'basehelper.js'));
+  '/lib/bricks/businesslogics/base/', 'basehelper.js'));
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/dbinterfaces/mongodbinterface/helpers/', 'find.js'));
+  '/lib/bricks/businesslogics/execution/helpers/', 'create.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -23,7 +23,7 @@ const DEFAULTCEMENTHELPER = {
   },
 };
 
-describe('DatabaseInterfaces - MongoDB - Find - constructor', function() {
+describe('BusinessLogics - Execution - Create - constructor', function() {
   context('when everything ok', function() {
     let helper;
     before(function() {

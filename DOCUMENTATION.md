@@ -7,14 +7,20 @@
 <dt><a href="#Base">Base</a> ⇐ <code>Brick</code></dt>
 <dd><p>Business Logic Base class</p>
 </dd>
-<dt><a href="#Find">Find</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
-<dd><p>Business Logic Execution Helper Find class</p>
+<dt><a href="#Create">Create</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
+<dd><p>Business Logic Execution Helper Create class</p>
 </dd>
-<dt><a href="#Save">Save</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
-<dd><p>Business Logic Execution Helper Save class</p>
+<dt><a href="#FindById">FindById</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
+<dd><p>Business Logic Execution Helper FindById class</p>
+</dd>
+<dt><a href="#Update">Update</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
+<dd><p>Business Logic Execution Helper Update class</p>
 </dd>
 <dt><a href="#Execution">Execution</a> ⇐ <code><a href="#Base">Base</a></code></dt>
 <dd><p>Business Logic Execution class</p>
+</dd>
+<dt><a href="#Execution">Execution</a></dt>
+<dd><p>Execution Data Model class</p>
 </dd>
 <dt><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></dt>
 <dd><p>Database Interface Helper Base class</p>
@@ -22,11 +28,14 @@
 <dt><a href="#BaseDBInterface">BaseDBInterface</a> ⇐ <code>Brick</code></dt>
 <dd><p>Database Interface Base class</p>
 </dd>
-<dt><a href="#Find">Find</a> ⇐ <code><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></code></dt>
-<dd><p>Database Interface MongoDB Helper Find class</p>
+<dt><a href="#FindById">FindById</a> ⇐ <code><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></code></dt>
+<dd><p>Database Interface MongoDB Helper FindById class</p>
 </dd>
-<dt><a href="#Save">Save</a> ⇐ <code><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></code></dt>
-<dd><p>Database Interface MongoDB Helper Save class</p>
+<dt><a href="#InsertOne">InsertOne</a> ⇐ <code><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></code></dt>
+<dd><p>Database Interface MongoDB Helper InsertOne class</p>
+</dd>
+<dt><a href="#UpdateOne">UpdateOne</a> ⇐ <code><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></code></dt>
+<dd><p>Database Interface MongoDB Helper UpdateOne class</p>
 </dd>
 <dt><a href="#MongoDBInterface">MongoDBInterface</a> ⇐ <code><a href="#BaseDBInterface">BaseDBInterface</a></code></dt>
 <dd><p>Database Interface MongoDB class</p>
@@ -142,79 +151,10 @@ Process the context
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Find"></a>
+<a name="Create"></a>
 
-## Find ⇐ <code>[BaseHelper](#BaseHelper)</code>
-Business Logic Execution Helper Find class
-
-**Kind**: global class  
-**Extends:** <code>[BaseHelper](#BaseHelper)</code>  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| cementHelper | <code>CementHelper</code> | cementHelper instance |
-| logger | <code>Logger</code> | logger instance |
-
-
-* [Find](#Find) ⇐ <code>[BaseHelper](#BaseHelper)</code>
-    * *[._validate(context)](#Find+_validate) ⇒ <code>Promise</code>*
-    * [._process(context)](#Find+_process)
-    * *[._validate(context)](#Find+_validate) ⇒ <code>Promise</code>*
-    * [._process(context)](#Find+_process)
-
-<a name="Find+_validate"></a>
-
-### *find._validate(context) ⇒ <code>Promise</code>*
-Validates Context properties specific to this HelperValidates Query Execution Model fields
-
-**Kind**: instance abstract method of <code>[Find](#Find)</code>  
-**Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| context | <code>Context</code> | a Context |
-
-<a name="Find+_process"></a>
-
-### find._process(context)
-Process the context
-
-**Kind**: instance method of <code>[Find](#Find)</code>  
-**Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| context | <code>Context</code> | a Context |
-
-<a name="Find+_validate"></a>
-
-### *find._validate(context) ⇒ <code>Promise</code>*
-Validates Context properties specific to this HelperValidates abstract query fields
-
-**Kind**: instance abstract method of <code>[Find](#Find)</code>  
-**Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| context | <code>Context</code> | a Context |
-
-<a name="Find+_process"></a>
-
-### find._process(context)
-Process the context
-
-**Kind**: instance method of <code>[Find](#Find)</code>  
-**Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| context | <code>Context</code> | a Context |
-
-<a name="Save"></a>
-
-## Save ⇐ <code>[BaseHelper](#BaseHelper)</code>
-Business Logic Execution Helper Save class
+## Create ⇐ <code>[BaseHelper](#BaseHelper)</code>
+Business Logic Execution Helper Create class
 
 **Kind**: global class  
 **Extends:** <code>[BaseHelper](#BaseHelper)</code>  
@@ -226,55 +166,141 @@ Business Logic Execution Helper Save class
 | logger | <code>Logger</code> | logger instance |
 
 
-* [Save](#Save) ⇐ <code>[BaseHelper](#BaseHelper)</code>
-    * *[._validate(context)](#Save+_validate) ⇒ <code>Promise</code>*
-    * [._process(context)](#Save+_process)
-    * *[._validate(context)](#Save+_validate) ⇒ <code>Promise</code>*
-    * [._process(context)](#Save+_process)
+* [Create](#Create) ⇐ <code>[BaseHelper](#BaseHelper)</code>
+    * *[._validate(context)](#Create+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Create+_process)
 
-<a name="Save+_validate"></a>
+<a name="Create+_validate"></a>
 
-### *save._validate(context) ⇒ <code>Promise</code>*
+### *create._validate(context) ⇒ <code>Promise</code>*
 Validates Context properties specific to this HelperValidates Execution Model fields
 
-**Kind**: instance abstract method of <code>[Save](#Save)</code>  
+**Kind**: instance abstract method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Create+_process"></a>
+
+### create._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="FindById"></a>
+
+## FindById ⇐ <code>[BaseHelper](#BaseHelper)</code>
+Business Logic Execution Helper FindById class
+
+**Kind**: global class  
+**Extends:** <code>[BaseHelper](#BaseHelper)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| logger | <code>Logger</code> | logger instance |
+
+
+* [FindById](#FindById) ⇐ <code>[BaseHelper](#BaseHelper)</code>
+    * *[._validate(context)](#FindById+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#FindById+_process)
+    * *[._validate(context)](#FindById+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#FindById+_process)
+
+<a name="FindById+_validate"></a>
+
+### *findById._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Query Execution Model fields
+
+**Kind**: instance abstract method of <code>[FindById](#FindById)</code>  
 **Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Save+_process"></a>
+<a name="FindById+_process"></a>
 
-### save._process(context)
+### findById._process(context)
 Process the context
 
-**Kind**: instance method of <code>[Save](#Save)</code>  
+**Kind**: instance method of <code>[FindById](#FindById)</code>  
 **Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Save+_validate"></a>
+<a name="FindById+_validate"></a>
 
-### *save._validate(context) ⇒ <code>Promise</code>*
+### *findById._validate(context) ⇒ <code>Promise</code>*
 Validates Context properties specific to this HelperValidates abstract query fields
 
-**Kind**: instance abstract method of <code>[Save](#Save)</code>  
+**Kind**: instance abstract method of <code>[FindById](#FindById)</code>  
 **Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Save+_process"></a>
+<a name="FindById+_process"></a>
 
-### save._process(context)
+### findById._process(context)
 Process the context
 
-**Kind**: instance method of <code>[Save](#Save)</code>  
+**Kind**: instance method of <code>[FindById](#FindById)</code>  
 **Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Update"></a>
+
+## Update ⇐ <code>[BaseHelper](#BaseHelper)</code>
+Business Logic Execution Helper Update class
+
+**Kind**: global class  
+**Extends:** <code>[BaseHelper](#BaseHelper)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| logger | <code>Logger</code> | logger instance |
+
+
+* [Update](#Update) ⇐ <code>[BaseHelper](#BaseHelper)</code>
+    * *[._validate(context)](#Update+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Update+_process)
+
+<a name="Update+_validate"></a>
+
+### *update._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Execution Model fields
+
+**Kind**: instance abstract method of <code>[Update](#Update)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Update+_process"></a>
+
+### update._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Update](#Update)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -297,8 +323,76 @@ Business Logic Execution class
 
 
 * [Execution](#Execution) ⇐ <code>[Base](#Base)</code>
+    * [new Execution(data)](#new_Execution_new)
     * [.validate(context)](#Base+validate) ⇒ <code>Promise</code>
     * [.process(context)](#Base+process)
+
+<a name="new_Execution_new"></a>
+
+### new Execution(data)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | params |
+| data.id | <code>ObjectID</code> | unique identifier |
+| data.scenario | <code>ObjectID</code> | unique identifier of a Scenario |
+| data.configuration | <code>ObjectID</code> | unique identifier of a Configuration |
+| data.user | <code>ObjectID</code> | unique identifier of an User |
+
+<a name="Base+validate"></a>
+
+### execution.validate(context) ⇒ <code>Promise</code>
+Validates Context properties
+
+**Kind**: instance method of <code>[Execution](#Execution)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Base+process"></a>
+
+### execution.process(context)
+Process the context
+
+**Kind**: instance method of <code>[Execution](#Execution)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Execution"></a>
+
+## Execution
+Execution Data Model class
+
+**Kind**: global class  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | <code>ObjectID</code> | unique identifier |
+| scenario | <code>ObjectID</code> | unique identifier of a Scenario |
+| configuration | <code>ObjectID</code> | unique identifier of a Configuration |
+| user | <code>ObjectID</code> | unique identifier of an User |
+
+
+* [Execution](#Execution)
+    * [new Execution(data)](#new_Execution_new)
+    * [.validate(context)](#Base+validate) ⇒ <code>Promise</code>
+    * [.process(context)](#Base+process)
+
+<a name="new_Execution_new"></a>
+
+### new Execution(data)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | params |
+| data.id | <code>ObjectID</code> | unique identifier |
+| data.scenario | <code>ObjectID</code> | unique identifier of a Scenario |
+| data.configuration | <code>ObjectID</code> | unique identifier of a Configuration |
+| data.user | <code>ObjectID</code> | unique identifier of an User |
 
 <a name="Base+validate"></a>
 
@@ -428,10 +522,10 @@ Process the context
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Find"></a>
+<a name="FindById"></a>
 
-## Find ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
-Database Interface MongoDB Helper Find class
+## FindById ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
+Database Interface MongoDB Helper FindById class
 
 **Kind**: global class  
 **Extends:** <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>  
@@ -443,64 +537,64 @@ Database Interface MongoDB Helper Find class
 | logger | <code>Logger</code> | logger instance |
 
 
-* [Find](#Find) ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
-    * *[._validate(context)](#Find+_validate) ⇒ <code>Promise</code>*
-    * [._process(context)](#Find+_process)
-    * *[._validate(context)](#Find+_validate) ⇒ <code>Promise</code>*
-    * [._process(context)](#Find+_process)
+* [FindById](#FindById) ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
+    * *[._validate(context)](#FindById+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#FindById+_process)
+    * *[._validate(context)](#FindById+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#FindById+_process)
 
-<a name="Find+_validate"></a>
+<a name="FindById+_validate"></a>
 
-### *find._validate(context) ⇒ <code>Promise</code>*
+### *findById._validate(context) ⇒ <code>Promise</code>*
 Validates Context properties specific to this HelperValidates Query Execution Model fields
 
-**Kind**: instance abstract method of <code>[Find](#Find)</code>  
+**Kind**: instance abstract method of <code>[FindById](#FindById)</code>  
 **Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Find+_process"></a>
+<a name="FindById+_process"></a>
 
-### find._process(context)
+### findById._process(context)
 Process the context
 
-**Kind**: instance method of <code>[Find](#Find)</code>  
+**Kind**: instance method of <code>[FindById](#FindById)</code>  
 **Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Find+_validate"></a>
+<a name="FindById+_validate"></a>
 
-### *find._validate(context) ⇒ <code>Promise</code>*
+### *findById._validate(context) ⇒ <code>Promise</code>*
 Validates Context properties specific to this HelperValidates abstract query fields
 
-**Kind**: instance abstract method of <code>[Find](#Find)</code>  
+**Kind**: instance abstract method of <code>[FindById](#FindById)</code>  
 **Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Find+_process"></a>
+<a name="FindById+_process"></a>
 
-### find._process(context)
+### findById._process(context)
 Process the context
 
-**Kind**: instance method of <code>[Find](#Find)</code>  
+**Kind**: instance method of <code>[FindById](#FindById)</code>  
 **Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Save"></a>
+<a name="InsertOne"></a>
 
-## Save ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
-Database Interface MongoDB Helper Save class
+## InsertOne ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
+Database Interface MongoDB Helper InsertOne class
 
 **Kind**: global class  
 **Extends:** <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>  
@@ -512,54 +606,71 @@ Database Interface MongoDB Helper Save class
 | logger | <code>Logger</code> | logger instance |
 
 
-* [Save](#Save) ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
-    * *[._validate(context)](#Save+_validate) ⇒ <code>Promise</code>*
-    * [._process(context)](#Save+_process)
-    * *[._validate(context)](#Save+_validate) ⇒ <code>Promise</code>*
-    * [._process(context)](#Save+_process)
+* [InsertOne](#InsertOne) ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
+    * *[._validate(context)](#InsertOne+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#InsertOne+_process)
 
-<a name="Save+_validate"></a>
+<a name="InsertOne+_validate"></a>
 
-### *save._validate(context) ⇒ <code>Promise</code>*
-Validates Context properties specific to this HelperValidates Execution Model fields
+### *insertOne._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates abstract query fields
 
-**Kind**: instance abstract method of <code>[Save](#Save)</code>  
+**Kind**: instance abstract method of <code>[InsertOne](#InsertOne)</code>  
 **Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Save+_process"></a>
+<a name="InsertOne+_process"></a>
 
-### save._process(context)
+### insertOne._process(context)
 Process the context
 
-**Kind**: instance method of <code>[Save](#Save)</code>  
+**Kind**: instance method of <code>[InsertOne](#InsertOne)</code>  
 **Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Save+_validate"></a>
+<a name="UpdateOne"></a>
 
-### *save._validate(context) ⇒ <code>Promise</code>*
+## UpdateOne ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
+Database Interface MongoDB Helper UpdateOne class
+
+**Kind**: global class  
+**Extends:** <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| logger | <code>Logger</code> | logger instance |
+
+
+* [UpdateOne](#UpdateOne) ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
+    * *[._validate(context)](#UpdateOne+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#UpdateOne+_process)
+
+<a name="UpdateOne+_validate"></a>
+
+### *updateOne._validate(context) ⇒ <code>Promise</code>*
 Validates Context properties specific to this HelperValidates abstract query fields
 
-**Kind**: instance abstract method of <code>[Save](#Save)</code>  
+**Kind**: instance abstract method of <code>[UpdateOne](#UpdateOne)</code>  
 **Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
-<a name="Save+_process"></a>
+<a name="UpdateOne+_process"></a>
 
-### save._process(context)
+### updateOne._process(context)
 Process the context
 
-**Kind**: instance method of <code>[Save](#Save)</code>  
+**Kind**: instance method of <code>[UpdateOne](#UpdateOne)</code>  
 **Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
 
 | Param | Type | Description |

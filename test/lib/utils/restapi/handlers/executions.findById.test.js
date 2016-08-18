@@ -43,7 +43,7 @@ describe('Utils - RESTAPI - Handlers - Executions - findById', function() {
       data = {
         nature: {
           type: 'execution',
-          quality: 'find',
+          quality: 'findbyid',
         },
         payload: {
           id: req.params.id,
@@ -54,12 +54,12 @@ describe('Utils - RESTAPI - Handlers - Executions - findById', function() {
       sinon.stub(handler.cementHelper, 'createContext')
         .withArgs(data)
         .returns(mockContext);
-      handler.findById(req, res, null);
     });
     after(function() {
       handler.cementHelper.createContext.restore();
     });
     it('should send a new Context', function() {
+      handler.findById(req, res, null);
       sinon.assert.calledWith(handler.cementHelper.createContext, data);
       sinon.assert.called(mockContext.publish);
     });
@@ -68,16 +68,16 @@ describe('Utils - RESTAPI - Handlers - Executions - findById', function() {
       context('when document is found', function() {
         before(function() {
           sinon.spy(res, 'send');
+          handler.findById(req, res, null);
         });
         after(function() {
           res.send.restore();
         });
         it('should send the found Object (res.send())', function() {
           const mockBrickname = 'businesslogic';
-          const object = { id: req.params.id };
-          const response = [object];
+          const response = { id: req.params.id };
           mockContext.emit('done', mockBrickname, response);
-          sinon.assert.calledWith(res.send, object);
+          sinon.assert.calledWith(res.send, response);
         });
       });
 
@@ -85,6 +85,7 @@ describe('Utils - RESTAPI - Handlers - Executions - findById', function() {
         before(function() {
           sinon.spy(res, 'status');
           sinon.spy(res, 'send');
+          handler.findById(req, res, null);
         });
         after(function() {
           res.status.restore();
@@ -92,11 +93,49 @@ describe('Utils - RESTAPI - Handlers - Executions - findById', function() {
         });
         it('should send 404', function() {
           const mockBrickname = 'businesslogic';
-          const response = [];
+          const response = null;
           mockContext.emit('done', mockBrickname, response);
           sinon.assert.calledWith(res.status, 404);
           sinon.assert.calledWith(res.send, 'Execution not found.');
         });
+      });
+    });
+
+    context('when Context emits error event', function() {
+      before(function() {
+        sinon.spy(res, 'status');
+        sinon.spy(res, 'send');
+        handler.findById(req, res, null);
+      });
+      after(function() {
+        res.status.restore();
+        res.send.restore();
+      });
+      it('should send the error message', function () {
+        const error = new Error('mockError');
+        const mockBrickname = 'businesslogic';
+        mockContext.emit('error', mockBrickname, error);
+        sinon.assert.calledWith(res.status, 400);
+        sinon.assert.calledWith(res.send, error.message);
+      });
+    });
+
+    context('when Context emits reject event', function() {
+      before(function() {
+        sinon.spy(res, 'status');
+        sinon.spy(res, 'send');
+        handler.findById(req, res, null);
+      });
+      after(function() {
+        res.status.restore();
+        res.send.restore();
+      });
+      it('should send the error message', function () {
+        const error = new Error('mockError');
+        const mockBrickname = 'businesslogic';
+        mockContext.emit('reject', mockBrickname, error);
+        sinon.assert.calledWith(res.status, 400);
+        sinon.assert.calledWith(res.send, error.message);
       });
     });
   });

@@ -9,7 +9,7 @@ const Logger = require('cta-logger');
 const Base = require(nodepath.join(appRootPath,
   '/lib/bricks/dbinterfaces/basedbinterface/', 'basehelper.js'));
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/dbinterfaces/mongodbinterface/helpers/', 'save.js'));
+  '/lib/bricks/dbinterfaces/mongodbinterface/helpers/', 'insertone.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -23,7 +23,7 @@ const DEFAULTCEMENTHELPER = {
   },
 };
 
-describe('DatabaseInterfaces - MongoDB - Save - constructor', function() {
+describe('DatabaseInterfaces - MongoDB - InsertOne - constructor', function() {
   context('when everything ok', function() {
     let helper;
     before(function() {

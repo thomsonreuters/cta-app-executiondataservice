@@ -2,12 +2,17 @@
 
 const appRootPath = require('app-root-path').path;
 const sinon = require('sinon');
+const requireSubvert = require('require-subvert')(__dirname);
 const nodepath = require('path');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
-const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'save.js'));
+const pathToHelper = nodepath.join(appRootPath,
+  '/lib/bricks/businesslogics/execution/helpers/', 'update.js');
+let Helper = require(pathToHelper);
+const pathToExecution = nodepath.join(appRootPath,
+  '/lib/bricks/businesslogics/execution/models/', 'execution.js');
+const Execution = require(pathToExecution);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -22,11 +27,8 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('BusinessLogics - Execution - Save - _process', function() {
+describe('BusinessLogics - Execution - Update - _process', function() {
   let helper;
-  before(function() {
-    helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
-  });
   context('when everything ok', function() {
     const inputJOB = {
       nature: {
@@ -41,27 +43,44 @@ describe('BusinessLogics - Execution - Save - _process', function() {
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
+      const mockExecution = new Execution({
+        id: 'foo',
+        scenarioId: 'bar',
+        userId: 'quz',
+        starttimestamp: 1231923018230123,
+        instances: [],
+      });
+      const mockUpdate = mockExecution.toJSON();
+      sinon.stub(mockExecution, 'toJSON').returns(mockUpdate);
+      const StubExecutionConstructor = sinon.stub().returns(mockExecution);
+      requireSubvert.subvert(pathToExecution, StubExecutionConstructor);
+      Helper = requireSubvert.require(pathToHelper);
+
       outputJOB = {
         nature: {
           type: 'dbinterface',
-          quality: 'save',
+          quality: 'updateone',
         },
         payload: {
           type: 'execution',
-          content: inputJOB.payload,
+          content: mockUpdate,
         },
       };
       mockOutputContext = new Context(DEFAULTCEMENTHELPER, outputJOB);
       mockOutputContext.publish = sinon.stub();
+
+      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
       sinon.stub(helper.cementHelper, 'createContext')
         .withArgs(outputJOB)
         .returns(mockOutputContext);
       helper._process(mockInputContext);
     });
     after(function() {
+      requireSubvert.cleanUp();
       helper.cementHelper.createContext.restore();
     });
-    it('should send a new Context', function() {
+
+    it('should send a new Context insertone', function() {
       sinon.assert.calledWith(helper.cementHelper.createContext, outputJOB);
       sinon.assert.called(mockOutputContext.publish);
     });
@@ -72,6 +91,26 @@ describe('BusinessLogics - Execution - Save - _process', function() {
         mockOutputContext.emit('done', 'dblayer', response);
         sinon.assert.calledWith(mockInputContext.emit,
           'done', helper.cementHelper.brickName, response);
+      });
+    });
+
+    context('when outputContext emits reject event', function() {
+      it('should emit reject event on inputContext', function() {
+        const error = new Error('mockError');
+        const brickName = 'dbinterface';
+        mockOutputContext.emit('reject', brickName, error);
+        sinon.assert.calledWith(mockInputContext.emit,
+          'reject', brickName, error);
+      });
+    });
+
+    context('when outputContext emits error event', function() {
+      it('should emit error event on inputContext', function() {
+        const error = new Error('mockError');
+        const brickName = 'dbinterface';
+        mockOutputContext.emit('error', brickName, error);
+        sinon.assert.calledWith(mockInputContext.emit,
+          'error', brickName, error);
       });
     });
   });
