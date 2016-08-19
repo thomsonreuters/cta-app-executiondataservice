@@ -37,9 +37,8 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - _validate', function() {
     },
     payload: {
       type: 'execution',
-      content: {
-        id: mockId.toString(),
-      },
+      id: mockId.toString(),
+      content: {},
     },
   };
   before(function() {
@@ -82,7 +81,7 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - _validate', function() {
 
   context('when payload.id is not a String', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.content.id = {};
+    job.payload.id = {};
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
@@ -93,7 +92,7 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - _validate', function() {
 
   context('when payload.id is not a String value of ObjectID', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.content.id = 'sdfsdf';
+    job.payload.id = 'sdfsdf';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
