@@ -36,8 +36,8 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
     },
     payload: {
       type: 'execution',
+      id: mockId.toString(),
       content: {
-        id: mockId.toString(),
         foo: 'bar',
       },
     },
@@ -59,10 +59,10 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
       sinon.stub(mockInputContext, 'emit');
 
       const mongoDbFilter = {
-        _id: new ObjectID(inputJOB.payload.content.id),
+        _id: new ObjectID(inputJOB.payload.id),
       };
       mongoDbDocument = {
-        $set: _.omit(inputJOB.payload.content, ['id']),
+        $set: inputJOB.payload.content,
       };
       const mongoDbOptions = {
         returnOriginal: false,

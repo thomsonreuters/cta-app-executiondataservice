@@ -826,7 +826,8 @@ Handler class for RESTAPI handlers : EXECUTIONS
 
 * [ExecutionsHandler](#ExecutionsHandler)
     * [new ExecutionsHandler(cementHelper)](#new_ExecutionsHandler_new)
-    * [.save(req, res, next)](#ExecutionsHandler+save)
+    * [.create(req, res, next)](#ExecutionsHandler+create)
+    * [.update(req, res, next)](#ExecutionsHandler+update)
     * [.findById(req, res, next)](#ExecutionsHandler+findById)
     * [.delete(req, res, next)](#ExecutionsHandler+delete)
 
@@ -838,10 +839,23 @@ Handler class for RESTAPI handlers : EXECUTIONS
 | --- | --- | --- |
 | cementHelper | <code>CementHelper</code> | cementHelper from a cta-restapi Brick |
 
-<a name="ExecutionsHandler+save"></a>
+<a name="ExecutionsHandler+create"></a>
 
-### executionsHandler.save(req, res, next)
-Publishes request body (Execution) in an execution-save Context
+### executionsHandler.create(req, res, next)
+Publishes request body (Execution) in an execution-create Context
+
+**Kind**: instance method of <code>[ExecutionsHandler](#ExecutionsHandler)</code>  
+
+| Param |
+| --- |
+| req | 
+| res | 
+| next | 
+
+<a name="ExecutionsHandler+update"></a>
+
+### executionsHandler.update(req, res, next)
+Publishes request body (Execution) in an execution-update Context
 
 **Kind**: instance method of <code>[ExecutionsHandler](#ExecutionsHandler)</code>  
 
@@ -854,7 +868,7 @@ Publishes request body (Execution) in an execution-save Context
 <a name="ExecutionsHandler+findById"></a>
 
 ### executionsHandler.findById(req, res, next)
-Publishes request params (Query) id in an execution-find Context
+Publishes request params (Query) id in an execution-findbyid Context
 
 **Kind**: instance method of <code>[ExecutionsHandler](#ExecutionsHandler)</code>  
 

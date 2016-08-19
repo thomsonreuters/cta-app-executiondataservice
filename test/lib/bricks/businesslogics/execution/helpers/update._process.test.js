@@ -4,15 +4,14 @@ const appRootPath = require('app-root-path').path;
 const sinon = require('sinon');
 const requireSubvert = require('require-subvert')(__dirname);
 const nodepath = require('path');
+const ObjectID = require('bson').ObjectID;
+const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const pathToHelper = nodepath.join(appRootPath,
   '/lib/bricks/businesslogics/execution/helpers/', 'update.js');
-let Helper = require(pathToHelper);
-const pathToExecution = nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/models/', 'execution.js');
-const Execution = require(pathToExecution);
+const Helper = require(pathToHelper);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -30,32 +29,22 @@ const DEFAULTCEMENTHELPER = {
 describe('BusinessLogics - Execution - Update - _process', function() {
   let helper;
   context('when everything ok', function() {
-    const inputJOB = {
+    const mockId = new ObjectID();
+    const DEFAULTINPUTJOB = {
       nature: {
         type: 'execution',
-        quality: Helper.name.toLowerCase(),
+        quality: 'update',
       },
-      payload: {},
+      payload: {
+        id: mockId.toString(),
+        content: {},
+      },
     };
-    const mockInputContext = new Context(DEFAULTCEMENTHELPER, inputJOB);
+    const mockInputContext = new Context(DEFAULTCEMENTHELPER, DEFAULTINPUTJOB);
     let mockOutputContext;
     let outputJOB;
     before(function() {
       sinon.stub(mockInputContext, 'emit');
-
-      const mockExecution = new Execution({
-        id: 'foo',
-        scenarioId: 'bar',
-        userId: 'quz',
-        starttimestamp: 1231923018230123,
-        instances: [],
-      });
-      const mockUpdate = mockExecution.toJSON();
-      sinon.stub(mockExecution, 'toJSON').returns(mockUpdate);
-      const StubExecutionConstructor = sinon.stub().returns(mockExecution);
-      requireSubvert.subvert(pathToExecution, StubExecutionConstructor);
-      Helper = requireSubvert.require(pathToHelper);
-
       outputJOB = {
         nature: {
           type: 'dbinterface',
@@ -63,7 +52,8 @@ describe('BusinessLogics - Execution - Update - _process', function() {
         },
         payload: {
           type: 'execution',
-          content: mockUpdate,
+          id: DEFAULTINPUTJOB.payload.id,
+          content: DEFAULTINPUTJOB.payload.content,
         },
       };
       mockOutputContext = new Context(DEFAULTCEMENTHELPER, outputJOB);

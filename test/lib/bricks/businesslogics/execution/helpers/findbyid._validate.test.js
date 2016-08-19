@@ -36,7 +36,6 @@ describe('BusinessLogics - Execution - FindById - _validate', function() {
       quality: 'findbyid',
     },
     payload: {
-      type: 'execution',
       id: mockId.toString(),
     },
   };
