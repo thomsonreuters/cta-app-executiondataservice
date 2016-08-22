@@ -5,10 +5,8 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
-const mockrequire = require('mock-require');
 const sinon = require('sinon');
 require('sinon-as-promised');
-const fs = require('fs');
 const nodepath = require('path');
 const _ = require('lodash');
 
@@ -30,9 +28,6 @@ const DEFAULTCEMENTHELPER = {
 };
 
 describe('BusinessLogics - Base - process', function() {
-  const helpersDirectory = nodepath.join(appRootPath,
-    '/lib/bricks/businesslogics/base/helpers');
-  const mockHelpers = new Map();
   const helperName = 'helperone';
   const JOB = {
     nature: {
@@ -44,36 +39,21 @@ describe('BusinessLogics - Base - process', function() {
   let logic;
   before(function () {
     // create some mock helpers
-    // helper mock #1
-    mockHelpers.set(helperName, {
-      MockConstructor: function (cementHelper) {
-        return {
-          ok: '1',
-          cementHelper: cementHelper,
-          _validate: function () {
-          },
-          _process: function () {
-          },
-        };
-      },
-      path: nodepath.join(helpersDirectory, helperName),
-    });
-    sinon.spy(mockHelpers.get(helperName), 'MockConstructor');
-    mockrequire(mockHelpers.get(helperName).path,
-      mockHelpers.get(helperName).MockConstructor);
-
-    // stub fs readdirSync method
-    // returns Array of mocked helpers directories
-    sinon.stub(fs, 'readdirSync')
-      .withArgs(helpersDirectory)
-      .returns(Array.from(mockHelpers.keys()));
-
+    const MockHelper = function (cementHelper) {
+      return {
+        ok: '1',
+        cementHelper: cementHelper,
+        _validate: function () {
+        },
+        _process: function () {
+        },
+      };
+    };
     logic = new Logic(DEFAULTCEMENTHELPER, DEFAULTCONFIG);
+    logic.helpers.set(helperName, new MockHelper(logic.cementHelper, logic.logger));
   });
 
   after(function () {
-    mockrequire.stopAll();
-    fs.readdirSync.restore();
   });
 
   context('when everything ok', function () {
