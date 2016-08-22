@@ -67,6 +67,7 @@ describe('Utils - RESTAPI - Handlers - Executions - delete', function() {
     context('when Context emits done event', function() {
       context('when document is found', function() {
         before(function() {
+          sinon.spy(res, 'status');
           sinon.spy(res, 'send');
           handler.delete(req, res, null);
         });

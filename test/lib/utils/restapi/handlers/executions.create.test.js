@@ -39,6 +39,7 @@ describe('Utils - RESTAPI - Handlers - Executions - create', function() {
     let mockContext;
     before(function() {
       req.method = 'POST';
+      req.params = {};
       req.body = _.cloneDeep(EXECUTION);
       data = {
         nature: {
@@ -64,16 +65,19 @@ describe('Utils - RESTAPI - Handlers - Executions - create', function() {
 
     context('when Context emits done event', function() {
       before(function() {
+        sinon.spy(res, 'status');
         sinon.spy(res, 'send');
         handler.create(req, res, null);
       });
       after(function() {
+        res.status.restore();
         res.send.restore();
       });
       it('should send the response (res.send())', function() {
         const mockBrickname = 'businesslogic';
         const response = { ok: 1 };
         mockContext.emit('done', mockBrickname, response);
+        sinon.assert.calledWith(res.status, 201);
         sinon.assert.calledWith(res.send, response);
       });
     });
@@ -118,42 +122,85 @@ describe('Utils - RESTAPI - Handlers - Executions - create', function() {
   });
 
   context('when method is PUT and id is not provided', function() {
-    const req = {};
-    const res = {
-      status: function() {
-        return this;
-      },
-      send: function() {},
-    };
-    let data;
-    let mockContext;
-    before(function() {
-      req.method = 'PUT';
-      req.body = _.cloneDeep(EXECUTION);
-      data = {
-        nature: {
-          type: 'execution',
-          quality: 'create',
+    context('when id is provided', function() {
+      const req = {};
+      const res = {
+        status: function() {
+          return this;
         },
-        payload: req.body,
+        send: function() {},
       };
-      mockContext = new EventEmitter();
-      mockContext.publish = sinon.stub();
-      sinon.stub(handler.cementHelper, 'createContext')
-        .withArgs(data)
-        .returns(mockContext);
-      sinon.spy(res, 'status');
-      sinon.spy(res, 'send');
+      let data;
+      let mockContext;
+      before(function() {
+        req.method = 'PUT';
+        req.params = {
+          id: 'foobar',
+        };
+        req.body = _.cloneDeep(EXECUTION);
+        data = {
+          nature: {
+            type: 'execution',
+            quality: 'create',
+          },
+          payload: req.body,
+        };
+        data.payload.id = req.params.id;
+        mockContext = new EventEmitter();
+        mockContext.publish = sinon.stub();
+        sinon.stub(handler.cementHelper, 'createContext')
+          .withArgs(data)
+          .returns(mockContext);
+      });
+      after(function() {
+        handler.cementHelper.createContext.restore();
+      });
+      it('should publish a new Context', function() {
+        handler.create(req, res, null);
+        sinon.assert.calledWith(handler.cementHelper.createContext, data);
+        sinon.assert.called(mockContext.publish);
+      });
     });
-    after(function() {
-      res.status.restore();
-      res.send.restore();
-      handler.cementHelper.createContext.restore();
-    });
-    it('should send 400', function() {
-      handler.create(req, res, null);
-      sinon.assert.calledWith(res.status, 400);
-      sinon.assert.calledWith(res.send, 'Missing \'id\' property');
+
+    context('when id is not provided', function() {
+      const req = {};
+      const res = {
+        status: function() {
+          return this;
+        },
+        send: function() {},
+      };
+      let data;
+      let mockContext;
+      before(function() {
+        req.method = 'PUT';
+        req.params = {};
+        req.body = _.cloneDeep(EXECUTION);
+        data = {
+          nature: {
+            type: 'execution',
+            quality: 'create',
+          },
+          payload: req.body,
+        };
+        mockContext = new EventEmitter();
+        mockContext.publish = sinon.stub();
+        sinon.stub(handler.cementHelper, 'createContext')
+          .withArgs(data)
+          .returns(mockContext);
+        sinon.spy(res, 'status');
+        sinon.spy(res, 'send');
+      });
+      after(function() {
+        res.status.restore();
+        res.send.restore();
+        handler.cementHelper.createContext.restore();
+      });
+      it('should send 400', function() {
+        handler.create(req, res, null);
+        sinon.assert.calledWith(res.status, 400);
+        sinon.assert.calledWith(res.send, 'Missing \'id\' property');
+      });
     });
   });
 });
