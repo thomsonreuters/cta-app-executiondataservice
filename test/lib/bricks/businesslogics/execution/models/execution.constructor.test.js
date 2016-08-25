@@ -9,7 +9,7 @@ const Model = require(nodepath.join(appRootPath,
   '/lib/bricks/businesslogics/execution/models', 'execution.js'));
 const data = require('./execution.data.testdata.js');
 
-describe('BusinessLogics - Executions - Model - Execution', function() {
+describe('BusinessLogics - Execution - Model - Execution', function() {
   it('should return an Execution', function() {
     const object = new Model(data);
     expect(object).to.be.an.instanceof(Model);
