@@ -13,6 +13,9 @@
 <dt><a href="#Delete">Delete</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
 <dd><p>Business Logic Execution Helper Delete class</p>
 </dd>
+<dt><a href="#Find">Find</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
+<dd><p>Business Logic Execution Helper Find class</p>
+</dd>
 <dt><a href="#FindById">FindById</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
 <dd><p>Business Logic Execution Helper FindById class</p>
 </dd>
@@ -25,6 +28,21 @@
 <dt><a href="#Execution">Execution</a></dt>
 <dd><p>Execution Data Model class</p>
 </dd>
+<dt><a href="#Create">Create</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
+<dd><p>Business Logic Status Helper Create class</p>
+</dd>
+<dt><a href="#Delete">Delete</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
+<dd><p>Business Logic Status Helper Delete class</p>
+</dd>
+<dt><a href="#Update">Update</a> ⇐ <code><a href="#BaseHelper">BaseHelper</a></code></dt>
+<dd><p>Business Logic Status Helper Update class</p>
+</dd>
+<dt><a href="#Status">Status</a> ⇐ <code><a href="#Base">Base</a></code></dt>
+<dd><p>Business Logic Status class</p>
+</dd>
+<dt><a href="#Status">Status</a></dt>
+<dd><p>Status Data Model class</p>
+</dd>
 <dt><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></dt>
 <dd><p>Database Interface Helper Base class</p>
 </dd>
@@ -33,6 +51,9 @@
 </dd>
 <dt><a href="#DeleteOne">DeleteOne</a> ⇐ <code><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></code></dt>
 <dd><p>Database Interface MongoDB Helper DeleteOne class</p>
+</dd>
+<dt><a href="#Find">Find</a> ⇐ <code><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></code></dt>
+<dd><p>Database Interface MongoDB Helper Find class</p>
 </dd>
 <dt><a href="#FindById">FindById</a> ⇐ <code><a href="#BaseDBInterfaceHelper">BaseDBInterfaceHelper</a></code></dt>
 <dd><p>Database Interface MongoDB Helper FindById class</p>
@@ -69,6 +90,7 @@ Business Logic Helper Base class
     * [new BaseHelper(cementHelper, logger)](#new_BaseHelper_new)
     * *[._validate(context)](#BaseHelper+_validate) ⇒ <code>Promise</code>*
     * *[._process(context)](#BaseHelper+_process) ⇒ <code>Context</code>*
+    * [._ack(context)](#BaseHelper+_ack)
 
 <a name="new_BaseHelper_new"></a>
 
@@ -102,6 +124,17 @@ Process the context
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
+
+<a name="BaseHelper+_ack"></a>
+
+### baseHelper._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[BaseHelper](#BaseHelper)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
 
 <a name="Base"></a>
 
@@ -175,6 +208,9 @@ Business Logic Execution Helper Create class
 * [Create](#Create) ⇐ <code>[BaseHelper](#BaseHelper)</code>
     * *[._validate(context)](#Create+_validate) ⇒ <code>Promise</code>*
     * [._process(context)](#Create+_process)
+    * *[._validate(context)](#Create+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Create+_process)
+    * [._ack(context)](#BaseHelper+_ack)
 
 <a name="Create+_validate"></a>
 
@@ -200,6 +236,42 @@ Process the context
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
+<a name="Create+_validate"></a>
+
+### *create._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Status Model fields
+
+**Kind**: instance abstract method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Create+_process"></a>
+
+### create._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="BaseHelper+_ack"></a>
+
+### create._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_ack](#BaseHelper+_ack)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
+
 <a name="Delete"></a>
 
 ## Delete ⇐ <code>[BaseHelper](#BaseHelper)</code>
@@ -218,6 +290,9 @@ Business Logic Execution Helper Delete class
 * [Delete](#Delete) ⇐ <code>[BaseHelper](#BaseHelper)</code>
     * *[._validate(context)](#Delete+_validate) ⇒ <code>Promise</code>*
     * [._process(context)](#Delete+_process)
+    * *[._validate(context)](#Delete+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Delete+_process)
+    * [._ack(context)](#BaseHelper+_ack)
 
 <a name="Delete+_validate"></a>
 
@@ -243,6 +318,123 @@ Process the context
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
+<a name="Delete+_validate"></a>
+
+### *delete._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Query Status Model fields
+
+**Kind**: instance abstract method of <code>[Delete](#Delete)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Delete+_process"></a>
+
+### delete._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Delete](#Delete)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="BaseHelper+_ack"></a>
+
+### delete._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[Delete](#Delete)</code>  
+**Overrides:** <code>[_ack](#BaseHelper+_ack)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
+
+<a name="Find"></a>
+
+## Find ⇐ <code>[BaseHelper](#BaseHelper)</code>
+Business Logic Execution Helper Find class
+
+**Kind**: global class  
+**Extends:** <code>[BaseHelper](#BaseHelper)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| logger | <code>Logger</code> | logger instance |
+
+
+* [Find](#Find) ⇐ <code>[BaseHelper](#BaseHelper)</code>
+    * *[._validate(context)](#Find+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Find+_process)
+    * *[._validate(context)](#Find+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Find+_process)
+    * [._ack(context)](#BaseHelper+_ack)
+
+<a name="Find+_validate"></a>
+
+### *find._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Query Execution Model fields
+
+**Kind**: instance abstract method of <code>[Find](#Find)</code>  
+**Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Find+_process"></a>
+
+### find._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Find](#Find)</code>  
+**Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Find+_validate"></a>
+
+### *find._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates abstract query fields
+
+**Kind**: instance abstract method of <code>[Find](#Find)</code>  
+**Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Find+_process"></a>
+
+### find._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Find](#Find)</code>  
+**Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="BaseHelper+_ack"></a>
+
+### find._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[Find](#Find)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
+
 <a name="FindById"></a>
 
 ## FindById ⇐ <code>[BaseHelper](#BaseHelper)</code>
@@ -263,6 +455,7 @@ Business Logic Execution Helper FindById class
     * [._process(context)](#FindById+_process)
     * *[._validate(context)](#FindById+_validate) ⇒ <code>Promise</code>*
     * [._process(context)](#FindById+_process)
+    * [._ack(context)](#BaseHelper+_ack)
 
 <a name="FindById+_validate"></a>
 
@@ -312,6 +505,17 @@ Process the context
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
+<a name="BaseHelper+_ack"></a>
+
+### findById._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[FindById](#FindById)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
+
 <a name="Update"></a>
 
 ## Update ⇐ <code>[BaseHelper](#BaseHelper)</code>
@@ -330,6 +534,9 @@ Business Logic Execution Helper Update class
 * [Update](#Update) ⇐ <code>[BaseHelper](#BaseHelper)</code>
     * *[._validate(context)](#Update+_validate) ⇒ <code>Promise</code>*
     * [._process(context)](#Update+_process)
+    * *[._validate(context)](#Update+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Update+_process)
+    * [._ack(context)](#BaseHelper+_ack)
 
 <a name="Update+_validate"></a>
 
@@ -354,6 +561,42 @@ Process the context
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
+
+<a name="Update+_validate"></a>
+
+### *update._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Status Model fields
+
+**Kind**: instance abstract method of <code>[Update](#Update)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Update+_process"></a>
+
+### update._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Update](#Update)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="BaseHelper+_ack"></a>
+
+### update._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[Update](#Update)</code>  
+**Overrides:** <code>[_ack](#BaseHelper+_ack)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
 
 <a name="Execution"></a>
 
@@ -460,6 +703,362 @@ Validates Context properties
 Process the context
 
 **Kind**: instance method of <code>[Execution](#Execution)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Create"></a>
+
+## Create ⇐ <code>[BaseHelper](#BaseHelper)</code>
+Business Logic Status Helper Create class
+
+**Kind**: global class  
+**Extends:** <code>[BaseHelper](#BaseHelper)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| logger | <code>Logger</code> | logger instance |
+
+
+* [Create](#Create) ⇐ <code>[BaseHelper](#BaseHelper)</code>
+    * *[._validate(context)](#Create+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Create+_process)
+    * *[._validate(context)](#Create+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Create+_process)
+    * [._ack(context)](#BaseHelper+_ack)
+
+<a name="Create+_validate"></a>
+
+### *create._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Execution Model fields
+
+**Kind**: instance abstract method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Create+_process"></a>
+
+### create._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Create+_validate"></a>
+
+### *create._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Status Model fields
+
+**Kind**: instance abstract method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Create+_process"></a>
+
+### create._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="BaseHelper+_ack"></a>
+
+### create._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[Create](#Create)</code>  
+**Overrides:** <code>[_ack](#BaseHelper+_ack)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
+
+<a name="Delete"></a>
+
+## Delete ⇐ <code>[BaseHelper](#BaseHelper)</code>
+Business Logic Status Helper Delete class
+
+**Kind**: global class  
+**Extends:** <code>[BaseHelper](#BaseHelper)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| logger | <code>Logger</code> | logger instance |
+
+
+* [Delete](#Delete) ⇐ <code>[BaseHelper](#BaseHelper)</code>
+    * *[._validate(context)](#Delete+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Delete+_process)
+    * *[._validate(context)](#Delete+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Delete+_process)
+    * [._ack(context)](#BaseHelper+_ack)
+
+<a name="Delete+_validate"></a>
+
+### *delete._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Query Execution Model fields
+
+**Kind**: instance abstract method of <code>[Delete](#Delete)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Delete+_process"></a>
+
+### delete._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Delete](#Delete)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Delete+_validate"></a>
+
+### *delete._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Query Status Model fields
+
+**Kind**: instance abstract method of <code>[Delete](#Delete)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Delete+_process"></a>
+
+### delete._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Delete](#Delete)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="BaseHelper+_ack"></a>
+
+### delete._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[Delete](#Delete)</code>  
+**Overrides:** <code>[_ack](#BaseHelper+_ack)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
+
+<a name="Update"></a>
+
+## Update ⇐ <code>[BaseHelper](#BaseHelper)</code>
+Business Logic Status Helper Update class
+
+**Kind**: global class  
+**Extends:** <code>[BaseHelper](#BaseHelper)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| logger | <code>Logger</code> | logger instance |
+
+
+* [Update](#Update) ⇐ <code>[BaseHelper](#BaseHelper)</code>
+    * *[._validate(context)](#Update+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Update+_process)
+    * *[._validate(context)](#Update+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Update+_process)
+    * [._ack(context)](#BaseHelper+_ack)
+
+<a name="Update+_validate"></a>
+
+### *update._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Execution Model fields
+
+**Kind**: instance abstract method of <code>[Update](#Update)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Update+_process"></a>
+
+### update._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Update](#Update)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Update+_validate"></a>
+
+### *update._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Status Model fields
+
+**Kind**: instance abstract method of <code>[Update](#Update)</code>  
+**Overrides:** <code>[_validate](#BaseHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Update+_process"></a>
+
+### update._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Update](#Update)</code>  
+**Overrides:** <code>[_process](#BaseHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="BaseHelper+_ack"></a>
+
+### update._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[Update](#Update)</code>  
+**Overrides:** <code>[_ack](#BaseHelper+_ack)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
+
+<a name="Status"></a>
+
+## Status ⇐ <code>[Base](#Base)</code>
+Business Logic Status class
+
+**Kind**: global class  
+**Extends:** <code>[Base](#Base)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| configuration | <code>BrickConfig</code> | cement configuration of the brick |
+| helpers | <code>Map.&lt;String, Helper&gt;</code> | Map of Helpers |
+
+
+* [Status](#Status) ⇐ <code>[Base](#Base)</code>
+    * [new Status(data)](#new_Status_new)
+    * [.validate(context)](#Base+validate) ⇒ <code>Promise</code>
+    * [.process(context)](#Base+process)
+
+<a name="new_Status_new"></a>
+
+### new Status(data)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | params |
+| data.id | <code>ObjectID</code> | unique identifier |
+| data.scenario | <code>ObjectID</code> | unique identifier of a Scenario |
+| data.configuration | <code>ObjectID</code> | unique identifier of a Configuration |
+| data.user | <code>ObjectID</code> | unique identifier of an User |
+
+<a name="Base+validate"></a>
+
+### status.validate(context) ⇒ <code>Promise</code>
+Validates Context properties
+
+**Kind**: instance method of <code>[Status](#Status)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Base+process"></a>
+
+### status.process(context)
+Process the context
+
+**Kind**: instance method of <code>[Status](#Status)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Status"></a>
+
+## Status
+Status Data Model class
+
+**Kind**: global class  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | <code>ObjectID</code> | unique identifier |
+| scenario | <code>ObjectID</code> | unique identifier of a Scenario |
+| configuration | <code>ObjectID</code> | unique identifier of a Configuration |
+| user | <code>ObjectID</code> | unique identifier of an User |
+
+
+* [Status](#Status)
+    * [new Status(data)](#new_Status_new)
+    * [.validate(context)](#Base+validate) ⇒ <code>Promise</code>
+    * [.process(context)](#Base+process)
+
+<a name="new_Status_new"></a>
+
+### new Status(data)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | params |
+| data.id | <code>ObjectID</code> | unique identifier |
+| data.scenario | <code>ObjectID</code> | unique identifier of a Scenario |
+| data.configuration | <code>ObjectID</code> | unique identifier of a Configuration |
+| data.user | <code>ObjectID</code> | unique identifier of an User |
+
+<a name="Base+validate"></a>
+
+### status.validate(context) ⇒ <code>Promise</code>
+Validates Context properties
+
+**Kind**: instance method of <code>[Status](#Status)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Base+process"></a>
+
+### status.process(context)
+Process the context
+
+**Kind**: instance method of <code>[Status](#Status)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -614,6 +1213,87 @@ Process the context
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
 
+<a name="Find"></a>
+
+## Find ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
+Database Interface MongoDB Helper Find class
+
+**Kind**: global class  
+**Extends:** <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cementHelper | <code>CementHelper</code> | cementHelper instance |
+| logger | <code>Logger</code> | logger instance |
+
+
+* [Find](#Find) ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
+    * *[._validate(context)](#Find+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Find+_process)
+    * *[._validate(context)](#Find+_validate) ⇒ <code>Promise</code>*
+    * [._process(context)](#Find+_process)
+    * [._ack(context)](#BaseHelper+_ack)
+
+<a name="Find+_validate"></a>
+
+### *find._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates Query Execution Model fields
+
+**Kind**: instance abstract method of <code>[Find](#Find)</code>  
+**Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Find+_process"></a>
+
+### find._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Find](#Find)</code>  
+**Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Find+_validate"></a>
+
+### *find._validate(context) ⇒ <code>Promise</code>*
+Validates Context properties specific to this HelperValidates abstract query fields
+
+**Kind**: instance abstract method of <code>[Find](#Find)</code>  
+**Overrides:** <code>[_validate](#BaseDBInterfaceHelper+_validate)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="Find+_process"></a>
+
+### find._process(context)
+Process the context
+
+**Kind**: instance method of <code>[Find](#Find)</code>  
+**Overrides:** <code>[_process](#BaseDBInterfaceHelper+_process)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | a Context |
+
+<a name="BaseHelper+_ack"></a>
+
+### find._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[Find](#Find)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
+
 <a name="FindById"></a>
 
 ## FindById ⇐ <code>[BaseDBInterfaceHelper](#BaseDBInterfaceHelper)</code>
@@ -634,6 +1314,7 @@ Database Interface MongoDB Helper FindById class
     * [._process(context)](#FindById+_process)
     * *[._validate(context)](#FindById+_validate) ⇒ <code>Promise</code>*
     * [._process(context)](#FindById+_process)
+    * [._ack(context)](#BaseHelper+_ack)
 
 <a name="FindById+_validate"></a>
 
@@ -682,6 +1363,17 @@ Process the context
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>Context</code> | a Context |
+
+<a name="BaseHelper+_ack"></a>
+
+### findById._ack(context)
+Acknowledge a Context
+
+**Kind**: instance method of <code>[FindById](#FindById)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| context | <code>Context</code> | the Context to acknowledge |
 
 <a name="InsertOne"></a>
 
@@ -830,6 +1522,7 @@ Handler class for RESTAPI handlers : EXECUTIONS
     * [.update(req, res, next)](#ExecutionsHandler+update)
     * [.findById(req, res, next)](#ExecutionsHandler+findById)
     * [.delete(req, res, next)](#ExecutionsHandler+delete)
+    * [.find(req, res, next)](#ExecutionsHandler+find)
 
 <a name="new_ExecutionsHandler_new"></a>
 
@@ -882,6 +1575,19 @@ Publishes request params (Query) id in an execution-findbyid Context
 
 ### executionsHandler.delete(req, res, next)
 Publishes request params (Query) id in an execution-deleteone Context
+
+**Kind**: instance method of <code>[ExecutionsHandler](#ExecutionsHandler)</code>  
+
+| Param |
+| --- |
+| req | 
+| res | 
+| next | 
+
+<a name="ExecutionsHandler+find"></a>
+
+### executionsHandler.find(req, res, next)
+Publishes request params (Query) in an execution-find Context
 
 **Kind**: instance method of <code>[ExecutionsHandler](#ExecutionsHandler)</code>  
 
