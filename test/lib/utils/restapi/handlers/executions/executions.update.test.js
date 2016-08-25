@@ -50,11 +50,9 @@ describe('Utils - RESTAPI - Handlers - Executions - update', function() {
           type: 'execution',
           quality: 'update',
         },
-        payload: {
-          id: req.params.id,
-          content: req.body,
-        },
+        payload: req.body,
       };
+      data.payload.id = req.params.id;
       mockContext = new EventEmitter();
       mockContext.publish = sinon.stub();
       sinon.stub(handler.cementHelper, 'createContext')

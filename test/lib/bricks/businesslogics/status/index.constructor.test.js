@@ -12,7 +12,7 @@ const Logger = require('cta-logger');
 const Base = require(nodepath.join(appRootPath,
   '/lib/bricks/businesslogics/base/', 'index.js'));
 const logicPath = nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/', 'index.js');
+  '/lib/bricks/businesslogics/status/', 'index.js');
 // let Logic = require(logicPath);
 
 const DEFAULTCONFIG = require('./index.config.testdata.js');
@@ -27,7 +27,7 @@ const DEFAULTCEMENTHELPER = {
   },
 };
 
-describe('BusinessLogics - Execution - constructor', function() {
+describe('BusinessLogics - Status - constructor', function() {
   context('when everything ok', function() {
     let Logic;
     let logic;
@@ -35,7 +35,7 @@ describe('BusinessLogics - Execution - constructor', function() {
     before(function() {
       // stubs all helpers available in the helpers directory
       const helpersDirectory = nodepath.join(appRootPath,
-        '/lib/bricks/businesslogics/execution/helpers');
+        '/lib/bricks/businesslogics/status/helpers');
       const helpersList = fs.readdirSync(helpersDirectory);
       helpersList.forEach(function(helperFileName) {
         mockHelpers.set(helperFileName, {
