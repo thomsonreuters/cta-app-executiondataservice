@@ -11,7 +11,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers', 'find.js'));
+  '/lib/bricks/businesslogics/status/helpers', 'find.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -26,11 +26,11 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('BusinessLogics - Execution - Find - _validate', function() {
+describe('BusinessLogics - Status - Find - _validate', function() {
   let helper;
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'execution',
+      type: 'status',
       quality: 'find',
     },
     payload: {
@@ -43,7 +43,7 @@ describe('BusinessLogics - Execution - Find - _validate', function() {
         },
       },
       query: {
-        starttimestamp: 10,
+        timestamp: 10,
       },
     },
   };
@@ -120,8 +120,7 @@ describe('BusinessLogics - Execution - Find - _validate', function() {
 
   context('when payload.query has an invalid parameter', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.query.updatetimestamp = 'not-a-number';
-    job.payload.query.state = {};
+    job.payload.query.timestamp = 'not-a-number';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);

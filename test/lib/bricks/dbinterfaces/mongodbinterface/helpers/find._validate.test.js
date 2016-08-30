@@ -40,7 +40,6 @@ describe('DatabaseInterfaces - MongoDB - Find - _validate', function() {
         offset: 0,
       },
       query: {
-        foo: 'bar',
       },
     },
   };
@@ -123,6 +122,16 @@ describe('DatabaseInterfaces - MongoDB - Find - _validate', function() {
       const validatePromise = helper._validate(mockInputContext);
       return expect(validatePromise).to.eventually
         .be.rejectedWith(Error, 'missing/incorrect \'query\' Object in job payload');
+    });
+  });
+
+  context.skip('when payload.query has an invalid parameter', function() {
+    const job = _.cloneDeep(DEFAULTINPUTJOB);
+    // job.payload.query.updatetimestamp = 'not-a-number';
+    const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
+    it('should reject', function() {
+      const validatePromise = helper._validate(mockInputContext);
+      return expect(validatePromise).to.eventually.be.rejected;
     });
   });
 });

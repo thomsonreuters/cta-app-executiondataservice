@@ -5,7 +5,6 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
-const sinon = require('sinon');
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
 const _ = require('lodash');
@@ -61,15 +60,8 @@ describe('BusinessLogics - Status - Delete - _validate', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
     job.payload.id = {};
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
-    before(function() {
-      sinon.spy(helper, '_ack');
-    });
-    after(function() {
-      helper._ack.restore();
-    });
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
-      sinon.assert.calledWith(helper._ack, mockInputContext);
       return expect(validatePromise).to.eventually
         .be.rejectedWith(Error, 'missing/incorrect \'id\' String value of ObjectID in job payload');
     });
@@ -79,15 +71,8 @@ describe('BusinessLogics - Status - Delete - _validate', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
     job.payload.id = 'sdfsdf';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
-    before(function() {
-      sinon.spy(helper, '_ack');
-    });
-    after(function() {
-      helper._ack.restore();
-    });
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
-      sinon.assert.calledWith(helper._ack, mockInputContext);
       return expect(validatePromise).to.eventually
         .be.rejectedWith(Error, 'missing/incorrect \'id\' String value of ObjectID in job payload');
     });

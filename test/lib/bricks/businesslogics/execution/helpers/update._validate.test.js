@@ -37,7 +37,7 @@ describe('BusinessLogics - Execution - Update - _validate', function() {
     },
     payload: {
       id: mockId.toString(),
-      content: {},
+      state: 'running',
     },
   };
   before(function() {
@@ -56,25 +56,23 @@ describe('BusinessLogics - Execution - Update - _validate', function() {
     });
   });
 
-  context('when payload.id is not a String', function() {
+  context('when payload is not an object', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.id = {};
+    job.payload = 'not-an-object';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
-      return expect(validatePromise).to.eventually
-        .be.rejectedWith(Error, 'missing/incorrect \'id\' String value of ObjectID in job payload');
+      return expect(validatePromise).to.eventually.be.rejected;
     });
   });
 
-  context('when payload.id is not a String value of ObjectID', function() {
+  context('when payload has an invalid argument', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.id = 'sdfsdf';
+    job.payload.state = {};
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
-      return expect(validatePromise).to.eventually
-        .be.rejectedWith(Error, 'missing/incorrect \'id\' String value of ObjectID in job payload');
+      return expect(validatePromise).to.eventually.be.rejected;
     });
   });
 });

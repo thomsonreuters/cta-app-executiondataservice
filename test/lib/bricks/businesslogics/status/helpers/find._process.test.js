@@ -2,17 +2,12 @@
 
 const appRootPath = require('app-root-path').path;
 const sinon = require('sinon');
-const requireSubvert = require('require-subvert')(__dirname);
 const nodepath = require('path');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
-const pathToHelper = nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'create.js');
-let Helper = require(pathToHelper);
-const pathToExecution = nodepath.join(appRootPath,
-  '/lib/utils/datamodels', 'execution.js');
-const Execution = require(pathToExecution);
+const Helper = require(nodepath.join(appRootPath,
+  '/lib/bricks/businesslogics/status/helpers/', 'find.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -27,15 +22,30 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('BusinessLogics - Execution - Create - _process', function() {
+describe('BusinessLogics - Status - Find - _process', function() {
   let helper;
+  before(function() {
+    helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+  });
   context('when everything ok', function() {
     const inputJOB = {
       nature: {
-        type: 'execution',
+        type: 'status',
         quality: Helper.name.toLowerCase(),
       },
-      payload: {},
+      payload: {
+        filter: {
+          limit: 10,
+          offset: 0,
+          sort: {
+            starttimestamp: -1,
+            nbstatuses: 1,
+          },
+        },
+        query: {
+          foo: 'bar',
+        },
+      },
     };
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, inputJOB);
     let mockOutputContext;
@@ -43,42 +53,28 @@ describe('BusinessLogics - Execution - Create - _process', function() {
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
-      const mockExecution = new Execution({
-        id: 'foo',
-        scenarioId: 'bar',
-        userId: 'quz',
-        starttimestamp: 1231923018230123,
-        instances: [],
-      });
-      const StubExecutionConstructor = sinon.stub().returns(mockExecution);
-      requireSubvert.subvert(pathToExecution, StubExecutionConstructor);
-      Helper = requireSubvert.require(pathToHelper);
-
       outputJOB = {
         nature: {
           type: 'dbinterface',
-          quality: 'insertone',
+          quality: 'find',
         },
         payload: {
-          type: 'execution',
-          content: mockExecution,
+          type: 'status',
+          filter: inputJOB.payload.filter,
+          query: inputJOB.payload.query,
         },
       };
       mockOutputContext = new Context(DEFAULTCEMENTHELPER, outputJOB);
       mockOutputContext.publish = sinon.stub();
-
-      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
       sinon.stub(helper.cementHelper, 'createContext')
         .withArgs(outputJOB)
         .returns(mockOutputContext);
       helper._process(mockInputContext);
     });
     after(function() {
-      requireSubvert.cleanUp();
       helper.cementHelper.createContext.restore();
     });
-
-    it('should send a new Context insertone', function() {
+    it('should send a new Context', function() {
       sinon.assert.calledWith(helper.cementHelper.createContext, outputJOB);
       sinon.assert.called(mockOutputContext.publish);
     });
@@ -86,7 +82,8 @@ describe('BusinessLogics - Execution - Create - _process', function() {
     context('when outputContext emits done event', function() {
       it('should emit done event on inputContext', function() {
         const response = {};
-        mockOutputContext.emit('done', 'dblayer', response);
+        const brickName = 'dbinterface';
+        mockOutputContext.emit('done', brickName, response);
         sinon.assert.calledWith(mockInputContext.emit,
           'done', helper.cementHelper.brickName, response);
       });
