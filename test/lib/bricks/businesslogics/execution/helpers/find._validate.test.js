@@ -98,7 +98,7 @@ describe('BusinessLogics - Execution - Find - _validate', function() {
 
   context('when payload.filter.sort is not an Object', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.filter.sort = null;
+    job.payload.filter.sort = 'not-an-object';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
