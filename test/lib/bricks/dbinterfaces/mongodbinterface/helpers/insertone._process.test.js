@@ -5,7 +5,6 @@ const sinon = require('sinon');
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
 const requireSubvert = require('require-subvert')(__dirname);
-const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
@@ -38,7 +37,6 @@ describe('DatabaseInterfaces - MongoDB - InsertOne - constructor', function() {
       type: 'execution',
       content: {
         id: mockId.toString(),
-        foo: 'bar',
       },
     },
   };
@@ -58,8 +56,9 @@ describe('DatabaseInterfaces - MongoDB - InsertOne - constructor', function() {
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
-      mongoDbDocument = _.omit(inputJOB.payload.content, ['id']);
-      mongoDbDocument._id = new ObjectID(inputJOB.payload.content.id);
+      mongoDbDocument = {
+        _id: mockId,
+      };
       outputJOB = {
         nature: {
           type: 'database',
@@ -100,13 +99,9 @@ describe('DatabaseInterfaces - MongoDB - InsertOne - constructor', function() {
           ],
         };
 
-        const result = _.cloneDeep(mongoDbDocument);
-        result.id = mongoDbDocument._id.toString();
-        delete result._id;
-
         mockOutputContext.emit('done', 'dblayer', response);
         sinon.assert.calledWith(mockInputContext.emit,
-          'done', helper.cementHelper.brickName, result);
+          'done', helper.cementHelper.brickName);
       });
     });
 

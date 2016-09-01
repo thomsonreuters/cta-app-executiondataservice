@@ -125,13 +125,14 @@ describe('DatabaseInterfaces - MongoDB - Find - _validate', function() {
     });
   });
 
-  context.skip('when payload.query has an invalid parameter', function() {
+  context('when payload.query has an invalid parameter', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    // job.payload.query.updatetimestamp = 'not-a-number';
+    job.payload.query.scenarioId = 'plop';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
-      return expect(validatePromise).to.eventually.be.rejected;
+      return expect(validatePromise).to.eventually
+        .be.rejectedWith(Error, 'incorrect \'scenarioId\' in job payload.query');
     });
   });
 });

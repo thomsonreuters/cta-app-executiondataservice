@@ -5,7 +5,6 @@ const sinon = require('sinon');
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
 const requireSubvert = require('require-subvert')(__dirname);
-const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
@@ -90,8 +89,8 @@ describe('DatabaseInterfaces - MongoDB - DeleteOne - constructor', function() {
           const responseDocument = {
             _id: mockId,
           };
-          const responseObject = _.omit(responseDocument, ['_id']);
-          responseObject.id = responseDocument._id.toString();
+          // const responseObject = _.omit(responseDocument, ['_id']);
+          // responseObject.id = responseDocument._id.toString();
           const response = {
             ok: 1,
             value: responseDocument,
@@ -99,7 +98,7 @@ describe('DatabaseInterfaces - MongoDB - DeleteOne - constructor', function() {
 
           mockOutputContext.emit('done', 'dblayer', response);
           sinon.assert.calledWith(mockInputContext.emit,
-            'done', helper.cementHelper.brickName, responseObject);
+            'done', helper.cementHelper.brickName);
         });
       });
 
