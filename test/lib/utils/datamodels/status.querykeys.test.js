@@ -13,14 +13,14 @@ describe('BusinessLogics - Status - Model - Status - QueryKeys', function() {
   context('when everything ok', function() {
     it('should return properties', function() {
       const keys = {
-        id: { type: 'objectid', optional: true },
-        executionId: { type: 'objectid', optional: true },
-        scenarioId: { type: 'objectid', optional: true },
-        configurationId: { type: 'objectid', optional: true },
-        testsuiteId: { type: 'objectid', optional: true },
-        testId: { type: 'objectid', optional: true },
+        id: { type: 'identifier', optional: true },
+        executionId: { type: 'identifier', optional: true },
+        scenarioId: { type: 'identifier', optional: true },
+        configurationId: { type: 'identifier', optional: true },
+        testsuiteId: { type: 'identifier', optional: true },
+        testId: { type: 'identifier', optional: true },
         timestamp: { type: 'number', optional: true },
-        parent: { type: 'objectid', optional: true },
+        parent: { type: 'identifier', optional: true },
         status: { type: 'string', optional: true },
         ip: { type: 'string', optional: true },
         hostname: { type: 'string', optional: true },
