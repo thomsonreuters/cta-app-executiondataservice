@@ -13,9 +13,9 @@ describe('Data Model - Execution - Keys', function() {
   context('when everything ok', function() {
     it('should return properties', function() {
       const keys = {
-        id: { type: 'objectid' },
-        scenarioId: { type: 'objectid' },
-        userId: { type: 'objectid' },
+        id: { type: 'identifier' },
+        scenarioId: { type: 'identifier' },
+        userId: { type: 'identifier' },
         starttimestamp: { type: 'number', optional: true },
         updatetimestamp: { type: 'number', optional: true },
         state: { type: 'string', optional: true },
@@ -39,9 +39,9 @@ describe('Data Model - Execution - QueryKeys', function() {
   context('when everything ok', function() {
     it('should return properties', function() {
       const keys = {
-        id: { type: 'objectid', optional: true },
-        scenarioId: { type: 'objectid', optional: true },
-        userId: { type: 'objectid', optional: true },
+        id: { type: 'identifier', optional: true },
+        scenarioId: { type: 'identifier', optional: true },
+        userId: { type: 'identifier', optional: true },
         starttimestamp: { type: 'number', optional: true },
         updatetimestamp: { type: 'number', optional: true },
         state: { type: 'string', optional: true },

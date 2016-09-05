@@ -10,7 +10,7 @@ const data = {
   testId: (new ObjectID()).toString(),
   // timestamp: { type: 'number', optional: true },
   // parent: { type: 'objectid', optional: true },
-  // status: { type: 'string', optional: true },
+  status: 'pending',
   // ip: { type: 'string', optional: true },
   // hostname: { type: 'string', optional: true },
   // type: { type: 'string', optional: true },

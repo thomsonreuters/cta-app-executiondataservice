@@ -13,15 +13,15 @@ describe('BusinessLogics - Status - Model - Status - Keys', function() {
   context('when everything ok', function() {
     it('should return properties', function() {
       const keys = {
-        id: { type: 'objectid' },
-        executionId: { type: 'objectid' },
-        scenarioId: { type: 'objectid' },
-        configurationId: { type: 'objectid' },
-        testsuiteId: { type: 'objectid' },
-        testId: { type: 'objectid' },
+        id: { type: 'identifier' },
+        executionId: { type: 'identifier' },
+        scenarioId: { type: 'identifier' },
+        configurationId: { type: 'identifier' },
+        testsuiteId: { type: 'identifier' },
+        testId: { type: 'identifier' },
+        status: { type: 'string' },
         timestamp: { type: 'number', optional: true },
-        parent: { type: 'objectid', optional: true },
-        status: { type: 'string', optional: true },
+        parent: { type: 'identifier', optional: true },
         ip: { type: 'string', optional: true },
         hostname: { type: 'string', optional: true },
         type: { type: 'string', optional: true },
