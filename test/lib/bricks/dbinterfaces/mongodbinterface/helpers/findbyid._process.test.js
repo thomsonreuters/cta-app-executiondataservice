@@ -5,7 +5,6 @@ const sinon = require('sinon');
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
 const requireSubvert = require('require-subvert')(__dirname);
-const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
@@ -95,13 +94,13 @@ describe('DatabaseInterfaces - MongoDB - FindById - constructor', function() {
           const response = [doc];
 
           // cta object
-          const object = _.cloneDeep(doc);
-          object.id = mockId.toString();
-          delete object._id;
+          // const object = _.cloneDeep(doc);
+          // object.id = mockId.toString();
+          // delete object._id;
 
           mockOutputContext.emit('done', 'dblayer', response);
           sinon.assert.calledWith(mockInputContext.emit,
-            'done', helper.cementHelper.brickName, object);
+            'done', helper.cementHelper.brickName);
         });
       });
 

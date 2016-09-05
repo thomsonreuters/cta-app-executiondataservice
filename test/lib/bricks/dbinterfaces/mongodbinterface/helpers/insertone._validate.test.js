@@ -80,7 +80,7 @@ describe('DatabaseInterfaces - MongoDB - InsertOne - _validate', function() {
     });
   });
 
-  context('when payload.id is not a String', function() {
+  context('when payload.content.id is not a String', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
     job.payload.content.id = {};
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
@@ -91,7 +91,7 @@ describe('DatabaseInterfaces - MongoDB - InsertOne - _validate', function() {
     });
   });
 
-  context('when payload.id is not a String value of ObjectID', function() {
+  context('when payload.content.id is not a String value of ObjectID', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
     job.payload.content.id = 'sdfsdf';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);

@@ -7,9 +7,9 @@ const _ = require('lodash');
 const EventEmitter = require('events');
 const Logger = require('cta-logger');
 const Handler = require(nodepath.join(appRootPath,
-  '/lib/utils/restapi/handlers/', 'executions.js'));
-const Execution = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels/', 'execution.js'));
+  '/lib/utils/restapi/handlers/', 'statuses.js'));
+const Status = require(nodepath.join(appRootPath,
+  '/lib/utils/datamodels/', 'status.js'));
 
 const DEFAULTLOGGER = new Logger();
 const DEFAULTCEMENTHELPER = {
@@ -23,7 +23,7 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('Utils - RESTAPI - Handlers - Executions - find', function() {
+describe('Utils - RESTAPI - Handlers - Statuses - find', function() {
   let handler;
   before(function() {
     handler = new Handler(DEFAULTCEMENTHELPER);
@@ -44,7 +44,6 @@ describe('Utils - RESTAPI - Handlers - Executions - find', function() {
         offset: 0,
         sort: '-starttimestamp,nbstatuses',
         status: 'finished',
-        done: 'true',
       };
       const filter = {
         limit: parseInt(req.query.limit, 10),
@@ -54,11 +53,11 @@ describe('Utils - RESTAPI - Handlers - Executions - find', function() {
           nbstatuses: 1,
         },
       };
-      const query = Execution.convertQueryStrings(_.omit(req.query, Object.keys(filter)));
+      const query = Status.convertQueryStrings(_.omit(req.query, Object.keys(filter)));
       sinonCustomMatcher = sinon.match(function(data) {
         return _.isEqual(data, {
           nature: {
-            type: 'execution',
+            type: 'status',
             quality: 'find',
           },
           payload: {

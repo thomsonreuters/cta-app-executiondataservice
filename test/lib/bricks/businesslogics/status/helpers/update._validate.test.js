@@ -5,7 +5,6 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
-const sinon = require('sinon');
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
 const _ = require('lodash');
@@ -38,7 +37,7 @@ describe('BusinessLogics - Status - Update - _validate', function() {
     },
     payload: {
       id: mockId.toString(),
-      content: {},
+      timestamp: 10,
     },
   };
   before(function() {
@@ -57,39 +56,23 @@ describe('BusinessLogics - Status - Update - _validate', function() {
     });
   });
 
-  context('when payload.id is not a String', function() {
+  context('when payload is not an object', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.id = {};
+    job.payload = 'not-an-object';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
-    before(function() {
-      sinon.spy(helper, '_ack');
-    });
-    after(function() {
-      helper._ack.restore();
-    });
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
-      sinon.assert.calledWith(helper._ack, mockInputContext);
-      return expect(validatePromise).to.eventually
-        .be.rejectedWith(Error, 'missing/incorrect \'id\' String value of ObjectID in job payload');
+      return expect(validatePromise).to.eventually.be.rejected;
     });
   });
 
-  context('when payload.id is not a String value of ObjectID', function() {
+  context('when payload has an invalid argument', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.id = 'sdfsdf';
+    job.payload.timestamp = {};
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
-    before(function() {
-      sinon.spy(helper, '_ack');
-    });
-    after(function() {
-      helper._ack.restore();
-    });
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
-      sinon.assert.calledWith(helper._ack, mockInputContext);
-      return expect(validatePromise).to.eventually
-        .be.rejectedWith(Error, 'missing/incorrect \'id\' String value of ObjectID in job payload');
+      return expect(validatePromise).to.eventually.be.rejected;
     });
   });
 });

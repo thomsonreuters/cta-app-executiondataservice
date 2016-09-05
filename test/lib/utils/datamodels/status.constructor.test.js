@@ -6,10 +6,10 @@ const expect = chai.expect;
 const nodepath = require('path');
 
 const Model = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/status/models', 'status.js'));
+  '/lib/utils/datamodels', 'status.js'));
 const data = require('./status.data.testdata.js');
 
-describe('BusinessLogics - Status - Model - Status', function() {
+describe('Data Model - Status', function() {
   it('should return an Status', function() {
     const object = new Model(data);
     expect(object).to.be.an.instanceof(Model);

@@ -11,7 +11,7 @@ const pathToHelper = nodepath.join(appRootPath,
   '/lib/bricks/businesslogics/execution/helpers/', 'create.js');
 let Helper = require(pathToHelper);
 const pathToExecution = nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/models/', 'execution.js');
+  '/lib/utils/datamodels', 'execution.js');
 const Execution = require(pathToExecution);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');

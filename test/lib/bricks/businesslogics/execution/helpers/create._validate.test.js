@@ -6,6 +6,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const nodepath = require('path');
+const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
@@ -24,6 +25,7 @@ const DEFAULTCEMENTHELPER = {
   },
   createContext: function() {},
 };
+const SAMPLE = require('./create.sample.testdata.js');
 
 describe('BusinessLogics - Execution - Create - _validate', function() {
   let helper;
@@ -32,7 +34,7 @@ describe('BusinessLogics - Execution - Create - _validate', function() {
       type: 'execution',
       quality: Helper.name.toLowerCase(),
     },
-    payload: {},
+    payload: SAMPLE,
   };
   before(function() {
     helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
@@ -47,6 +49,26 @@ describe('BusinessLogics - Execution - Create - _validate', function() {
     });
     it('should resolve', function() {
       return expect(promise).to.eventually.have.property('ok', 1);
+    });
+  });
+
+  context('when payload is not an object', function() {
+    const job = _.cloneDeep(DEFAULTINPUTJOB);
+    job.payload = 'not-an-object';
+    const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
+    it('should reject', function() {
+      const validatePromise = helper._validate(mockInputContext);
+      return expect(validatePromise).to.eventually.be.rejected;
+    });
+  });
+
+  context('when payload has an invalid parameter', function() {
+    const job = _.cloneDeep(DEFAULTINPUTJOB);
+    job.payload.id = 'not-an-objectid';
+    const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
+    it('should reject', function() {
+      const validatePromise = helper._validate(mockInputContext);
+      return expect(validatePromise).to.eventually.be.rejected;
     });
   });
 });

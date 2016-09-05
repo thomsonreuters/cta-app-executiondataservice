@@ -5,7 +5,6 @@ const sinon = require('sinon');
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
 const requireSubvert = require('require-subvert')(__dirname);
-const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
@@ -29,6 +28,7 @@ const DEFAULTCEMENTHELPER = {
 describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
   let helper;
   const mockId = new ObjectID();
+  const mockScenarioId = new ObjectID();
   const inputJOB = {
     nature: {
       type: 'dbinterface',
@@ -38,7 +38,7 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
       type: 'execution',
       id: mockId.toString(),
       content: {
-        foo: 'bar',
+        scenarioId: mockScenarioId.toString(),
       },
     },
   };
@@ -62,7 +62,9 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
         _id: new ObjectID(inputJOB.payload.id),
       };
       mongoDbDocument = {
-        $set: inputJOB.payload.content,
+        $set: {
+          scenarioId: mockScenarioId,
+        },
       };
       const mongoDbOptions = {
         returnOriginal: false,
@@ -85,7 +87,7 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
       mockOutputContext = new Context(DEFAULTCEMENTHELPER, outputJOB);
       mockOutputContext.publish = sinon.stub();
       sinon.stub(helper.cementHelper, 'createContext')
-        .withArgs(outputJOB)
+        // .withArgs(outputJOB)
         .returns(mockOutputContext);
       helper._process(mockInputContext);
     });
@@ -102,9 +104,8 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
         it('should emit done event on inputContext', function() {
           const responseDocument = {
             _id: mockId,
+            scenarioId: mockScenarioId,
           };
-          const responseObject = _.omit(responseDocument, ['_id']);
-          responseObject.id = responseDocument._id.toString();
           const response = {
             ok: 1,
             value: responseDocument,
@@ -112,7 +113,7 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
 
           mockOutputContext.emit('done', 'dblayer', response);
           sinon.assert.calledWith(mockInputContext.emit,
-            'done', helper.cementHelper.brickName, responseObject);
+            'done', helper.cementHelper.brickName);
         });
       });
 

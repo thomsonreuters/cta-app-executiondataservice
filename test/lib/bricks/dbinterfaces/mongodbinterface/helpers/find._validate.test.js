@@ -40,7 +40,6 @@ describe('DatabaseInterfaces - MongoDB - Find - _validate', function() {
         offset: 0,
       },
       query: {
-        foo: 'bar',
       },
     },
   };
@@ -95,7 +94,7 @@ describe('DatabaseInterfaces - MongoDB - Find - _validate', function() {
 
   context('when payload.filter.sort is not an Object', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.filter.sort = null;
+    job.payload.filter.sort = '';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
@@ -123,6 +122,17 @@ describe('DatabaseInterfaces - MongoDB - Find - _validate', function() {
       const validatePromise = helper._validate(mockInputContext);
       return expect(validatePromise).to.eventually
         .be.rejectedWith(Error, 'missing/incorrect \'query\' Object in job payload');
+    });
+  });
+
+  context('when payload.query has an invalid parameter', function() {
+    const job = _.cloneDeep(DEFAULTINPUTJOB);
+    job.payload.query.scenarioId = 'plop';
+    const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
+    it('should reject', function() {
+      const validatePromise = helper._validate(mockInputContext);
+      return expect(validatePromise).to.eventually
+        .be.rejectedWith(Error, 'incorrect \'scenarioId\' in job payload.query');
     });
   });
 });

@@ -2,6 +2,7 @@
 
 const appRootPath = require('app-root-path').path;
 const sinon = require('sinon');
+const ObjectID = require('bson').ObjectID;
 const nodepath = require('path');
 
 const Logger = require('cta-logger');
@@ -25,6 +26,7 @@ const DEFAULTCEMENTHELPER = {
 
 describe('DatabaseInterfaces - MongoDB - Find - constructor', function() {
   let helper;
+  const mockScenarioId = new ObjectID();
   const inputJOB = {
     nature: {
       type: 'dbinterface',
@@ -41,7 +43,7 @@ describe('DatabaseInterfaces - MongoDB - Find - constructor', function() {
         },
       },
       query: {
-        foo: 'bar',
+        scenarioId: mockScenarioId.toString(),
       },
     },
   };
@@ -64,7 +66,9 @@ describe('DatabaseInterfaces - MongoDB - Find - constructor', function() {
           collection: inputJOB.payload.type,
           action: 'find',
           args: [
-            inputJOB.payload.query,
+            {
+              scenarioId: mockScenarioId,
+            },
             {
               limit: inputJOB.payload.filter.limit,
               skip: inputJOB.payload.filter.offset,
@@ -76,7 +80,7 @@ describe('DatabaseInterfaces - MongoDB - Find - constructor', function() {
       mockOutputContext = new Context(DEFAULTCEMENTHELPER, outputJOB);
       mockOutputContext.publish = sinon.stub();
       sinon.stub(helper.cementHelper, 'createContext')
-        .withArgs(outputJOB)
+        // .withArgs(outputJOB)
         .returns(mockOutputContext);
       helper._process(mockInputContext);
     });
@@ -93,13 +97,13 @@ describe('DatabaseInterfaces - MongoDB - Find - constructor', function() {
         it('should emit done event on inputContext', function() {
           // mongodoc
           const doc = {
-            foo: 'bar',
+            scenarioId: mockScenarioId,
           };
           const response = [doc];
 
           mockOutputContext.emit('done', 'dblayer', response);
           sinon.assert.calledWith(mockInputContext.emit,
-            'done', helper.cementHelper.brickName, response);
+            'done', helper.cementHelper.brickName);
         });
       });
     });
