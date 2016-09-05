@@ -74,10 +74,10 @@ describe('BusinessLogics - Status - Create - _process', function() {
       updateExecutionStatusesJOB = {
         nature: {
           type: 'execution',
-          quality: 'updatestatuses',
+          quality: 'updatestatusescount',
         },
         payload: {
-          executionid: mockStatus.executionId,
+          executionId: mockStatus.executionId,
         },
       };
       updateExecutionStatusesContext = new Context(DEFAULTCEMENTHELPER, updateExecutionStatusesJOB);

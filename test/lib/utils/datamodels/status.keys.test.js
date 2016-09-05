@@ -21,7 +21,7 @@ describe('BusinessLogics - Status - Model - Status - Keys', function() {
         testId: { type: 'identifier' },
         status: { type: 'string' },
         timestamp: { type: 'number', optional: true },
-        parent: { type: 'identifier', optional: true },
+        parentId: { type: 'identifier', optional: true },
         ip: { type: 'string', optional: true },
         hostname: { type: 'string', optional: true },
         type: { type: 'string', optional: true },

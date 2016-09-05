@@ -4,6 +4,7 @@ const appRootPath = require('app-root-path').path;
 const chai = require('chai');
 const expect = chai.expect;
 const nodepath = require('path');
+const _ = require('lodash');
 const ObjectID = require('bson').ObjectID;
 
 const Model = require(nodepath.join(appRootPath,
@@ -49,6 +50,14 @@ describe('DatabaseInterfaces - MongoDB - Schema - Status', function() {
       expect(object.scenarioId).to.equal(mongodbDoc.scenarioId.toString());
       expect(object.executionId).to.equal(mongodbDoc.executionId.toString());
       expect(object.timestamp).to.equal(mongodbDoc.timestamp);
+    });
+  });
+
+  describe('dataQueryKeys', function() {
+    it('should return Execution QueryKeys', function() {
+      const modelQueryKeys = Model.queryKeys();
+      const schemaQueryKeys = Schema.dataQueryKeys();
+      expect(_.isEqual(modelQueryKeys, schemaQueryKeys)).to.be.equal(true);
     });
   });
 });

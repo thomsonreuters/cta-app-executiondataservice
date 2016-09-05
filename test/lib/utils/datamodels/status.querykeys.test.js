@@ -20,7 +20,7 @@ describe('BusinessLogics - Status - Model - Status - QueryKeys', function() {
         testsuiteId: { type: 'identifier', optional: true },
         testId: { type: 'identifier', optional: true },
         timestamp: { type: 'number', optional: true },
-        parent: { type: 'identifier', optional: true },
+        parentId: { type: 'identifier', optional: true },
         status: { type: 'string', optional: true },
         ip: { type: 'string', optional: true },
         hostname: { type: 'string', optional: true },
