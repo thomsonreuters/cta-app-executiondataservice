@@ -26,7 +26,7 @@ const DEFAULTCEMENTHELPER = {
   },
 };
 
-describe('DatabaseInterfaces - MongoDB - constructor', function() {
+describe('DatabaseInterfaces - MongoDB - Constructor', function() {
   context('when everything ok', function() {
     let Interface;
     let instance;

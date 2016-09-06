@@ -9,7 +9,7 @@ const _ = require('lodash');
 const Model = require(nodepath.join(appRootPath,
   '/lib/utils/datamodels', 'status.js'));
 
-describe('BusinessLogics - Status - Model - Status - Keys', function() {
+describe('Data Model - Status - Keys', function() {
   context('when everything ok', function() {
     it('should return properties', function() {
       const keys = {

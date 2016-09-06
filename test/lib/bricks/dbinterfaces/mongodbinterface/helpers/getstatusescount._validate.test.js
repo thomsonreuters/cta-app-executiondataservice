@@ -26,7 +26,7 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - Find - _validate', function() {
+describe('DatabaseInterfaces - MongoDB - GetStatusesCount - _validate', function() {
   let helper;
   const mockExecutionId = new ObjectID();
   const DEFAULTINPUTJOB = {

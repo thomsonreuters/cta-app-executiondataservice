@@ -27,7 +27,7 @@ const DEFAULTCEMENTHELPER = {
   },
 };
 
-describe('BusinessLogics - Status - constructor', function() {
+describe('BusinessLogics - Status - Constructor', function() {
   context('when everything ok', function() {
     let Logic;
     let logic;
