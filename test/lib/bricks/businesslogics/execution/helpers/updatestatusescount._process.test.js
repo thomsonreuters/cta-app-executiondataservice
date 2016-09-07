@@ -67,7 +67,7 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _process', function
       payload: {
         type: 'execution',
         id: DEFAULTINPUTJOB.payload.executionid,
-        content: DATA.statusesCount,
+        content: DATA.updatedExecutionFields,
       },
     };
     const updateExecutionContext = new Context(DEFAULTCEMENTHELPER, updateExecutionJob);
@@ -77,6 +77,7 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _process', function
       sinon.stub(mockInputContext, 'emit');
 
       helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+      sinon.stub(helper, '_getExecutionUpdatedFields').returns(DATA.updatedExecutionFields);
       sinon.stub(helper.cementHelper, 'createContext')
         .onFirstCall()
         .returns(findExecutionContext)
@@ -89,6 +90,7 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _process', function
     after(function() {
       requireSubvert.cleanUp();
       helper.cementHelper.createContext.restore();
+      helper._getExecutionUpdatedFields.restore();
     });
 
     it('should send a new Context find statuses', function() {

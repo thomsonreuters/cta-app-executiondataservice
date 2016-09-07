@@ -78,9 +78,32 @@ const statusesCount = {
   inconclusive: 0,
   ok: 0,
 };
+const updatedExecutionFields = {
+  failed: 0,
+  partial: 0,
+  inconclusive: 0,
+  ok: 0,
+  nbstatuses: 0,
+  updatetimestamp: Date.now,
+  status: '',
+};
 statuses.forEach(function(status) {
   statusesCount[status.status]++;
+  updatedExecutionFields[status.status]++;
+  updatedExecutionFields.nbstatuses++;
 });
+if (updatedExecutionFields.failed > 0) {
+  updatedExecutionFields.status = 'failed';
+} else if (updatedExecutionFields.partial > 0) {
+  updatedExecutionFields.status = 'partial';
+} else if (updatedExecutionFields.inconclusive > 0) {
+  updatedExecutionFields.status = 'inconclusive';
+} else if (updatedExecutionFields.ok > 0) {
+  updatedExecutionFields.status = 'ok';
+} else {
+  updatedExecutionFields.status = 'failed';
+}
+
 const statusesCountProjection = [
   {
     status: 'failed',
@@ -105,5 +128,6 @@ module.exports = {
   execution: execution,
   statuses: statuses,
   statusesCount: statusesCount,
+  updatedExecutionFields: updatedExecutionFields,
   statusesCountProjection: statusesCountProjection,
 };
