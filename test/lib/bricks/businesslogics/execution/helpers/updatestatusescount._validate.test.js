@@ -6,6 +6,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const nodepath = require('path');
+const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
@@ -42,6 +43,28 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _validate', functio
     });
     it('should resolve', function() {
       return expect(promise).to.eventually.have.property('ok', 1);
+    });
+  });
+
+  context('when payload.id is not a String', function() {
+    const job = _.cloneDeep(DEFAULTINPUTJOB);
+    job.payload.executionId = {};
+    const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
+    it('should reject', function() {
+      const validatePromise = helper._validate(mockInputContext);
+      return expect(validatePromise).to.eventually
+        .be.rejectedWith(Error, 'missing/incorrect \'executionId\' identifier in job payload');
+    });
+  });
+
+  context('when payload.id is not a String value of ObjectID', function() {
+    const job = _.cloneDeep(DEFAULTINPUTJOB);
+    job.payload.executionId = 'sdfsdf';
+    const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
+    it('should reject', function() {
+      const validatePromise = helper._validate(mockInputContext);
+      return expect(validatePromise).to.eventually
+        .be.rejectedWith(Error, 'missing/incorrect \'executionId\' identifier in job payload');
     });
   });
 });

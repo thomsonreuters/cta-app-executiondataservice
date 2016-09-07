@@ -98,34 +98,95 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _process', function
       sinon.assert.called(findExecutionContext.publish);
     });
 
-    context('when outputContext emits done event', function() {
-      it('should emit done event on inputContext', function() {
-        const execution = DATA.execution;
-        const statusesCount = DATA.statusesCountProjection;
-        const updatedExecution = _.cloneDeep(DATA.execution);
-        findExecutionContext.emit('done', 'dblayer', execution);
-        findStatusesContext.emit('done', 'dblayer', statusesCount);
-        updateExecutionContext.emit('done', 'dblayer', updatedExecution);
-        sinon.assert.calledWith(mockInputContext.emit,
-          'done', helper.cementHelper.brickName, updatedExecution);
+    context('when findExecutionContext emits done event', function() {
+      before(function() {
+        findExecutionContext.emit('done', 'dblayer', DATA.execution);
+      });
+      context('when findStatusesContext emits done event', function() {
+        before(function() {
+          findStatusesContext.emit('done', 'dblayer', DATA.statusesCountProjection);
+        });
+        context('when updateExecutionContext emits done event', function() {
+          const updatedExecution = _.cloneDeep(DATA.execution);
+          before(function() {
+            updateExecutionContext.emit('done', 'dblayer', updatedExecution);
+          });
+
+          it('should emit done event on inputContext', function() {
+            sinon.assert.calledWith(mockInputContext.emit,
+              'done', helper.cementHelper.brickName, updatedExecution);
+          });
+        });
+
+        context('when updateExecutionContext emits reject event', function() {
+          const error = new Error('mockError');
+          const brickName = 'dbinterface';
+          before(function() {
+            updateExecutionContext.emit('reject', brickName, error);
+          });
+          it('should emit reject event on inputContext', function() {
+            sinon.assert.calledWith(mockInputContext.emit,
+              'reject', brickName, error);
+          });
+        });
+
+        context('when updateExecutionContext emits error event', function() {
+          const error = new Error('mockError');
+          const brickName = 'dbinterface';
+          before(function() {
+            updateExecutionContext.emit('error', brickName, error);
+          });
+          it('should emit error event on inputContext', function() {
+            sinon.assert.calledWith(mockInputContext.emit,
+              'error', brickName, error);
+          });
+        });
+      });
+
+      context('when findStatusesContext emits reject event', function() {
+        const error = new Error('mockError');
+        const brickName = 'dbinterface';
+        before(function() {
+          findStatusesContext.emit('reject', brickName, error);
+        });
+        it('should emit reject event on inputContext', function() {
+          sinon.assert.calledWith(mockInputContext.emit,
+            'reject', brickName, error);
+        });
+      });
+
+      context('when findStatusesContext emits error event', function() {
+        const error = new Error('mockError');
+        const brickName = 'dbinterface';
+        before(function() {
+          findStatusesContext.emit('error', brickName, error);
+        });
+        it('should emit error event on inputContext', function() {
+          sinon.assert.calledWith(mockInputContext.emit,
+            'error', brickName, error);
+        });
       });
     });
 
-    context.skip('when outputContext emits reject event', function() {
+    context('when findExecutionContext emits reject event', function() {
+      const error = new Error('mockError');
+      const brickName = 'dbinterface';
+      before(function() {
+        findExecutionContext.emit('reject', brickName, error);
+      });
       it('should emit reject event on inputContext', function() {
-        const error = new Error('mockError');
-        const brickName = 'dbinterface';
-        findStatusesContext.emit('reject', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'reject', brickName, error);
       });
     });
 
-    context.skip('when outputContext emits error event', function() {
+    context('when findExecutionContext emits error event', function() {
+      const error = new Error('mockError');
+      const brickName = 'dbinterface';
+      before(function() {
+        findExecutionContext.emit('error', brickName, error);
+      });
       it('should emit error event on inputContext', function() {
-        const error = new Error('mockError');
-        const brickName = 'dbinterface';
-        findStatusesContext.emit('error', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'error', brickName, error);
       });
