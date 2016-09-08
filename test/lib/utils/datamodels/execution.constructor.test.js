@@ -21,12 +21,12 @@ describe('Data Model - Execution', function() {
     expect(object).to.have.property('state', data.state);
     expect(object).to.have.property('cancel', data.cancel);
     expect(object).to.have.property('status', data.status);
-    expect(object).to.have.property('ok', data.ok);
-    expect(object).to.have.property('partial', data.partial);
-    expect(object).to.have.property('inconclusive', data.inconclusive);
-    expect(object).to.have.property('failed', data.failed);
-    expect(object).to.have.property('nbstatuses', data.nbstatuses);
-    expect(object).to.have.property('done', data.done);
+    expect(object).to.have.property('ok', data.ok || 0);
+    expect(object).to.have.property('partial', data.partial || 0);
+    expect(object).to.have.property('inconclusive', data.inconclusive || 0);
+    expect(object).to.have.property('failed', data.failed || 0);
+    expect(object).to.have.property('nbstatuses', data.nbstatuses || 0);
+    expect(object).to.have.property('done', data.done || false);
     expect(object).to.have.property('instances', data.instances);
   });
 });

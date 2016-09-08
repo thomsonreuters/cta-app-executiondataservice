@@ -24,7 +24,7 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - GetStatusesCount - constructor', function() {
+describe('DatabaseInterfaces - MongoDB - GetStatusesCount - _process', function() {
   let helper;
   const mockExecutionId = new ObjectID();
   const inputJOB = {
@@ -43,8 +43,10 @@ describe('DatabaseInterfaces - MongoDB - GetStatusesCount - constructor', functi
     helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
   });
   context('when everything ok', function() {
-    let mockOutputContext;
-    let outputJOB;
+    let aggregateContext;
+    let aggregateJob;
+    let countContext;
+    let countJob;
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
@@ -80,7 +82,7 @@ describe('DatabaseInterfaces - MongoDB - GetStatusesCount - constructor', functi
         },
       ];
 
-      outputJOB = {
+      aggregateJob = {
         nature: {
           type: 'database',
           quality: 'query',
@@ -93,53 +95,107 @@ describe('DatabaseInterfaces - MongoDB - GetStatusesCount - constructor', functi
           ],
         },
       };
-      mockOutputContext = new Context(DEFAULTCEMENTHELPER, outputJOB);
-      mockOutputContext.publish = sinon.stub();
+      aggregateContext = new Context(DEFAULTCEMENTHELPER, aggregateJob);
+      aggregateContext.publish = sinon.stub();
+
+      countJob = {
+        nature: {
+          type: 'database',
+          quality: 'query',
+        },
+        payload: {
+          collection: mongoDbCollection,
+          action: 'count',
+          args: [
+            mongoDbMatch,
+          ],
+        },
+      };
+      countContext = new Context(DEFAULTCEMENTHELPER, countJob);
+      countContext.publish = sinon.stub();
+
       sinon.stub(helper.cementHelper, 'createContext')
         // .withArgs(outputJOB)
-        .returns(mockOutputContext);
+        .onFirstCall()
+        .returns(aggregateContext)
+        .onSecondCall()
+        .returns(countContext);
       helper._process(mockInputContext);
     });
     after(function() {
       helper.cementHelper.createContext.restore();
     });
     it('should send a new Context', function() {
-      sinon.assert.calledWith(helper.cementHelper.createContext, outputJOB);
-      sinon.assert.called(mockOutputContext.publish);
+      sinon.assert.calledWith(helper.cementHelper.createContext, aggregateJob);
+      sinon.assert.called(aggregateContext.publish);
     });
 
-    context('when outputContext emits done event', function() {
-      context('when response Array is not empty', function() {
-        it('should emit done event on inputContext', function() {
-          // mongodoc
-          const doc = {
-            count: 10,
-            status: 'failed',
-          };
-          const response = [doc];
+    context('when aggregateContext emits done event', function() {
+      const doc = {
+        count: 10,
+        status: 'failed',
+      };
+      const aggregateResponse = [doc];
+      before(function() {
+        aggregateContext.emit('done', 'dblayer', aggregateResponse);
+      });
 
-          mockOutputContext.emit('done', 'dblayer', response);
+      it('should send a findStatuses Context', function() {
+        sinon.assert.called(countContext.publish);
+      });
+
+      context('when countContext emits done event', function() {
+        const totalCount = 20;
+        before(function() {
+          countContext.emit('done', 'dblayer', totalCount);
+        });
+
+        it('shoud emit done event on inputContext', function() {
+          const response = {
+            statusesCount: aggregateResponse,
+            totalCount: totalCount,
+          };
           sinon.assert.calledWith(mockInputContext.emit,
-            'done', helper.cementHelper.brickName);
+            'done', helper.cementHelper.brickName, response);
+        });
+      });
+
+      context('when countContext emits reject event', function() {
+        it('should emit reject event on inputContext', function() {
+          const error = new Error('mockError');
+          const brickName = 'dblayer';
+          countContext.emit('reject', brickName, error);
+          sinon.assert.calledWith(mockInputContext.emit,
+            'reject', brickName, error);
+        });
+      });
+
+      context('when countContext emits error event', function() {
+        it('should emit error event on inputContext', function() {
+          const error = new Error('mockError');
+          const brickName = 'dblayer';
+          countContext.emit('error', brickName, error);
+          sinon.assert.calledWith(mockInputContext.emit,
+            'error', brickName, error);
         });
       });
     });
 
-    context('when outputContext emits reject event', function() {
+    context('when aggregateContext emits reject event', function() {
       it('should emit reject event on inputContext', function() {
         const error = new Error('mockError');
         const brickName = 'dblayer';
-        mockOutputContext.emit('reject', brickName, error);
+        aggregateContext.emit('reject', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'reject', brickName, error);
       });
     });
 
-    context('when outputContext emits error event', function() {
+    context('when aggregateContext emits error event', function() {
       it('should emit error event on inputContext', function() {
         const error = new Error('mockError');
         const brickName = 'dblayer';
-        mockOutputContext.emit('error', brickName, error);
+        aggregateContext.emit('error', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'error', brickName, error);
       });

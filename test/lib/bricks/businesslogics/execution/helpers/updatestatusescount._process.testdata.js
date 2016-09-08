@@ -9,6 +9,7 @@ const Status = require(nodepath.join(appRootPath,
 
 const execution = new Execution({
   id: (new ObjectID()).toString(),
+  nbstatuses: 3,
 });
 const DEFAULTINPUTJOB = {
   nature: {
@@ -104,24 +105,28 @@ if (updatedExecutionFields.failed > 0) {
   updatedExecutionFields.status = 'failed';
 }
 
-const statusesCountProjection = [
-  {
-    status: 'failed',
-    count: statusesCount.failed,
-  },
-  {
-    status: 'partial',
-    count: statusesCount.partial,
-  },
-  {
-    status: 'inconclusive',
-    count: statusesCount.inconclusive,
-  },
-  {
-    status: 'ok',
-    count: statusesCount.ok,
-  },
-];
+const response = {
+  statusesCount: [
+    {
+      status: 'failed',
+      count: statusesCount.failed,
+    },
+    {
+      status: 'partial',
+      count: statusesCount.partial,
+    },
+    {
+      status: 'inconclusive',
+      count: statusesCount.inconclusive,
+    },
+    {
+      status: 'ok',
+      count: statusesCount.ok,
+    },
+  ],
+  totalCount: statuses.length,
+};
+
 
 module.exports = {
   job: DEFAULTINPUTJOB,
@@ -129,5 +134,5 @@ module.exports = {
   statuses: statuses,
   statusesCount: statusesCount,
   updatedExecutionFields: updatedExecutionFields,
-  statusesCountProjection: statusesCountProjection,
+  response: response,
 };

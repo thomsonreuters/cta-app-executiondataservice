@@ -25,7 +25,7 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - DeleteOne - constructor', function() {
+describe('DatabaseInterfaces - MongoDB - DeleteOne - _process', function() {
   let helper;
   const mockId = new ObjectID();
   const inputJOB = {

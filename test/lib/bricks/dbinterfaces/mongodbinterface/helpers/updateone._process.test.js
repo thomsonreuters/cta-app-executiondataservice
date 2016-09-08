@@ -25,7 +25,7 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
+describe('DatabaseInterfaces - MongoDB - UpdateOne - _process', function() {
   let helper;
   const mockId = new ObjectID();
   const mockScenarioId = new ObjectID();

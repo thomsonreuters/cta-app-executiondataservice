@@ -37,27 +37,30 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _getExecutionUpdate
     Date.now.restore();
   });
   context('when execution status should be failed', function() {
-    const statusesCount = [
-      {
-        status: 'failed',
-        count: 1,
-      },
-      {
-        status: 'partial',
-        count: 1,
-      },
-      {
-        status: 'inconclusive',
-        count: 1,
-      },
-      {
-        status: 'ok',
-        count: 1,
-      },
-    ];
+    const counts = {
+      statusesCount: [
+        {
+          status: 'failed',
+          count: 1,
+        },
+        {
+          status: 'partial',
+          count: 1,
+        },
+        {
+          status: 'inconclusive',
+          count: 1,
+        },
+        {
+          status: 'ok',
+          count: 1,
+        },
+      ],
+      totalCount: 4,
+    };
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(statusesCount);
+      result = helper._getExecutionUpdatedFields(counts);
     });
 
     it('should return execution update fields', function() {
@@ -71,27 +74,30 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _getExecutionUpdate
     });
   });
   context('when execution status should be partial', function() {
-    const statusesCount = [
-      {
-        status: 'failed',
-        count: 0,
-      },
-      {
-        status: 'partial',
-        count: 1,
-      },
-      {
-        status: 'inconclusive',
-        count: 1,
-      },
-      {
-        status: 'ok',
-        count: 1,
-      },
-    ];
+    const counts = {
+      statusesCount: [
+        {
+          status: 'failed',
+          count: 0,
+        },
+        {
+          status: 'partial',
+          count: 1,
+        },
+        {
+          status: 'inconclusive',
+          count: 1,
+        },
+        {
+          status: 'ok',
+          count: 1,
+        },
+      ],
+      totalCount: 3,
+    };
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(statusesCount);
+      result = helper._getExecutionUpdatedFields(counts);
     });
 
     it('should return execution update fields', function() {
@@ -105,27 +111,30 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _getExecutionUpdate
     });
   });
   context('when execution status should be inconclusive', function() {
-    const statusesCount = [
-      {
-        status: 'failed',
-        count: 0,
-      },
-      {
-        status: 'partial',
-        count: 0,
-      },
-      {
-        status: 'inconclusive',
-        count: 1,
-      },
-      {
-        status: 'ok',
-        count: 1,
-      },
-    ];
+    const counts = {
+      statusesCount: [
+        {
+          status: 'failed',
+          count: 0,
+        },
+        {
+          status: 'partial',
+          count: 0,
+        },
+        {
+          status: 'inconclusive',
+          count: 1,
+        },
+        {
+          status: 'ok',
+          count: 1,
+        },
+      ],
+      totalCount: 2,
+    };
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(statusesCount);
+      result = helper._getExecutionUpdatedFields(counts);
     });
 
     it('should return execution update fields', function() {
@@ -139,27 +148,30 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _getExecutionUpdate
     });
   });
   context('when execution status should be ok', function() {
-    const statusesCount = [
-      {
-        status: 'failed',
-        count: 0,
-      },
-      {
-        status: 'partial',
-        count: 0,
-      },
-      {
-        status: 'inconclusive',
-        count: 0,
-      },
-      {
-        status: 'ok',
-        count: 1,
-      },
-    ];
+    const counts = {
+      statusesCount: [
+        {
+          status: 'failed',
+          count: 0,
+        },
+        {
+          status: 'partial',
+          count: 0,
+        },
+        {
+          status: 'inconclusive',
+          count: 0,
+        },
+        {
+          status: 'ok',
+          count: 1,
+        },
+      ],
+      totalCount: 1,
+    };
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(statusesCount);
+      result = helper._getExecutionUpdatedFields(counts);
     });
 
     it('should return execution update fields', function() {
