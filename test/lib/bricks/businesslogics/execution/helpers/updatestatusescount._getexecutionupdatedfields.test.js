@@ -26,7 +26,7 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('BusinessLogics - Execution - UpdateStatusesCount - _getExecutionUpdatedFields', function() { // eslint-disable-line max-len
+describe('BusinessLogics - Execution - UpdateStatus - _getExecutionUpdatedFields', function() { // eslint-disable-line max-len
   let helper;
   const now = Date.now();
   before(function() {
@@ -38,24 +38,12 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _getExecutionUpdate
   });
   context('when execution status should be failed', function() {
     const counts = {
-      statusesCount: [
-        {
-          status: 'failed',
-          count: 1,
-        },
-        {
-          status: 'partial',
-          count: 1,
-        },
-        {
-          status: 'inconclusive',
-          count: 1,
-        },
-        {
-          status: 'ok',
-          count: 1,
-        },
-      ],
+      statusesCount: {
+        failed: 1,
+        partial: 1,
+        inconclusive: 1,
+        ok: 1,
+      },
       totalCount: 4,
     };
     let result;
@@ -75,24 +63,12 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _getExecutionUpdate
   });
   context('when execution status should be partial', function() {
     const counts = {
-      statusesCount: [
-        {
-          status: 'failed',
-          count: 0,
-        },
-        {
-          status: 'partial',
-          count: 1,
-        },
-        {
-          status: 'inconclusive',
-          count: 1,
-        },
-        {
-          status: 'ok',
-          count: 1,
-        },
-      ],
+      statusesCount: {
+        failed: 0,
+        partial: 1,
+        inconclusive: 1,
+        ok: 1,
+      },
       totalCount: 3,
     };
     let result;
@@ -112,24 +88,12 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _getExecutionUpdate
   });
   context('when execution status should be inconclusive', function() {
     const counts = {
-      statusesCount: [
-        {
-          status: 'failed',
-          count: 0,
-        },
-        {
-          status: 'partial',
-          count: 0,
-        },
-        {
-          status: 'inconclusive',
-          count: 1,
-        },
-        {
-          status: 'ok',
-          count: 1,
-        },
-      ],
+      statusesCount: {
+        failed: 0,
+        partial: 0,
+        inconclusive: 1,
+        ok: 1,
+      },
       totalCount: 2,
     };
     let result;
@@ -149,24 +113,12 @@ describe('BusinessLogics - Execution - UpdateStatusesCount - _getExecutionUpdate
   });
   context('when execution status should be ok', function() {
     const counts = {
-      statusesCount: [
-        {
-          status: 'failed',
-          count: 0,
-        },
-        {
-          status: 'partial',
-          count: 0,
-        },
-        {
-          status: 'inconclusive',
-          count: 0,
-        },
-        {
-          status: 'ok',
-          count: 1,
-        },
-      ],
+      statusesCount: {
+        failed: 0,
+        partial: 0,
+        inconclusive: 0,
+        ok: 1,
+      },
       totalCount: 1,
     };
     let result;

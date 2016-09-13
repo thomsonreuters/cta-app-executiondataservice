@@ -5,8 +5,9 @@ const data = {
   scenarioId: (new ObjectID()).toString(),
   // configuration: (new ObjectID()).toString(),
   userId: (new ObjectID()).toString(),
-  starttimestamp: new Date(),
-  updatetimestamp: new Date(),
+  starttimestamp: Date.now,
+  updatetimestamp: Date.now,
+  commandcount: 1,
   state: 'pending', // pending,running,acked, cancelled, finished
   // cancel: {
   //   mode: String,

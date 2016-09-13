@@ -7,27 +7,18 @@ const nodepath = require('path');
 const _ = require('lodash');
 
 const Model = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels', 'status.js'));
+  '/lib/utils/datamodels', 'state.js'));
 
-describe('Data Model - Status - Keys', function() {
+describe('Data Model - State - Keys', function() {
   context('when everything ok', function() {
     it('should return properties', function() {
       const keys = {
         id: { type: 'identifier' },
         executionId: { type: 'identifier' },
-        scenarioId: { type: 'identifier' },
-        configurationId: { type: 'identifier' },
-        testsuiteId: { type: 'identifier' },
-        testId: { type: 'identifier' },
         status: { type: 'string' },
         timestamp: { type: 'number', optional: true },
-        parentId: { type: 'identifier', optional: true },
         ip: { type: 'string', optional: true },
         hostname: { type: 'string', optional: true },
-        type: { type: 'string', optional: true },
-        name: { type: 'string', optional: true },
-        description: { type: 'string', optional: true },
-        custom: { type: 'object', optional: true },
       };
       expect(_.isEqual(Model.keys(), keys)).to.be.equal(true);
     });

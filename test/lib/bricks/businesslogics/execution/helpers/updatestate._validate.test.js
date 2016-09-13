@@ -11,7 +11,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers', 'updatestatusescount.js'));
+  '/lib/bricks/businesslogics/execution/helpers', 'updatestate.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -25,9 +25,9 @@ const DEFAULTCEMENTHELPER = {
   },
   createContext: function() {},
 };
-const DATA = require('./updatestatusescount._process.testdata.js');
+const DATA = require('./updatestate._process.testdata.js');
 
-describe('BusinessLogics - Execution - UpdateStatus - _validate', function() {
+describe('BusinessLogics - Execution - UpdateState - _validate', function() {
   let helper;
   const DEFAULTINPUTJOB = DATA.job;
   before(function() {

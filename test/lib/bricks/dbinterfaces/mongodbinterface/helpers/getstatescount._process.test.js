@@ -8,7 +8,7 @@ const nodepath = require('path');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const pathToHelper = nodepath.join(appRootPath,
-  '/lib/bricks/dbinterfaces/mongodbinterface/helpers/', 'getstatusescount.js');
+  '/lib/bricks/dbinterfaces/mongodbinterface/helpers/', 'getstatescount.js');
 const Helper = require(pathToHelper);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
@@ -24,15 +24,22 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - GetStatusesCount - _process', function() {
+describe('DatabaseInterfaces - MongoDB - GetStatesCount - _process', function() {
   let helper;
   const mockExecutionId = new ObjectID();
   const inputJOB = {
     nature: {
       type: 'dbinterface',
-      quality: 'getstatusescount',
+      quality: 'getstatescount',
     },
     payload: {
+      filter: {
+        limit: 1,
+        offset: 0,
+        sort: {
+          timestamp: -1,
+        },
+      },
       query: {
         executionId: mockExecutionId.toString(),
       },
@@ -45,12 +52,10 @@ describe('DatabaseInterfaces - MongoDB - GetStatusesCount - _process', function(
   context('when everything ok', function() {
     let aggregateContext;
     let aggregateJob;
-    let countContext;
-    let countJob;
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
-      const mongoDbCollection = 'status';
+      const mongoDbCollection = 'state';
       const mongoDbMatch = {
         executionId: mockExecutionId,
       };
@@ -59,17 +64,17 @@ describe('DatabaseInterfaces - MongoDB - GetStatusesCount - _process', function(
           $match: mongoDbMatch,
         },
         {
-          $sort: { timestamp: -1 },
+          $sort: inputJOB.payload.filter.sort,
+        },
+        {
+          $skip: inputJOB.payload.filter.offset,
+        },
+        {
+          $limit: inputJOB.payload.filter.limit,
         },
         {
           $group: {
-            _id: '$testId',
-            doc: { $first: '$$ROOT' },
-          },
-        },
-        {
-          $group: {
-            _id: '$doc.status',
+            _id: '$status',
             count: { $sum: 1 },
           },
         },
@@ -98,28 +103,10 @@ describe('DatabaseInterfaces - MongoDB - GetStatusesCount - _process', function(
       aggregateContext = new Context(DEFAULTCEMENTHELPER, aggregateJob);
       aggregateContext.publish = sinon.stub();
 
-      countJob = {
-        nature: {
-          type: 'database',
-          quality: 'query',
-        },
-        payload: {
-          collection: mongoDbCollection,
-          action: 'count',
-          args: [
-            mongoDbMatch,
-          ],
-        },
-      };
-      countContext = new Context(DEFAULTCEMENTHELPER, countJob);
-      countContext.publish = sinon.stub();
-
       sinon.stub(helper.cementHelper, 'createContext')
         // .withArgs(outputJOB)
         .onFirstCall()
-        .returns(aggregateContext)
-        .onSecondCall()
-        .returns(countContext);
+        .returns(aggregateContext);
       helper._process(mockInputContext);
     });
     after(function() {
@@ -139,54 +126,19 @@ describe('DatabaseInterfaces - MongoDB - GetStatusesCount - _process', function(
       before(function() {
         aggregateContext.emit('done', 'dblayer', aggregateResponse);
       });
-
-      it('should send a findStatuses Context', function() {
-        sinon.assert.called(countContext.publish);
-      });
-
-      context('when countContext emits done event', function() {
-        const totalCount = 20;
-        before(function() {
-          countContext.emit('done', 'dblayer', totalCount);
+      it('shoud emit done event on inputContext', function() {
+        const states = {
+          pending: 0,
+          running: 0,
+          finished: 0,
+          acked: 0,
+        };
+        aggregateResponse.forEach(function(state) {
+          states[state.status] = state.count;
         });
-
-        it('shoud emit done event on inputContext', function() {
-          const statuses = {
-            ok: 0,
-            failed: 0,
-            partial: 0,
-            inconclusive: 0,
-          };
-          aggregateResponse.forEach(function(status) {
-            statuses[status.status] = status.count;
-          });
-          const response = {
-            statusesCount: statuses,
-            totalCount: totalCount,
-          };
-          sinon.assert.calledWith(mockInputContext.emit,
-            'done', helper.cementHelper.brickName, response);
-        });
-      });
-
-      context('when countContext emits reject event', function() {
-        it('should emit reject event on inputContext', function() {
-          const error = new Error('mockError');
-          const brickName = 'dblayer';
-          countContext.emit('reject', brickName, error);
-          sinon.assert.calledWith(mockInputContext.emit,
-            'reject', brickName, error);
-        });
-      });
-
-      context('when countContext emits error event', function() {
-        it('should emit error event on inputContext', function() {
-          const error = new Error('mockError');
-          const brickName = 'dblayer';
-          countContext.emit('error', brickName, error);
-          sinon.assert.calledWith(mockInputContext.emit,
-            'error', brickName, error);
-        });
+        const response = states;
+        sinon.assert.calledWith(mockInputContext.emit,
+          'done', helper.cementHelper.brickName, response);
       });
     });
 

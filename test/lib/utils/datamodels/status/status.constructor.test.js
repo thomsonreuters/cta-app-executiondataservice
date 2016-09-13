@@ -15,12 +15,12 @@ describe('Data Model - Status', function() {
     expect(object).to.be.an.instanceof(Model);
     expect(object).to.have.property('id');
     expect(object).to.have.property('executionId', data.executionId);
-    expect(object).to.have.property('scenarioId', data.scenarioId);
-    expect(object).to.have.property('configurationId', data.configurationId);
-    expect(object).to.have.property('testsuiteId', data.testsuiteId);
+    // expect(object).to.have.property('scenarioId', data.scenarioId);
+    // expect(object).to.have.property('configurationId', data.configurationId);
+    // expect(object).to.have.property('testsuiteId', data.testsuiteId);
     expect(object).to.have.property('testId', data.testId);
     expect(object).to.have.property('timestamp', data.timestamp);
-    expect(object).to.have.property('parent', data.parent);
+    // expect(object).to.have.property('parentId', data.parentId);
     expect(object).to.have.property('status', data.status);
     expect(object).to.have.property('ip', data.ip);
     expect(object).to.have.property('hostname', data.hostname);

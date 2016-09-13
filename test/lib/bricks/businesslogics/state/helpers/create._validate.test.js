@@ -11,7 +11,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers', 'updatestatusescount.js'));
+  '/lib/bricks/businesslogics/state/helpers', 'create.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -25,11 +25,17 @@ const DEFAULTCEMENTHELPER = {
   },
   createContext: function() {},
 };
-const DATA = require('./updatestatusescount._process.testdata.js');
+const SAMPLE = require('./create.sample.testdata.js');
 
-describe('BusinessLogics - Execution - UpdateStatus - _validate', function() {
+describe('BusinessLogics - State - Create - _validate', function() {
   let helper;
-  const DEFAULTINPUTJOB = DATA.job;
+  const DEFAULTINPUTJOB = {
+    nature: {
+      type: 'state',
+      quality: Helper.name.toLowerCase(),
+    },
+    payload: SAMPLE,
+  };
   before(function() {
     helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
   });
@@ -46,25 +52,23 @@ describe('BusinessLogics - Execution - UpdateStatus - _validate', function() {
     });
   });
 
-  context('when payload.id is not a String', function() {
+  context('when payload is not an object', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.executionId = {};
+    job.payload = 'not-an-object';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
-      return expect(validatePromise).to.eventually
-        .be.rejectedWith(Error, 'missing/incorrect \'executionId\' identifier in job payload');
+      return expect(validatePromise).to.eventually.be.rejected;
     });
   });
 
-  context('when payload.id is not a String value of ObjectID', function() {
+  context('when payload has an invalid parameter', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.executionId = 'sdfsdf';
+    job.payload.id = 'not-an-objectid';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
-      return expect(validatePromise).to.eventually
-        .be.rejectedWith(Error, 'missing/incorrect \'executionId\' identifier in job payload');
+      return expect(validatePromise).to.eventually.be.rejected;
     });
   });
 });

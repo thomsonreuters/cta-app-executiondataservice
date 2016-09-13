@@ -106,24 +106,7 @@ if (updatedExecutionFields.failed > 0) {
 }
 
 const response = {
-  statusesCount: [
-    {
-      status: 'failed',
-      count: statusesCount.failed,
-    },
-    {
-      status: 'partial',
-      count: statusesCount.partial,
-    },
-    {
-      status: 'inconclusive',
-      count: statusesCount.inconclusive,
-    },
-    {
-      status: 'ok',
-      count: statusesCount.ok,
-    },
-  ],
+  statusesCount: statusesCount,
   totalCount: statuses.length,
 };
 

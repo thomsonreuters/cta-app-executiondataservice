@@ -9,7 +9,7 @@ const Logger = require('cta-logger');
 const Base = require(nodepath.join(appRootPath,
   '/lib/bricks/businesslogics/base/', 'basehelper.js'));
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'updatestatusescount.js'));
+  '/lib/bricks/businesslogics/state/helpers/', 'create.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -23,7 +23,7 @@ const DEFAULTCEMENTHELPER = {
   },
 };
 
-describe('BusinessLogics - Execution - UpdateStatus - constructor', function() {
+describe('BusinessLogics - State - Create - constructor', function() {
   context('when everything ok', function() {
     let helper;
     before(function() {

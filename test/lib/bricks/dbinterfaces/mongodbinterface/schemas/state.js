@@ -8,46 +8,41 @@ const _ = require('lodash');
 const ObjectID = require('bson').ObjectID;
 
 const Model = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels', 'status.js'));
+  '/lib/utils/datamodels', 'state.js'));
 const Schema = require(nodepath.join(appRootPath,
-  '/lib/bricks/dbinterfaces/mongodbinterface/schemas', 'status.js'));
+  '/lib/bricks/dbinterfaces/mongodbinterface/schemas', 'state.js'));
 
 
-describe('DatabaseInterfaces - MongoDB - Schema - Status', function() {
+describe('DatabaseInterfaces - MongoDB - Schema - State', function() {
   describe('constructor', function() {
     const data = {
       id: (new ObjectID()).toString(),
-      testId: (new ObjectID()).toString(),
       executionId: (new ObjectID()).toString(),
       timestamp: 1000,
     };
-    const status = new Model(data);
-    it('should return an StatusSchema', function() {
-      const object = new Schema(status);
+    const state = new Model(data);
+    it('should return an StateSchema', function() {
+      const object = new Schema(state);
       expect(object.id).to.not.exist; // eslint-disable-line no-unused-expressions
       expect(object._id).to.be.an.instanceof(ObjectID);
-      expect(object._id.toString()).to.equal(status.id);
-      expect(object.testId).to.be.an.instanceof(ObjectID);
-      expect(object.testId.toString()).to.equal(status.testId);
+      expect(object._id.toString()).to.equal(state.id);
       expect(object.executionId).to.be.an.instanceof(ObjectID);
-      expect(object.executionId.toString()).to.equal(status.executionId);
-      expect(object.timestamp).to.equal(status.timestamp);
+      expect(object.executionId.toString()).to.equal(state.executionId);
+      expect(object.timestamp).to.equal(state.timestamp);
     });
   });
 
   describe('toCTAData', function() {
     const mongodbDoc = {
       _id: (new ObjectID()),
-      testId: (new ObjectID()),
       executionId: (new ObjectID()),
       timestamp: 1000,
     };
-    it('should return an Status', function() {
+    it('should return a State', function() {
       const object = Schema.toCTAData(mongodbDoc);
       expect(object).to.be.an.instanceof(Model);
       expect(object._id).to.not.exist; // eslint-disable-line no-unused-expressions
       expect(object.id).to.equal(mongodbDoc._id.toString());
-      expect(object.testId).to.equal(mongodbDoc.testId.toString());
       expect(object.executionId).to.equal(mongodbDoc.executionId.toString());
       expect(object.timestamp).to.equal(mongodbDoc.timestamp);
     });
