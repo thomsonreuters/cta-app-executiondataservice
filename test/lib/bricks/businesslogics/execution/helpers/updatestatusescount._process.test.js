@@ -67,6 +67,9 @@ describe('BusinessLogics - Execution - UpdateStatus - _process', function() {
       payload: {
         type: 'execution',
         id: DEFAULTINPUTJOB.payload.executionId,
+        filter: {
+          nbstatuses: { $lt: DATA.response.totalCount },
+        },
         content: DATA.updatedExecutionFields,
       },
     };

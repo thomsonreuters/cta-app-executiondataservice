@@ -79,6 +79,17 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - _validate', function() {
     });
   });
 
+  context('when payload.filter is not an Object', function() {
+    const job = _.cloneDeep(DEFAULTINPUTJOB);
+    job.payload.filter = '';
+    const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
+    it('should reject', function() {
+      const validatePromise = helper._validate(mockInputContext);
+      return expect(validatePromise).to.eventually
+        .be.rejectedWith(Error, 'incorrect \'filter\' Object in job payload');
+    });
+  });
+
   context('when payload.id is not a String', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
     job.payload.id = {};
