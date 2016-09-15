@@ -36,7 +36,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
   after(function() {
     Date.now.restore();
   });
-  context('when execution status should be pending', function() {
+  context('when execution result should be pending', function() {
     const counts = {
       pending: 1,
       running: 0,
@@ -54,7 +54,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
       expect(result).to.have.property('updatetimestamp', now);
     });
   });
-  context('when execution status should be finished', function() {
+  context('when execution result should be finished', function() {
     const counts = {
       pending: 0,
       running: 0,
@@ -72,7 +72,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
       expect(result).to.have.property('updatetimestamp', now);
     });
   });
-  context('when execution status should be running', function() {
+  context('when execution result should be running', function() {
     const counts = {
       pending: 1,
       running: 1,

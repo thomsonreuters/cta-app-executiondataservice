@@ -39,7 +39,7 @@ describe('DatabaseInterfaces - MongoDB - Find - _process', function() {
         offset: 0,
         sort: {
           starttimestamp: -1,
-          nbstatuses: 1,
+          nbresults: 1,
         },
       },
       query: {

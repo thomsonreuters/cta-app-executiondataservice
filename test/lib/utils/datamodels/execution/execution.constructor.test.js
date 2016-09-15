@@ -21,12 +21,12 @@ describe('Data Model - Execution', function() {
     expect(object).to.have.property('starttimestamp', data.starttimestamp);
     expect(object).to.have.property('updatetimestamp', data.updatetimestamp);
 
-    expect(object).to.have.property('status', data.status);
+    expect(object).to.have.property('result', data.result);
     expect(object).to.have.property('ok', data.ok || 0);
     expect(object).to.have.property('partial', data.partial || 0);
     expect(object).to.have.property('inconclusive', data.inconclusive || 0);
     expect(object).to.have.property('failed', data.failed || 0);
-    expect(object).to.have.property('nbstatuses', data.nbstatuses || 0);
+    expect(object).to.have.property('nbresults', data.nbresults || 0);
 
     expect(object).to.have.property('instances', data.instances);
     expect(object).to.have.property('commandcount', data.commandcount);

@@ -20,13 +20,13 @@ describe('Data Model - Execution - Keys', function() {
         // timestamps related fields
         starttimestamp: { type: 'number', optional: true },
         updatetimestamp: { type: 'number', optional: true },
-        // statuses related fields
-        status: { type: 'string', optional: true },
+        // results related fields
+        result: { type: 'string', optional: true },
         ok: { type: 'number', optional: true },
         partial: { type: 'number', optional: true },
         inconclusive: { type: 'number', optional: true },
         failed: { type: 'number', optional: true },
-        nbstatuses: { type: 'number', optional: true },
+        nbresults: { type: 'number', optional: true },
         // states related fields
         instances: { type: 'array', optional: true },
         commandcount: { type: 'number', optional: true },

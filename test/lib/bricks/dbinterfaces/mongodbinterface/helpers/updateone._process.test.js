@@ -39,7 +39,7 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - _process', function() {
       type: 'execution',
       id: mockId.toString(),
       filter: {
-        nbstatuses: { $lt: 10 },
+        nbresults: { $lt: 10 },
       },
       content: {
         scenarioId: mockScenarioId.toString(),

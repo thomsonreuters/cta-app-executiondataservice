@@ -15,12 +15,12 @@ const data = {
   //     last: String,
   //   },
   // },
-  // status: String, // succeeded, inconclusive, partial, failed
+  // result: String, // succeeded, inconclusive, partial, failed
   // ok: Long,
   // partial: Long,
   // inconclusive: Long,
   // failed: Long,
-  // nbstatuses: Long, // sum(ok, partial...)
+  // nbresults: Long, // sum(ok, partial...)
   // done: Boolean,
   // instances: Array,
 };

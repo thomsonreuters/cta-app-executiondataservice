@@ -32,7 +32,7 @@ describe('DatabaseInterfaces - MongoDB - GetStatesCount - _validate', function()
   const DEFAULTINPUTJOB = {
     nature: {
       type: 'dbinterface',
-      quality: 'getstatusescount',
+      quality: 'getresultscount',
     },
     payload: {
       query: {
