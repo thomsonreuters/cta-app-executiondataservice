@@ -38,10 +38,11 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
   });
   context('when execution result should be pending', function() {
     const counts = {
-      pending: 1,
-      running: 0,
-      finished: 1,
-      acked: 2,
+      pending: 4,
+      running: 3,
+      finished: 2,
+      acked: 0,
+      canceled: 1,
     };
     const commandcounts = 4;
     let result;
@@ -54,12 +55,32 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
       expect(result).to.have.property('updatetimestamp', now);
     });
   });
+  context('when execution result should be canceled', function() {
+    const counts = {
+      pending: 4,
+      running: 4,
+      finished: 3,
+      acked: 0,
+      canceled: 1,
+    };
+    const commandcounts = 4;
+    let result;
+    before(function() {
+      result = helper._getExecutionUpdatedFields(counts, commandcounts);
+    });
+
+    it('should return execution update fields', function() {
+      expect(result).to.have.property('state', 'canceled');
+      expect(result).to.have.property('updatetimestamp', now);
+    });
+  });
   context('when execution result should be finished', function() {
     const counts = {
-      pending: 0,
-      running: 0,
-      finished: 2,
-      acked: 2,
+      pending: 4,
+      running: 2,
+      finished: 1,
+      acked: 3,
+      canceled: 0,
     };
     const commandcounts = 4;
     let result;
@@ -74,12 +95,13 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
   });
   context('when execution result should be running', function() {
     const counts = {
-      pending: 1,
-      running: 1,
-      finished: 3,
-      acked: 2,
+      pending: 4,
+      running: 4,
+      finished: 1,
+      acked: 0,
+      canceled: 1,
     };
-    const commandcounts = 6;
+    const commandcounts = 4;
     let result;
     before(function() {
       result = helper._getExecutionUpdatedFields(counts, commandcounts);

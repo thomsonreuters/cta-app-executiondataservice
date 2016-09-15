@@ -47,6 +47,7 @@ const statesCount = {
   running: 0,
   acked: 0,
   finished: 0,
+  canceled: 0,
 };
 states.forEach(function(state) {
   statesCount[state.status]++;

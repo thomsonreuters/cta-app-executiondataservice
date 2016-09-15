@@ -52,7 +52,6 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
       },
       payload: {
         filter: {
-          limit: DATA.execution.commandcount,
           offset: 0,
           sort: {
             timestamp: -1,

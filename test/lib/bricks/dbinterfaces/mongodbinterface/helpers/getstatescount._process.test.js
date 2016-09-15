@@ -34,7 +34,6 @@ describe('DatabaseInterfaces - MongoDB - GetStatesCount - _process', function() 
     },
     payload: {
       filter: {
-        limit: 1,
         offset: 0,
         sort: {
           timestamp: -1,
@@ -68,9 +67,6 @@ describe('DatabaseInterfaces - MongoDB - GetStatesCount - _process', function() 
         },
         {
           $skip: inputJOB.payload.filter.offset,
-        },
-        {
-          $limit: inputJOB.payload.filter.limit,
         },
         {
           $group: {
@@ -132,6 +128,7 @@ describe('DatabaseInterfaces - MongoDB - GetStatesCount - _process', function() 
           running: 0,
           finished: 0,
           acked: 0,
+          canceled: 0,
         };
         aggregateResponse.forEach(function(state) {
           states[state.status] = state.count;
