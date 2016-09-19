@@ -105,11 +105,6 @@ if (updatedExecutionFields.failed > 0) {
   updatedExecutionFields.result = 'failed';
 }
 
-const response = {
-  resultsCount: resultsCount,
-  totalCount: results.length,
-};
-
 
 module.exports = {
   job: DEFAULTINPUTJOB,
@@ -117,5 +112,6 @@ module.exports = {
   results: results,
   resultsCount: resultsCount,
   updatedExecutionFields: updatedExecutionFields,
-  response: response,
+  aggregation: resultsCount,
+  count: results.length,
 };

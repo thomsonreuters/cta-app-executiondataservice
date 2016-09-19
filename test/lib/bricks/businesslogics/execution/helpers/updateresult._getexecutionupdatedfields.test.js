@@ -48,7 +48,7 @@ describe('BusinessLogics - Execution - UpdateResult - _getExecutionUpdatedFields
     };
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(counts);
+      result = helper._getExecutionUpdatedFields(counts.resultsCount, counts.totalCount);
     });
 
     it('should return execution update fields', function() {
@@ -73,7 +73,7 @@ describe('BusinessLogics - Execution - UpdateResult - _getExecutionUpdatedFields
     };
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(counts);
+      result = helper._getExecutionUpdatedFields(counts.resultsCount, counts.totalCount);
     });
 
     it('should return execution update fields', function() {
@@ -98,7 +98,7 @@ describe('BusinessLogics - Execution - UpdateResult - _getExecutionUpdatedFields
     };
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(counts);
+      result = helper._getExecutionUpdatedFields(counts.resultsCount, counts.totalCount);
     });
 
     it('should return execution update fields', function() {
@@ -123,7 +123,7 @@ describe('BusinessLogics - Execution - UpdateResult - _getExecutionUpdatedFields
     };
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(counts);
+      result = helper._getExecutionUpdatedFields(counts.resultsCount, counts.totalCount);
     });
 
     it('should return execution update fields', function() {
