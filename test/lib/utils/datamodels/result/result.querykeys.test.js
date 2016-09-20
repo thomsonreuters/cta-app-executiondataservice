@@ -28,6 +28,7 @@ describe('Data Model - Result - QueryKeys', function() {
         name: { type: 'string', optional: true },
         description: { type: 'string', optional: true },
         custom: { type: 'object', optional: true },
+        index: { type: 'number', optional: true },
       };
       expect(_.isEqual(Model.queryKeys(), keys)).to.be.equal(true);
     });

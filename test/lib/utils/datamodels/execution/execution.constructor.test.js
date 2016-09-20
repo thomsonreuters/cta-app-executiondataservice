@@ -32,6 +32,6 @@ describe('Data Model - Execution', function() {
     expect(object).to.have.property('commandcount', data.commandcount);
     expect(object).to.have.property('state', data.state);
     expect(object).to.have.property('canceldetails', data.canceldetails);
-    expect(object).to.have.property('done', data.done || false);
+    expect(object).to.have.property('completed', data.completed || false);
   });
 });

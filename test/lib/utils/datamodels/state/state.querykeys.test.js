@@ -19,6 +19,7 @@ describe('Data Model - State - QueryKeys', function() {
         status: { type: 'string', optional: true },
         ip: { type: 'string', optional: true },
         hostname: { type: 'string', optional: true },
+        index: { type: 'number', optional: true },
       };
       expect(_.isEqual(Model.queryKeys(), keys)).to.be.equal(true);
     });

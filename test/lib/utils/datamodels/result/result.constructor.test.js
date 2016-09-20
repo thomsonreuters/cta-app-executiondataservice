@@ -29,5 +29,6 @@ describe('Data Model - Result', function() {
     expect(object).to.have.property('description', data.description);
     expect(object).to.have.property('screenshot', data.screenshot);
     expect(object).to.have.property('custom', data.custom);
+    expect(object).to.have.property('index', data.index);
   });
 });

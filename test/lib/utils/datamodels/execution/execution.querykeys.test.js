@@ -32,7 +32,7 @@ describe('Data Model - Execution - QueryKeys', function() {
         commandcount: { type: 'number', optional: true },
         state: { type: 'string', optional: true },
         canceldetails: { type: 'object', optional: true },
-        done: { type: 'boolean', optional: true },
+        completed: { type: 'boolean', optional: true },
       };
       expect(_.isEqual(Model.queryKeys(), keys)).to.be.equal(true);
     });

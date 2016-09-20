@@ -9,7 +9,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const pathToHelper = nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'updateresult.js');
+  '/lib/bricks/businesslogics/execution/helpers/', 'finalize.js');
 const Helper = require(pathToHelper);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
@@ -24,9 +24,9 @@ const DEFAULTCEMENTHELPER = {
   },
   createContext: function() {},
 };
-const DATA = require('./updateresult._process.testdata.js');
+const DATA = require('./finalize._process.testdata.js');
 
-describe('BusinessLogics - Execution - UpdateResult - _process', function() {
+describe('BusinessLogics - Execution - Finalize - _process', function() {
   let helper;
   context('when everything ok', function() {
     const DEFAULTINPUTJOB = DATA.job;
@@ -45,25 +45,24 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
     const findExecutionContext = new Context(DEFAULTCEMENTHELPER, findExecutionJob);
     findExecutionContext.publish = sinon.stub();
 
-    const countResultsJob = {
+    const getResultsIndexJob = {
       nature: {
         type: 'dbinterface',
-        quality: 'count',
+        quality: 'getresultsindex',
       },
       payload: {
-        type: 'result',
         query: {
           executionId: DEFAULTINPUTJOB.payload.executionId,
         },
       },
     };
-    const countResultsContext = new Context(DEFAULTCEMENTHELPER, countResultsJob);
-    countResultsContext.publish = sinon.stub();
+    const getResultsIndexContext = new Context(DEFAULTCEMENTHELPER, getResultsIndexJob);
+    getResultsIndexContext.publish = sinon.stub();
 
-    const aggregateResultsJob = {
+    const getStatesIndexJob = {
       nature: {
         type: 'dbinterface',
-        quality: 'getresultscount',
+        quality: 'getstatesindex',
       },
       payload: {
         query: {
@@ -71,8 +70,8 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
         },
       },
     };
-    const aggregateResultsContext = new Context(DEFAULTCEMENTHELPER, aggregateResultsJob);
-    aggregateResultsContext.publish = sinon.stub();
+    const getStatesIndexContext = new Context(DEFAULTCEMENTHELPER, getStatesIndexJob);
+    getStatesIndexContext.publish = sinon.stub();
 
     const updateExecutionJob = {
       nature: {
@@ -82,26 +81,11 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
       payload: {
         type: 'execution',
         id: DEFAULTINPUTJOB.payload.executionId,
-        filter: {
-          nbresults: { $lt: DATA.count },
-        },
         content: DATA.updatedExecutionFields,
       },
     };
     const updateExecutionContext = new Context(DEFAULTCEMENTHELPER, updateExecutionJob);
     updateExecutionContext.publish = sinon.stub();
-
-    const finalizeExecutionJob = {
-      nature: {
-        type: 'execution',
-        quality: 'finalize',
-      },
-      payload: {
-        executionId: DEFAULTINPUTJOB.payload.executionId,
-      },
-    };
-    const finalizeExecutionContext = new Context(DEFAULTCEMENTHELPER, finalizeExecutionJob);
-    finalizeExecutionContext.publish = sinon.stub();
 
     before(function() {
       sinon.stub(mockInputContext, 'emit');
@@ -112,13 +96,11 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
         .onCall(0)
         .returns(findExecutionContext)
         .onCall(1)
-        .returns(countResultsContext)
+        .returns(getResultsIndexContext)
         .onCall(2)
-        .returns(aggregateResultsContext)
+        .returns(getStatesIndexContext)
         .onCall(3)
-        .returns(updateExecutionContext)
-        .onCall(4)
-        .returns(finalizeExecutionContext);
+        .returns(updateExecutionContext);
       helper._process(mockInputContext);
     });
     after(function() {
@@ -133,72 +115,98 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
     });
 
     context('when findExecutionContext emits done event', function() {
-      before(function() {
-        findExecutionContext.emit('done', 'dblayer', DATA.execution);
+      context('when execution has already been completed', function() {
+        const execution = _.cloneDeep(DATA.execution);
+        before(function() {
+          execution.completed = true;
+          findExecutionContext.emit('done', 'dblayer', execution);
+        });
+
+        it('should emit done event on inputContext with non-updated execution', function() {
+          sinon.assert.calledWith(mockInputContext.emit,
+            'done', helper.cementHelper.brickName, execution);
+        });
       });
 
-      it('should send a countResultsContext Context', function() {
-        sinon.assert.called(countResultsContext.publish);
-      });
+      context('when execution has not been completed', function() {
+        before(function() {
+          findExecutionContext.emit('done', 'dblayer', DATA.execution);
+        });
 
-      context('when countResultsContext emit done event', function() {
-        context('when execution has less results than found', function() {
-          before(function() {
-            countResultsContext.emit('done', 'dblayer', DATA.count);
-          });
+        it('should send a getResultsIndexContext Context', function() {
+          sinon.assert.called(getResultsIndexContext.publish);
+        });
 
-          it('should send a aggregateResultsContext Context', function() {
-            sinon.assert.called(aggregateResultsContext.publish);
-          });
+        context('when getResultsIndexContext emit done event', function() {
+          // context('when response is not an Array', function() {
+          //   before(function() {
+          //     getResultsIndexContext.emit('done', 'dblayer', {});
+          //   });
+          //
+          //   it('should emit done event on inputContext with non-updated execution', function() {
+          //     sinon.assert.calledWith(mockInputContext.emit,
+          //       'done', helper.cementHelper.brickName, DATA.execution);
+          //   });
+          // });
 
-          context('when aggregateResultsContext emits done event', function() {
+          context('when there is continuous gap in resultsIndexes', function() {
             before(function() {
-              aggregateResultsContext.emit('done', 'dblayer', DATA.aggregation);
+              getResultsIndexContext.emit('done', 'dblayer', DATA.gapResultsIndexes);
+            });
+
+            it('should emit done event on inputContext with non-updated execution', function() {
+              sinon.assert.calledWith(mockInputContext.emit,
+                'done', helper.cementHelper.brickName, DATA.execution);
+            });
+          });
+
+          context('when there is no continuous gap in resultsIndexes', function() {
+            before(function() {
+              getResultsIndexContext.emit('done', 'dblayer', DATA.noGapResultsIndexes);
             });
 
             it('should send a updateExecution Context', function() {
-              sinon.assert.called(updateExecutionContext.publish);
+              sinon.assert.called(getStatesIndexContext.publish);
             });
 
-            context('when updateExecutionContext emits done event', function() {
-              context('when updatedExecution is null (no update)', function() {
+            context('when getStatesIndexContext emits done event', function() {
+              context('when there is no missing results', function() {
                 before(function() {
-                  updateExecutionContext.emit('done', 'dblayer', null);
+                  getStatesIndexContext.emit('done', 'dblayer', DATA.gapStatesIndexes);
                 });
 
-                it('should emit done event on inputContext with null', function() {
+                it('should emit done event on inputContext with non-updated execution', function() {
                   sinon.assert.calledWith(mockInputContext.emit,
-                    'done', helper.cementHelper.brickName, null);
+                    'done', helper.cementHelper.brickName, DATA.execution);
                 });
               });
 
-              context('when updatedExecution is non null', function() {
-                const updatedExecution = _.cloneDeep(DATA.execution);
+              context('when there is no missing results', function() {
                 before(function() {
-                  updateExecutionContext.emit('done', 'dblayer', updatedExecution);
+                  getStatesIndexContext.emit('done', 'dblayer', DATA.noGapStatesIndexes);
                 });
 
-                it('should send a finalizeExecutionContext Context', function() {
-                  sinon.assert.called(finalizeExecutionContext.publish);
+                it('should send a updateExecution Context', function() {
+                  sinon.assert.called(updateExecutionContext.publish);
                 });
 
-                context('when finalizeExecutionContext emits done event', function() {
-                  const finalizedExecution = _.cloneDeep(DATA.execution);
+                context('when updateExecutionContext emits done event', function() {
+                  const execution = _.cloneDeep(DATA.execution);
                   before(function() {
-                    finalizeExecutionContext.emit('done', 'dblayer', finalizedExecution);
+                    updateExecutionContext.emit('done', 'dblayer', execution);
                   });
 
-                  it('should emit done event on inputContext with updated execution', function() {
+                  it('should emit reject event on inputContext', function() {
                     sinon.assert.calledWith(mockInputContext.emit,
-                      'done', helper.cementHelper.brickName, finalizedExecution);
+                      'done', helper.cementHelper.brickName, execution);
                   });
                 });
 
-                context('when finalizeExecutionContext emits reject event', function() {
+                context('when updateExecutionContext emits reject event', function() {
                   const error = new Error('mockError');
                   const brickName = 'dbinterface';
                   before(function() {
-                    finalizeExecutionContext.emit('reject', brickName, error);
+                    updateExecutionContext.emit('reject', brickName, error);
                   });
                   it('should emit reject event on inputContext', function() {
                     sinon.assert.calledWith(mockInputContext.emit,
@@ -206,11 +214,11 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
                   });
                 });
 
-                context('when finalizeExecutionContext emits error event', function() {
+                context('when updateExecutionContext emits error event', function() {
                   const error = new Error('mockError');
                   const brickName = 'dbinterface';
                   before(function() {
-                    finalizeExecutionContext.emit('error', brickName, error);
+                    updateExecutionContext.emit('error', brickName, error);
                   });
                   it('should emit error event on inputContext', function() {
                     sinon.assert.calledWith(mockInputContext.emit,
@@ -220,11 +228,11 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
               });
             });
 
-            context('when updateExecutionContext emits reject event', function() {
+            context('when getStatesIndexContext emits reject event', function() {
               const error = new Error('mockError');
               const brickName = 'dbinterface';
               before(function() {
-                updateExecutionContext.emit('reject', brickName, error);
+                getStatesIndexContext.emit('reject', brickName, error);
               });
               it('should emit reject event on inputContext', function() {
                 sinon.assert.calledWith(mockInputContext.emit,
@@ -232,11 +240,11 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
               });
             });
 
-            context('when updateExecutionContext emits error event', function() {
+            context('when getStatesIndexContext emits error event', function() {
               const error = new Error('mockError');
               const brickName = 'dbinterface';
               before(function() {
-                updateExecutionContext.emit('error', brickName, error);
+                getStatesIndexContext.emit('error', brickName, error);
               });
               it('should emit error event on inputContext', function() {
                 sinon.assert.calledWith(mockInputContext.emit,
@@ -244,65 +252,30 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
               });
             });
           });
-
-          context('when aggregateResultsContext emits reject event', function() {
-            const error = new Error('mockError');
-            const brickName = 'dbinterface';
-            before(function() {
-              aggregateResultsContext.emit('reject', brickName, error);
-            });
-            it('should emit reject event on inputContext', function() {
-              sinon.assert.calledWith(mockInputContext.emit,
-                'reject', brickName, error);
-            });
-          });
-
-          context('when aggregateResultsContext emits error event', function() {
-            const error = new Error('mockError');
-            const brickName = 'dbinterface';
-            before(function() {
-              aggregateResultsContext.emit('error', brickName, error);
-            });
-            it('should emit error event on inputContext', function() {
-              sinon.assert.calledWith(mockInputContext.emit,
-                'error', brickName, error);
-            });
-          });
         });
 
-        context('when execution has more results than found', function() {
+        context('when getResultsIndexContext emits reject event', function() {
+          const error = new Error('mockError');
+          const brickName = 'dbinterface';
           before(function() {
-            countResultsContext.emit('done', 'dblayer', 1);
+            getResultsIndexContext.emit('reject', brickName, error);
           });
-
-          it('should emit done event on inputContext with non-updated execution', function() {
+          it('should emit reject event on inputContext', function() {
             sinon.assert.calledWith(mockInputContext.emit,
-              'done', helper.cementHelper.brickName, DATA.execution);
+              'reject', brickName, error);
           });
         });
-      });
 
-      context('when countResultsContext emits reject event', function() {
-        const error = new Error('mockError');
-        const brickName = 'dbinterface';
-        before(function() {
-          countResultsContext.emit('reject', brickName, error);
-        });
-        it('should emit reject event on inputContext', function() {
-          sinon.assert.calledWith(mockInputContext.emit,
-            'reject', brickName, error);
-        });
-      });
-
-      context('when countResultsContext emits error event', function() {
-        const error = new Error('mockError');
-        const brickName = 'dbinterface';
-        before(function() {
-          countResultsContext.emit('error', brickName, error);
-        });
-        it('should emit error event on inputContext', function() {
-          sinon.assert.calledWith(mockInputContext.emit,
-            'error', brickName, error);
+        context('when getResultsIndexContext emits error event', function() {
+          const error = new Error('mockError');
+          const brickName = 'dbinterface';
+          before(function() {
+            getResultsIndexContext.emit('error', brickName, error);
+          });
+          it('should emit error event on inputContext', function() {
+            sinon.assert.calledWith(mockInputContext.emit,
+              'error', brickName, error);
+          });
         });
       });
     });

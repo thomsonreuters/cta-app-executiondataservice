@@ -19,5 +19,6 @@ describe('Data Model - State', function() {
     expect(object).to.have.property('status', data.status);
     expect(object).to.have.property('ip', data.ip);
     expect(object).to.have.property('hostname', data.hostname);
+    expect(object).to.have.property('index', data.index);
   });
 });

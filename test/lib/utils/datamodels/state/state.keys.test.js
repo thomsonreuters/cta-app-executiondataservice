@@ -19,6 +19,7 @@ describe('Data Model - State - Keys', function() {
         timestamp: { type: 'number', optional: true },
         ip: { type: 'string', optional: true },
         hostname: { type: 'string', optional: true },
+        index: { type: 'number', optional: true },
       };
       expect(_.isEqual(Model.keys(), keys)).to.be.equal(true);
     });

@@ -79,18 +79,32 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
     const updateExecutionContext = new Context(DEFAULTCEMENTHELPER, updateExecutionJob);
     updateExecutionContext.publish = sinon.stub();
 
+    const finalizeExecutionJob = {
+      nature: {
+        type: 'execution',
+        quality: 'finalize',
+      },
+      payload: {
+        executionId: DEFAULTINPUTJOB.payload.executionId,
+      },
+    };
+    const finalizeExecutionContext = new Context(DEFAULTCEMENTHELPER, finalizeExecutionJob);
+    finalizeExecutionContext.publish = sinon.stub();
+
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
       helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
       // sinon.stub(helper, '_getExecutionUpdatedFields').returns(DATA.updatedExecutionFields);
       sinon.stub(helper.cementHelper, 'createContext')
-        .onFirstCall()
+        .onCall(0)
         .returns(findExecutionContext)
-        .onSecondCall()
+        .onCall(1)
         .returns(findStatesContext)
-        .onThirdCall()
-        .returns(updateExecutionContext);
+        .onCall(2)
+        .returns(updateExecutionContext)
+        .onCall(3)
+        .returns(finalizeExecutionContext);
       helper._process(mockInputContext);
     });
     after(function() {
@@ -128,9 +142,44 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
             updateExecutionContext.emit('done', 'dblayer', updatedExecution);
           });
 
-          it('should emit done event on inputContext with updated execution', function() {
-            sinon.assert.calledWith(mockInputContext.emit,
-              'done', helper.cementHelper.brickName, updatedExecution);
+          it('should send a finalizeExecutionContext Context', function() {
+            sinon.assert.called(finalizeExecutionContext.publish);
+          });
+
+          context('when finalizeExecutionContext emits done event', function() {
+            const finalizedExecution = _.cloneDeep(DATA.execution);
+            before(function() {
+              finalizeExecutionContext.emit('done', 'dblayer', finalizedExecution);
+            });
+
+            it('should emit done event on inputContext with updated execution', function() {
+              sinon.assert.calledWith(mockInputContext.emit,
+                'done', helper.cementHelper.brickName, finalizedExecution);
+            });
+          });
+
+          context('when finalizeExecutionContext emits reject event', function() {
+            const error = new Error('mockError');
+            const brickName = 'dbinterface';
+            before(function() {
+              finalizeExecutionContext.emit('reject', brickName, error);
+            });
+            it('should emit reject event on inputContext', function() {
+              sinon.assert.calledWith(mockInputContext.emit,
+                'reject', brickName, error);
+            });
+          });
+
+          context('when finalizeExecutionContext emits error event', function() {
+            const error = new Error('mockError');
+            const brickName = 'dbinterface';
+            before(function() {
+              finalizeExecutionContext.emit('error', brickName, error);
+            });
+            it('should emit error event on inputContext', function() {
+              sinon.assert.calledWith(mockInputContext.emit,
+                'error', brickName, error);
+            });
           });
         });
 
