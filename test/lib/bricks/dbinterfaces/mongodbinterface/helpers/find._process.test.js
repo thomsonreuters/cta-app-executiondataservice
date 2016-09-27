@@ -24,7 +24,7 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - Find - constructor', function() {
+describe('DatabaseInterfaces - MongoDB - Find - _process', function() {
   let helper;
   const mockScenarioId = new ObjectID();
   const inputJOB = {
@@ -39,7 +39,7 @@ describe('DatabaseInterfaces - MongoDB - Find - constructor', function() {
         offset: 0,
         sort: {
           starttimestamp: -1,
-          nbstatuses: 1,
+          nbresults: 1,
         },
       },
       query: {

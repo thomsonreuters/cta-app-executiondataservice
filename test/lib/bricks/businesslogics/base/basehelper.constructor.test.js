@@ -21,7 +21,7 @@ const DEFAULTCEMENTHELPER = {
   },
 };
 
-describe('BusinessLogics - BaseHelper - constructor', function() {
+describe('BusinessLogics - Base Helper - constructor', function() {
   context('when everything ok', function() {
     let helper;
     before(function() {

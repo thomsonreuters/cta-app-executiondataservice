@@ -5,6 +5,7 @@ const sinon = require('sinon');
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
 const requireSubvert = require('require-subvert')(__dirname);
+const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
@@ -25,7 +26,7 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 
-describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
+describe('DatabaseInterfaces - MongoDB - UpdateOne - _process', function() {
   let helper;
   const mockId = new ObjectID();
   const mockScenarioId = new ObjectID();
@@ -37,6 +38,9 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
     payload: {
       type: 'execution',
       id: mockId.toString(),
+      filter: {
+        nbresults: { $lt: 10 },
+      },
       content: {
         scenarioId: mockScenarioId.toString(),
       },
@@ -58,9 +62,9 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - constructor', function() {
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
-      const mongoDbFilter = {
+      const mongoDbFilter = _.assignIn({
         _id: new ObjectID(inputJOB.payload.id),
-      };
+      }, inputJOB.payload.filter);
       mongoDbDocument = {
         $set: {
           scenarioId: mockScenarioId,
