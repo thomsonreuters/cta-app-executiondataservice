@@ -42,7 +42,7 @@ describe('Utils - RESTAPI - Handlers - Executions - find', function() {
       req.query = {
         limit: 10,
         offset: 0,
-        sort: '-starttimestamp,nbresults',
+        sort: '-startTimestamp,resultsCount',
         status: 'finished',
         done: 'true',
       };
@@ -50,8 +50,8 @@ describe('Utils - RESTAPI - Handlers - Executions - find', function() {
         limit: parseInt(req.query.limit, 10),
         offset: parseInt(req.query.offset, 0),
         sort: {
-          starttimestamp: -1,
-          nbresults: 1,
+          startTimestamp: -1,
+          resultsCount: 1,
         },
       };
       const query = Execution.convertQueryStrings(_.omit(req.query, Object.keys(filter)));

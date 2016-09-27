@@ -31,12 +31,12 @@ describe('DatabaseInterfaces - BaseDBInterface - validate', function() {
   const helperName = 'helperone';
   const JOB = {
     nature: {
-      type: 'dbinterface',
+      type: 'dbInterface',
       quality: helperName,
     },
     payload: {},
   };
-  let dbinterface;
+  let dbInterface;
   before(function () {
     // create some mock helpers
     const MockHelper = function (cementHelper) {
@@ -49,9 +49,9 @@ describe('DatabaseInterfaces - BaseDBInterface - validate', function() {
         },
       };
     };
-    dbinterface = new Interface(DEFAULTCEMENTHELPER, DEFAULTCONFIG);
-    dbinterface.helpers.set(helperName,
-      new MockHelper(dbinterface.cementHelper, dbinterface.logger));
+    dbInterface = new Interface(DEFAULTCEMENTHELPER, DEFAULTCONFIG);
+    dbInterface.helpers.set(helperName,
+      new MockHelper(dbInterface.cementHelper, dbInterface.logger));
   });
 
   after(function () {
@@ -63,15 +63,15 @@ describe('DatabaseInterfaces - BaseDBInterface - validate', function() {
     const context = { data: job };
     before(function(done) {
       sinon.stub(Brick.prototype, 'validate').resolves();
-      sinon.stub(dbinterface.helpers.get(helperName), '_validate').resolves();
-      dbinterface.validate(context).then(function(res) {
+      sinon.stub(dbInterface.helpers.get(helperName), '_validate').resolves();
+      dbInterface.validate(context).then(function(res) {
         validatePromise = res;
         done();
       }).catch(done);
     });
     after(function() {
       Brick.prototype.validate.restore();
-      dbinterface.helpers.get(helperName)._validate.restore();
+      dbInterface.helpers.get(helperName)._validate.restore();
     });
 
     it('should call super validate()', function() {
@@ -79,7 +79,7 @@ describe('DatabaseInterfaces - BaseDBInterface - validate', function() {
     });
 
     it('should call provider _validate()', function() {
-      return expect(dbinterface.helpers.get(helperName)._validate.calledOnce).to.be.true;
+      return expect(dbInterface.helpers.get(helperName)._validate.calledOnce).to.be.true;
     });
 
     it('should resolve', function() {
@@ -93,35 +93,35 @@ describe('DatabaseInterfaces - BaseDBInterface - validate', function() {
     const context = { data: job };
     before(function() {
       sinon.stub(Brick.prototype, 'validate').rejects(mockError);
-      sinon.stub(dbinterface.helpers.get(helperName), '_validate').resolves();
+      sinon.stub(dbInterface.helpers.get(helperName), '_validate').resolves();
     });
 
     after(function() {
       Brick.prototype.validate.restore();
-      dbinterface.helpers.get(helperName)._validate.restore();
+      dbInterface.helpers.get(helperName)._validate.restore();
     });
 
     it('should reject', function() {
-      const validatePromise = dbinterface.validate(context);
+      const validatePromise = dbInterface.validate(context);
       return expect(validatePromise).to.eventually.be.rejectedWith(mockError);
     });
   });
 
   context('when job type is not supported', function() {
     const job = _.cloneDeep(JOB);
-    job.nature.type = 'not-a-dbinterface';
+    job.nature.type = 'not-a-dbInterface';
     const context = { data: job };
     before(function() {
       sinon.stub(Brick.prototype, 'validate').resolves();
-      sinon.stub(dbinterface.helpers.get(helperName), '_validate').resolves();
+      sinon.stub(dbInterface.helpers.get(helperName), '_validate').resolves();
     });
     after(function() {
       Brick.prototype.validate.restore();
-      dbinterface.helpers.get(helperName)._validate.restore();
+      dbInterface.helpers.get(helperName)._validate.restore();
     });
 
     it('should reject', function() {
-      const validatePromise = dbinterface.validate(context);
+      const validatePromise = dbInterface.validate(context);
       return expect(validatePromise).to.eventually
         .be.rejectedWith(Error, `type ${job.nature.type} not supported`);
     });
@@ -133,15 +133,15 @@ describe('DatabaseInterfaces - BaseDBInterface - validate', function() {
     const context = { data: job };
     before(function() {
       sinon.stub(Brick.prototype, 'validate').resolves();
-      sinon.stub(dbinterface.helpers.get(helperName), '_validate').resolves();
+      sinon.stub(dbInterface.helpers.get(helperName), '_validate').resolves();
     });
     after(function() {
       Brick.prototype.validate.restore();
-      dbinterface.helpers.get(helperName)._validate.restore();
+      dbInterface.helpers.get(helperName)._validate.restore();
     });
 
     it('should reject', function() {
-      const validatePromise = dbinterface.validate(context);
+      const validatePromise = dbInterface.validate(context);
       return expect(validatePromise).to.eventually
         .be.rejectedWith(Error, `quality ${job.nature.quality} not supported`);
     });
@@ -153,16 +153,16 @@ describe('DatabaseInterfaces - BaseDBInterface - validate', function() {
     const context = { data: job };
     before(function() {
       sinon.stub(Brick.prototype, 'validate').resolves();
-      sinon.stub(dbinterface.helpers.get(helperName), '_validate').rejects(mockError);
+      sinon.stub(dbInterface.helpers.get(helperName), '_validate').rejects(mockError);
     });
 
     after(function() {
       Brick.prototype.validate.restore();
-      dbinterface.helpers.get(helperName)._validate.restore();
+      dbInterface.helpers.get(helperName)._validate.restore();
     });
 
     it('should reject', function() {
-      const validatePromise = dbinterface.validate(context);
+      const validatePromise = dbInterface.validate(context);
       return expect(validatePromise).to.eventually.be.rejectedWith(mockError);
     });
   });

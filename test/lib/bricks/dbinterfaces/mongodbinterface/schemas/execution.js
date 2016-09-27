@@ -19,8 +19,8 @@ describe('DatabaseInterfaces - MongoDB - Schema - Execution', function() {
       id: (new ObjectID()).toString(),
       scenarioId: (new ObjectID()).toString(),
       userId: (new ObjectID()).toString(),
-      starttimestamp: 1000,
-      updatetimestamp: 1000,
+      startTimestamp: 1000,
+      updateTimestamp: 1000,
       state: 'pending', // pending,running,acked, cancelled, finished
     };
     const execution = new Model(data);
@@ -33,8 +33,8 @@ describe('DatabaseInterfaces - MongoDB - Schema - Execution', function() {
       expect(object.scenarioId.toString()).to.equal(execution.scenarioId);
       expect(object.userId).to.be.an.instanceof(ObjectID);
       expect(object.userId.toString()).to.equal(execution.userId);
-      expect(object.starttimestamp).to.equal(execution.starttimestamp);
-      expect(object.updatetimestamp).to.equal(execution.updatetimestamp);
+      expect(object.startTimestamp).to.equal(execution.startTimestamp);
+      expect(object.updateTimestamp).to.equal(execution.updateTimestamp);
       expect(object.state).to.equal(execution.state);
     });
   });
@@ -44,8 +44,8 @@ describe('DatabaseInterfaces - MongoDB - Schema - Execution', function() {
       _id: (new ObjectID()),
       scenarioId: (new ObjectID()),
       userId: (new ObjectID()),
-      starttimestamp: 1000,
-      updatetimestamp: 1000,
+      startTimestamp: 1000,
+      updateTimestamp: 1000,
       state: 'pending', // pending,running,acked, cancelled, finished
     };
     it('should return an Execution', function() {
@@ -55,8 +55,8 @@ describe('DatabaseInterfaces - MongoDB - Schema - Execution', function() {
       expect(object.id).to.equal(mongodbDoc._id.toString());
       expect(object.scenarioId).to.equal(mongodbDoc.scenarioId.toString());
       expect(object.userId).to.equal(mongodbDoc.userId.toString());
-      expect(object.starttimestamp).to.equal(mongodbDoc.starttimestamp);
-      expect(object.updatetimestamp).to.equal(mongodbDoc.updatetimestamp);
+      expect(object.startTimestamp).to.equal(mongodbDoc.startTimestamp);
+      expect(object.updateTimestamp).to.equal(mongodbDoc.updateTimestamp);
       expect(object.state).to.equal(mongodbDoc.state);
     });
   });

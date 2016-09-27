@@ -29,8 +29,8 @@ describe('DatabaseInterfaces - MongoDB - Find - _process', function() {
   const mockScenarioId = new ObjectID();
   const inputJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'findbyid',
+      type: 'dbInterface',
+      quality: 'findById',
     },
     payload: {
       type: 'execution',
@@ -38,8 +38,8 @@ describe('DatabaseInterfaces - MongoDB - Find - _process', function() {
         limit: 10,
         offset: 0,
         sort: {
-          starttimestamp: -1,
-          nbresults: 1,
+          startTimestamp: -1,
+          resultsCount: 1,
         },
       },
       query: {

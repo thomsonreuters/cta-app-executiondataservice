@@ -24,9 +24,9 @@ const DEFAULTCEMENTHELPER = {
 
 describe('DatabaseInterfaces - BaseDBInterface - constructor', function() {
   context('when everything ok', function() {
-    let dbinterface;
+    let dbInterface;
     before(function() {
-      dbinterface = new Interface(DEFAULTCEMENTHELPER, DEFAULTCONFIG);
+      dbInterface = new Interface(DEFAULTCEMENTHELPER, DEFAULTCONFIG);
     });
 
     after(function() {
@@ -37,8 +37,8 @@ describe('DatabaseInterfaces - BaseDBInterface - constructor', function() {
     });
 
     it('should return a Logic object', function() {
-      expect(dbinterface).to.be.an.instanceof(Interface);
-      expect(dbinterface).to.have.property('helpers').and.to.be.a('Map');
+      expect(dbInterface).to.be.an.instanceof(Interface);
+      expect(dbInterface).to.have.property('helpers').and.to.be.a('Map');
     });
   });
 });

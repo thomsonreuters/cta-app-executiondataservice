@@ -29,8 +29,8 @@ describe('DatabaseInterfaces - MongoDB - GetStatesCount - _process', function() 
   const mockExecutionId = new ObjectID();
   const inputJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'getstatescount',
+      type: 'dbInterface',
+      quality: 'getStatesCount',
     },
     payload: {
       filter: {

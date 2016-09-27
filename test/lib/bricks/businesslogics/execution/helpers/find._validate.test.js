@@ -38,12 +38,12 @@ describe('BusinessLogics - Execution - Find - _validate', function() {
         limit: 10,
         offset: 0,
         sort: {
-          starttimestamp: -1,
+          startTimestamp: -1,
           nbstatuses: 1,
         },
       },
       query: {
-        starttimestamp: 10,
+        startTimestamp: 10,
       },
     },
   };
@@ -120,7 +120,7 @@ describe('BusinessLogics - Execution - Find - _validate', function() {
 
   context('when payload.query has an invalid parameter', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.query.updatetimestamp = 'not-a-number';
+    job.payload.query.updateTimestamp = 'not-a-number';
     job.payload.query.state = {};
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
