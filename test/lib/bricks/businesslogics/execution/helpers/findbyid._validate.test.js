@@ -33,7 +33,7 @@ describe('BusinessLogics - Execution - FindById - _validate', function() {
   const DEFAULTINPUTJOB = {
     nature: {
       type: 'execution',
-      quality: 'findbyid',
+      quality: 'findById',
     },
     payload: {
       id: mockId.toString(),

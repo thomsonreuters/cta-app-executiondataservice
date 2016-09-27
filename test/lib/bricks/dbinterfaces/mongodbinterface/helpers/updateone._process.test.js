@@ -32,14 +32,14 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - _process', function() {
   const mockScenarioId = new ObjectID();
   const inputJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'updateone',
+      type: 'dbInterface',
+      quality: 'updateOne',
     },
     payload: {
       type: 'execution',
       id: mockId.toString(),
       filter: {
-        nbresults: { $lt: 10 },
+        resultsCount: { $lt: 10 },
       },
       content: {
         scenarioId: mockScenarioId.toString(),

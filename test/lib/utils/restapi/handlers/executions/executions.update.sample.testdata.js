@@ -5,8 +5,8 @@ const execution = {
   scenario: (new ObjectID()).toString(),
   configuration: (new ObjectID()).toString(),
   user: (new ObjectID()).toString(),
-  starttimestamp: new Date(),
-  updatetimestamp: new Date(),
+  startTimestamp: new Date(),
+  updateTimestamp: new Date(),
   state: 'pending', // pending,running,acked, cancelled, finished
   // cancel: {
   //   mode: String,
@@ -20,7 +20,7 @@ const execution = {
   // partial: Long,
   // inconclusive: Long,
   // failed: Long,
-  // nbresults: Long, // sum(ok, partial...)
+  // resultsCount: Long, // sum(ok, partial...)
   // done: Boolean,
 };
 

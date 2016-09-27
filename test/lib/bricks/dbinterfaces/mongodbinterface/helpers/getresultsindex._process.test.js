@@ -30,8 +30,8 @@ describe('DatabaseInterfaces - MongoDB - GetResultsIndex - _process', function()
   const mockExecutionId = new ObjectID();
   const inputJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'getresultsindex',
+      type: 'dbInterface',
+      quality: 'getResultsIndex',
     },
     payload: {
       query: {

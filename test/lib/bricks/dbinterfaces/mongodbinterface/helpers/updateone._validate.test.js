@@ -32,8 +32,8 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - _validate', function() {
   const mockId = new ObjectID();
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'insertone',
+      type: 'dbInterface',
+      quality: 'insertOne',
     },
     payload: {
       type: 'execution',

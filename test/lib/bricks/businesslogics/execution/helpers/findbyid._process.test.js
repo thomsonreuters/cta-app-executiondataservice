@@ -43,8 +43,8 @@ describe('BusinessLogics - Execution - FindById - _process', function() {
 
       outputJOB = {
         nature: {
-          type: 'dbinterface',
-          quality: 'findbyid',
+          type: 'dbInterface',
+          quality: 'findById',
         },
         payload: {
           type: 'execution',
@@ -69,7 +69,7 @@ describe('BusinessLogics - Execution - FindById - _process', function() {
     context('when outputContext emits done event', function() {
       it('should emit done event on inputContext', function() {
         const response = {};
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         mockOutputContext.emit('done', brickName, response);
         sinon.assert.calledWith(mockInputContext.emit,
           'done', helper.cementHelper.brickName, response);
@@ -79,7 +79,7 @@ describe('BusinessLogics - Execution - FindById - _process', function() {
     context('when outputContext emits reject event', function() {
       it('should emit reject event on inputContext', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         mockOutputContext.emit('reject', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'reject', brickName, error);
@@ -89,7 +89,7 @@ describe('BusinessLogics - Execution - FindById - _process', function() {
     context('when outputContext emits error event', function() {
       it('should emit error event on inputContext', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         mockOutputContext.emit('error', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'error', brickName, error);

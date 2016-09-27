@@ -51,7 +51,7 @@ describe('BusinessLogics - Result - Create - _process', function() {
         executionId: 'foobar',
         scenarioId: 'bar',
         userId: 'quz',
-        starttimestamp: 1231923018230123,
+        startTimestamp: 1231923018230123,
         instances: [],
       });
       const StubResultConstructor = sinon.stub().returns(mockResult);
@@ -60,8 +60,8 @@ describe('BusinessLogics - Result - Create - _process', function() {
 
       insertJOB = {
         nature: {
-          type: 'dbinterface',
-          quality: 'insertone',
+          type: 'dbInterface',
+          quality: 'insertOne',
         },
         payload: {
           type: 'result',
@@ -74,7 +74,7 @@ describe('BusinessLogics - Result - Create - _process', function() {
       UpdateExecutionResultsJob = {
         nature: {
           type: 'execution',
-          quality: 'updateresult',
+          quality: 'updateResult',
         },
         payload: {
           executionId: mockResult.executionId,
@@ -99,7 +99,7 @@ describe('BusinessLogics - Result - Create - _process', function() {
       helper._ack.restore();
     });
 
-    it('should send a new Context insertone', function() {
+    it('should send a new Context insertOne', function() {
       sinon.assert.calledWith(helper.cementHelper.createContext, insertJOB);
       sinon.assert.called(insertContext.publish);
     });
@@ -119,7 +119,7 @@ describe('BusinessLogics - Result - Create - _process', function() {
           'done', helper.cementHelper.brickName, response);
       });
 
-      it('should publish updateresult context', function() {
+      it('should publish updateResult context', function() {
         sinon.assert.calledWith(helper.cementHelper.createContext, UpdateExecutionResultsJob);
         sinon.assert.called(UpdateExecutionResultsContext.publish);
       });
@@ -128,7 +128,7 @@ describe('BusinessLogics - Result - Create - _process', function() {
     context('when outputContext emits reject event', function() {
       it('should emit reject event on inputContext', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         insertContext.emit('reject', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'reject', brickName, error);
@@ -138,7 +138,7 @@ describe('BusinessLogics - Result - Create - _process', function() {
     context('when outputContext emits error event', function() {
       it('should emit error event on inputContext', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         insertContext.emit('error', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'error', brickName, error);

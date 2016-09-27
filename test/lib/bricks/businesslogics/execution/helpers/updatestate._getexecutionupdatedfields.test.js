@@ -44,15 +44,15 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
       acked: 0,
       canceled: 1,
     };
-    const commandcounts = 4;
+    const commandsCounts = 4;
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(counts, commandcounts);
+      result = helper._getExecutionUpdatedFields(counts, commandsCounts);
     });
 
     it('should return execution update fields', function() {
       expect(result).to.have.property('state', 'pending');
-      expect(result).to.have.property('updatetimestamp', now);
+      expect(result).to.have.property('updateTimestamp', now);
     });
   });
   context('when execution result should be canceled', function() {
@@ -63,15 +63,15 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
       acked: 0,
       canceled: 1,
     };
-    const commandcounts = 4;
+    const commandsCounts = 4;
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(counts, commandcounts);
+      result = helper._getExecutionUpdatedFields(counts, commandsCounts);
     });
 
     it('should return execution update fields', function() {
       expect(result).to.have.property('state', 'canceled');
-      expect(result).to.have.property('updatetimestamp', now);
+      expect(result).to.have.property('updateTimestamp', now);
     });
   });
   context('when execution result should be finished', function() {
@@ -82,15 +82,15 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
       acked: 3,
       canceled: 0,
     };
-    const commandcounts = 4;
+    const commandsCounts = 4;
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(counts, commandcounts);
+      result = helper._getExecutionUpdatedFields(counts, commandsCounts);
     });
 
     it('should return execution update fields', function() {
       expect(result).to.have.property('state', 'finished');
-      expect(result).to.have.property('updatetimestamp', now);
+      expect(result).to.have.property('updateTimestamp', now);
     });
   });
   context('when execution result should be running', function() {
@@ -101,15 +101,15 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
       acked: 0,
       canceled: 1,
     };
-    const commandcounts = 4;
+    const commandsCounts = 4;
     let result;
     before(function() {
-      result = helper._getExecutionUpdatedFields(counts, commandcounts);
+      result = helper._getExecutionUpdatedFields(counts, commandsCounts);
     });
 
     it('should return execution update fields', function() {
       expect(result).to.have.property('state', 'running');
-      expect(result).to.have.property('updatetimestamp', now);
+      expect(result).to.have.property('updateTimestamp', now);
     });
   });
 });

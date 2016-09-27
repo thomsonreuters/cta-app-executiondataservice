@@ -31,8 +31,8 @@ describe('DatabaseInterfaces - MongoDB - GetStatesIndex - _validate', function()
   const mockExecutionId = new ObjectID();
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'getstatesindex',
+      type: 'dbInterface',
+      quality: 'getStatesIndex',
     },
     payload: {
       query: {

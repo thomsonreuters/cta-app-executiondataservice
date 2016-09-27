@@ -47,7 +47,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
         id: 'foo',
         scenarioId: 'bar',
         userId: 'quz',
-        starttimestamp: 1231923018230123,
+        startTimestamp: 1231923018230123,
         instances: [],
       });
       const StubExecutionConstructor = sinon.stub().returns(mockExecution);
@@ -56,8 +56,8 @@ describe('BusinessLogics - Execution - Create - _process', function() {
 
       outputJOB = {
         nature: {
-          type: 'dbinterface',
-          quality: 'insertone',
+          type: 'dbInterface',
+          quality: 'insertOne',
         },
         payload: {
           type: 'execution',
@@ -78,7 +78,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
       helper.cementHelper.createContext.restore();
     });
 
-    it('should send a new Context insertone', function() {
+    it('should send a new Context insertOne', function() {
       sinon.assert.calledWith(helper.cementHelper.createContext, outputJOB);
       sinon.assert.called(mockOutputContext.publish);
     });
@@ -95,7 +95,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
     context('when outputContext emits reject event', function() {
       it('should emit reject event on inputContext', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         mockOutputContext.emit('reject', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'reject', brickName, error);
@@ -105,7 +105,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
     context('when outputContext emits error event', function() {
       it('should emit error event on inputContext', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         mockOutputContext.emit('error', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'error', brickName, error);

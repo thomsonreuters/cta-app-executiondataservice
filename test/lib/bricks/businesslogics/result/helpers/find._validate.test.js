@@ -38,8 +38,8 @@ describe('BusinessLogics - Result - Find - _validate', function() {
         limit: 10,
         offset: 0,
         sort: {
-          starttimestamp: -1,
-          nbresults: 1,
+          startTimestamp: -1,
+          resultsCount: 1,
         },
       },
       query: {

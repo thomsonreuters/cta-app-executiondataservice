@@ -30,8 +30,8 @@ describe('DatabaseInterfaces - MongoDB - FindById - constructor', function() {
   const mockId = new ObjectID();
   const inputJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'findbyid',
+      type: 'dbInterface',
+      quality: 'findById',
     },
     payload: {
       type: 'execution',

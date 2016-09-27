@@ -29,7 +29,7 @@ describe('DatabaseInterfaces - MongoDB - Count - _process', function() {
   const mockExecutionId = new ObjectID();
   const inputJOB = {
     nature: {
-      type: 'dbinterface',
+      type: 'dbInterface',
       quality: 'count',
     },
     payload: {

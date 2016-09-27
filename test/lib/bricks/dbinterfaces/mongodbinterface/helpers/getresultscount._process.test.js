@@ -29,8 +29,8 @@ describe('DatabaseInterfaces - MongoDB - GetResultsCount - _process', function()
   const mockExecutionId = new ObjectID();
   const inputJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'getresultscount',
+      type: 'dbInterface',
+      quality: 'getResultsCount',
     },
     payload: {
       query: {

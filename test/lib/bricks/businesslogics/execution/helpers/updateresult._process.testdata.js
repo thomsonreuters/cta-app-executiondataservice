@@ -9,12 +9,12 @@ const Result = require(nodepath.join(appRootPath,
 
 const execution = new Execution({
   id: (new ObjectID()).toString(),
-  nbresults: 3,
+  resultsCount: 3,
 });
 const DEFAULTINPUTJOB = {
   nature: {
     type: 'execution',
-    quality: 'updateresult',
+    quality: 'updateResult',
   },
   payload: {
     executionId: execution.id,
@@ -84,14 +84,14 @@ const updatedExecutionFields = {
   partial: 0,
   inconclusive: 0,
   ok: 0,
-  nbresults: 0,
-  updatetimestamp: Date.now,
+  resultsCount: 0,
+  updateTimestamp: Date.now,
   result: '',
 };
 results.forEach(function(result) {
   resultsCount[result.status]++;
   updatedExecutionFields[result.status]++;
-  updatedExecutionFields.nbresults++;
+  updatedExecutionFields.resultsCount++;
 });
 if (updatedExecutionFields.failed > 0) {
   updatedExecutionFields.result = 'failed';

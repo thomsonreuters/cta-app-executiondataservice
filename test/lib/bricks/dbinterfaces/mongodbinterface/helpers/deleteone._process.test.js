@@ -30,8 +30,8 @@ describe('DatabaseInterfaces - MongoDB - DeleteOne - _process', function() {
   const mockId = new ObjectID();
   const inputJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'deleteone',
+      type: 'dbInterface',
+      quality: 'deleteOne',
     },
     payload: {
       type: 'execution',

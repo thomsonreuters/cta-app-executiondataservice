@@ -52,13 +52,13 @@ describe('BusinessLogics - Execution - UpdateResult - _getExecutionUpdatedFields
     });
 
     it('should return execution update fields', function() {
-      expect(result).to.have.property('nbresults', 4);
+      expect(result).to.have.property('resultsCount', 4);
       expect(result).to.have.property('failed', 1);
       expect(result).to.have.property('partial', 1);
       expect(result).to.have.property('inconclusive', 1);
       expect(result).to.have.property('ok', 1);
       expect(result).to.have.property('result', 'failed');
-      expect(result).to.have.property('updatetimestamp', now);
+      expect(result).to.have.property('updateTimestamp', now);
     });
   });
   context('when execution result should be partial', function() {
@@ -77,13 +77,13 @@ describe('BusinessLogics - Execution - UpdateResult - _getExecutionUpdatedFields
     });
 
     it('should return execution update fields', function() {
-      expect(result).to.have.property('nbresults', 3);
+      expect(result).to.have.property('resultsCount', 3);
       expect(result).to.have.property('failed', 0);
       expect(result).to.have.property('partial', 1);
       expect(result).to.have.property('inconclusive', 1);
       expect(result).to.have.property('ok', 1);
       expect(result).to.have.property('result', 'partial');
-      expect(result).to.have.property('updatetimestamp', now);
+      expect(result).to.have.property('updateTimestamp', now);
     });
   });
   context('when execution result should be inconclusive', function() {
@@ -102,13 +102,13 @@ describe('BusinessLogics - Execution - UpdateResult - _getExecutionUpdatedFields
     });
 
     it('should return execution update fields', function() {
-      expect(result).to.have.property('nbresults', 2);
+      expect(result).to.have.property('resultsCount', 2);
       expect(result).to.have.property('failed', 0);
       expect(result).to.have.property('partial', 0);
       expect(result).to.have.property('inconclusive', 1);
       expect(result).to.have.property('ok', 1);
       expect(result).to.have.property('result', 'inconclusive');
-      expect(result).to.have.property('updatetimestamp', now);
+      expect(result).to.have.property('updateTimestamp', now);
     });
   });
   context('when execution result should be ok', function() {
@@ -127,13 +127,13 @@ describe('BusinessLogics - Execution - UpdateResult - _getExecutionUpdatedFields
     });
 
     it('should return execution update fields', function() {
-      expect(result).to.have.property('nbresults', 1);
+      expect(result).to.have.property('resultsCount', 1);
       expect(result).to.have.property('failed', 0);
       expect(result).to.have.property('partial', 0);
       expect(result).to.have.property('inconclusive', 0);
       expect(result).to.have.property('ok', 1);
       expect(result).to.have.property('result', 'ok');
-      expect(result).to.have.property('updatetimestamp', now);
+      expect(result).to.have.property('updateTimestamp', now);
     });
   });
 });

@@ -30,8 +30,8 @@ describe('DatabaseInterfaces - MongoDB - InsertOne - _process', function() {
   const mockId = new ObjectID();
   const inputJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'insertone',
+      type: 'dbInterface',
+      quality: 'insertOne',
     },
     payload: {
       type: 'execution',
