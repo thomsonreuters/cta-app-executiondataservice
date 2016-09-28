@@ -32,8 +32,8 @@ describe('DatabaseInterfaces - MongoDB - DeleteOne - _validate', function() {
   const mockId = new ObjectID();
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'deleteone',
+      type: 'dbInterface',
+      quality: 'deleteOne',
     },
     payload: {
       type: 'execution',

@@ -30,8 +30,8 @@ describe('DatabaseInterfaces - MongoDB - Find - _validate', function() {
   let helper;
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'findbyid',
+      type: 'dbInterface',
+      quality: 'findById',
     },
     payload: {
       type: 'execution',

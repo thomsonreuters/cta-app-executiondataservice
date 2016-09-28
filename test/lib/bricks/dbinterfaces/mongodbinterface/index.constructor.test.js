@@ -31,6 +31,18 @@ describe('DatabaseInterfaces - MongoDB - Constructor', function() {
     let Interface;
     let instance;
     const mockHelpers = new Map();
+    const helpersCamelCasedNames = {
+      'count.js': 'count',
+      'deleteone.js': 'deleteOne',
+      'find.js': 'find',
+      'findbyid.js': 'findById',
+      'getresultscount.js': 'getResultsCount',
+      'getresultsindex.js': 'getResultsIndex',
+      'getstatescount.js': 'getStatesCount',
+      'getstatesindex.js': 'getStatesIndex',
+      'insertone.js': 'insertOne',
+      'updateone.js': 'updateOne',
+    };
     before(function() {
       // stubs all helpers available in the helpers directory
       const helpersDirectory = nodepath.join(appRootPath,
@@ -60,10 +72,10 @@ describe('DatabaseInterfaces - MongoDB - Constructor', function() {
 
     it('should instantiate all available helpers', function() {
       mockHelpers.forEach((value, key) => {
-        const noExtName = key.endsWith('.js') ? key.slice(0, -3) : key;
+        const helperName = helpersCamelCasedNames[key];
         sinon.assert.calledWith(value.MockConstructor, instance.cementHelper, instance.logger);
-        expect(instance.helpers.has(noExtName)).to.equal(true);
-        expect(instance.helpers.get(noExtName))
+        expect(instance.helpers.has(helperName)).to.equal(true);
+        expect(instance.helpers.get(helperName))
           .to.equal(value.MockConstructor.returnValues[0]);
       });
     });

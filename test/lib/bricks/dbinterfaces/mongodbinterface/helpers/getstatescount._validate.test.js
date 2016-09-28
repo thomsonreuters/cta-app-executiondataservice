@@ -31,8 +31,8 @@ describe('DatabaseInterfaces - MongoDB - GetStatesCount - _validate', function()
   const mockExecutionId = new ObjectID();
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'getresultscount',
+      type: 'dbInterface',
+      quality: 'getResultsCount',
     },
     payload: {
       query: {

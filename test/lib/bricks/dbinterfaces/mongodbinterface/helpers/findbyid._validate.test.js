@@ -32,8 +32,8 @@ describe('DatabaseInterfaces - MongoDB - FindById - _validate', function() {
   const mockId = new ObjectID();
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'findbyid',
+      type: 'dbInterface',
+      quality: 'findById',
     },
     payload: {
       type: 'execution',

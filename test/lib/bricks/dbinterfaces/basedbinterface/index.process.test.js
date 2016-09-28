@@ -36,7 +36,7 @@ describe('DatabaseInterfaces - BaseDBInterface - process', function() {
     },
     payload: {},
   };
-  let dbinterface;
+  let dbInterface;
   before(function () {
     // create some mock helpers
     const MockHelper = function (cementHelper) {
@@ -49,9 +49,9 @@ describe('DatabaseInterfaces - BaseDBInterface - process', function() {
         },
       };
     };
-    dbinterface = new Interface(DEFAULTCEMENTHELPER, DEFAULTCONFIG);
-    dbinterface.helpers.set(helperName,
-      new MockHelper(dbinterface.cementHelper, dbinterface.logger));
+    dbInterface = new Interface(DEFAULTCEMENTHELPER, DEFAULTCONFIG);
+    dbInterface.helpers.set(helperName,
+      new MockHelper(dbInterface.cementHelper, dbInterface.logger));
   });
 
   after(function () {
@@ -63,17 +63,17 @@ describe('DatabaseInterfaces - BaseDBInterface - process', function() {
     let result;
     before(function () {
       sinon.stub(Brick.prototype, 'validate').resolves();
-      sinon.stub(dbinterface.helpers.get(helperName), '_process').withArgs(context).returns(true);
-      result = dbinterface.process(context);
+      sinon.stub(dbInterface.helpers.get(helperName), '_process').withArgs(context).returns(true);
+      result = dbInterface.process(context);
     });
     after(function () {
       Brick.prototype.validate.restore();
-      dbinterface.helpers.get(helperName)._process.restore();
+      dbInterface.helpers.get(helperName)._process.restore();
     });
 
     it('should return provider _validate() result', function () {
       return expect(result).to.be.equal(
-        dbinterface.helpers.get(helperName)._process.returnValues[0]
+        dbInterface.helpers.get(helperName)._process.returnValues[0]
       );
     });
   });

@@ -43,7 +43,7 @@ describe('Utils - RESTAPI - Handlers - Executions - findById', function() {
       data = {
         nature: {
           type: 'execution',
-          quality: 'findbyid',
+          quality: 'findById',
         },
         payload: {
           id: req.params.id,

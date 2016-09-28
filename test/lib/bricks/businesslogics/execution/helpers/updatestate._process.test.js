@@ -34,8 +34,8 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
     const findExecutionJob = {
       nature: {
-        type: 'dbinterface',
-        quality: 'findbyid',
+        type: 'dbInterface',
+        quality: 'findById',
       },
       payload: {
         type: 'execution',
@@ -47,8 +47,8 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
     const findStatesJob = {
       nature: {
-        type: 'dbinterface',
-        quality: 'getstatescount',
+        type: 'dbInterface',
+        quality: 'getStatesCount',
       },
       payload: {
         filter: {
@@ -67,8 +67,8 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
     const updateExecutionJob = {
       nature: {
-        type: 'dbinterface',
-        quality: 'updateone',
+        type: 'dbInterface',
+        quality: 'updateOne',
       },
       payload: {
         type: 'execution',
@@ -160,7 +160,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
           context('when finalizeExecutionContext emits reject event', function() {
             const error = new Error('mockError');
-            const brickName = 'dbinterface';
+            const brickName = 'dbInterface';
             before(function() {
               finalizeExecutionContext.emit('reject', brickName, error);
             });
@@ -172,7 +172,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
           context('when finalizeExecutionContext emits error event', function() {
             const error = new Error('mockError');
-            const brickName = 'dbinterface';
+            const brickName = 'dbInterface';
             before(function() {
               finalizeExecutionContext.emit('error', brickName, error);
             });
@@ -185,7 +185,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
         context('when updateExecutionContext emits reject event', function() {
           const error = new Error('mockError');
-          const brickName = 'dbinterface';
+          const brickName = 'dbInterface';
           before(function() {
             updateExecutionContext.emit('reject', brickName, error);
           });
@@ -197,7 +197,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
         context('when updateExecutionContext emits error event', function() {
           const error = new Error('mockError');
-          const brickName = 'dbinterface';
+          const brickName = 'dbInterface';
           before(function() {
             updateExecutionContext.emit('error', brickName, error);
           });
@@ -210,7 +210,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
       context('when findStatesContext emits reject event', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         before(function() {
           findStatesContext.emit('reject', brickName, error);
         });
@@ -222,7 +222,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
       context('when findStatesContext emits error event', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         before(function() {
           findStatesContext.emit('error', brickName, error);
         });
@@ -235,7 +235,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
     context('when findExecutionContext emits reject event', function() {
       const error = new Error('mockError');
-      const brickName = 'dbinterface';
+      const brickName = 'dbInterface';
       before(function() {
         findExecutionContext.emit('reject', brickName, error);
       });
@@ -247,7 +247,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
     context('when findExecutionContext emits error event', function() {
       const error = new Error('mockError');
-      const brickName = 'dbinterface';
+      const brickName = 'dbInterface';
       before(function() {
         findExecutionContext.emit('error', brickName, error);
       });

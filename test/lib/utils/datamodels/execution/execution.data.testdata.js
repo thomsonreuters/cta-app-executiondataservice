@@ -5,9 +5,9 @@ const data = {
   scenarioId: (new ObjectID()).toString(),
   // configuration: (new ObjectID()).toString(),
   userId: (new ObjectID()).toString(),
-  starttimestamp: Date.now,
-  updatetimestamp: Date.now,
-  commandcount: 1,
+  startTimestamp: Date.now,
+  updateTimestamp: Date.now,
+  commandsCount: 1,
   state: 'pending', // pending,running,acked, cancelled, finished
   // cancel: {
   //   mode: String,
@@ -21,7 +21,7 @@ const data = {
   // partial: Long,
   // inconclusive: Long,
   // failed: Long,
-  // nbresults: Long, // sum(ok, partial...)
+  // resultsCount: Long, // sum(ok, partial...)
   // done: Boolean,
   // instances: Array,
 };

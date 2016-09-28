@@ -31,8 +31,8 @@ describe('DatabaseInterfaces - MongoDB - GetResultsIndex - _validate', function(
   const mockExecutionId = new ObjectID();
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'dbinterface',
-      quality: 'getresultsindex',
+      type: 'dbInterface',
+      quality: 'getResultsIndex',
     },
     payload: {
       query: {

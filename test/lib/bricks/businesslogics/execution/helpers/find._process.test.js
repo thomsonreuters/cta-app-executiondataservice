@@ -38,8 +38,8 @@ describe('BusinessLogics - Execution - Find - _process', function() {
           limit: 10,
           offset: 0,
           sort: {
-            starttimestamp: -1,
-            nbresults: 1,
+            startTimestamp: -1,
+            resultsCount: 1,
           },
         },
         query: {
@@ -55,7 +55,7 @@ describe('BusinessLogics - Execution - Find - _process', function() {
 
       outputJOB = {
         nature: {
-          type: 'dbinterface',
+          type: 'dbInterface',
           quality: 'find',
         },
         payload: {
@@ -82,7 +82,7 @@ describe('BusinessLogics - Execution - Find - _process', function() {
     context('when outputContext emits done event', function() {
       it('should emit done event on inputContext', function() {
         const response = {};
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         mockOutputContext.emit('done', brickName, response);
         sinon.assert.calledWith(mockInputContext.emit,
           'done', helper.cementHelper.brickName, response);
@@ -92,7 +92,7 @@ describe('BusinessLogics - Execution - Find - _process', function() {
     context('when outputContext emits reject event', function() {
       it('should emit reject event on inputContext', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         mockOutputContext.emit('reject', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'reject', brickName, error);
@@ -102,7 +102,7 @@ describe('BusinessLogics - Execution - Find - _process', function() {
     context('when outputContext emits error event', function() {
       it('should emit error event on inputContext', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         mockOutputContext.emit('error', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'error', brickName, error);

@@ -7,7 +7,7 @@ const config = {
   publish: [],
   subscribe: [
     {
-      topic: 'dbinterface',
+      topic: 'dbInterface',
       data: [
         {},
       ],

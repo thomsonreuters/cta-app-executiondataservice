@@ -32,7 +32,7 @@ describe('DatabaseInterfaces - MongoDB - Count - _validate', function() {
   const mockExecutionId = new ObjectID();
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'dbinterface',
+      type: 'dbInterface',
       quality: 'count',
     },
     payload: {

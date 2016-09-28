@@ -7,7 +7,7 @@ const Execution = require(nodepath.join(appRootPath,
 
 const execution = new Execution({
   id: (new ObjectID()).toString(),
-  nbresults: 3,
+  resultsCount: 3,
   state: 'finished',
 });
 const DEFAULTINPUTJOB = {

@@ -34,8 +34,8 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
     const findExecutionJob = {
       nature: {
-        type: 'dbinterface',
-        quality: 'findbyid',
+        type: 'dbInterface',
+        quality: 'findById',
       },
       payload: {
         type: 'execution',
@@ -47,7 +47,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
     const countResultsJob = {
       nature: {
-        type: 'dbinterface',
+        type: 'dbInterface',
         quality: 'count',
       },
       payload: {
@@ -62,8 +62,8 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
     const aggregateResultsJob = {
       nature: {
-        type: 'dbinterface',
-        quality: 'getresultscount',
+        type: 'dbInterface',
+        quality: 'getResultsCount',
       },
       payload: {
         query: {
@@ -76,14 +76,14 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
     const updateExecutionJob = {
       nature: {
-        type: 'dbinterface',
-        quality: 'updateone',
+        type: 'dbInterface',
+        quality: 'updateOne',
       },
       payload: {
         type: 'execution',
         id: DEFAULTINPUTJOB.payload.executionId,
         filter: {
-          nbresults: { $lt: DATA.count },
+          resultsCount: { $lt: DATA.count },
         },
         content: DATA.updatedExecutionFields,
       },
@@ -196,7 +196,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
                 context('when finalizeExecutionContext emits reject event', function() {
                   const error = new Error('mockError');
-                  const brickName = 'dbinterface';
+                  const brickName = 'dbInterface';
                   before(function() {
                     finalizeExecutionContext.emit('reject', brickName, error);
                   });
@@ -208,7 +208,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
                 context('when finalizeExecutionContext emits error event', function() {
                   const error = new Error('mockError');
-                  const brickName = 'dbinterface';
+                  const brickName = 'dbInterface';
                   before(function() {
                     finalizeExecutionContext.emit('error', brickName, error);
                   });
@@ -222,7 +222,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
             context('when updateExecutionContext emits reject event', function() {
               const error = new Error('mockError');
-              const brickName = 'dbinterface';
+              const brickName = 'dbInterface';
               before(function() {
                 updateExecutionContext.emit('reject', brickName, error);
               });
@@ -234,7 +234,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
             context('when updateExecutionContext emits error event', function() {
               const error = new Error('mockError');
-              const brickName = 'dbinterface';
+              const brickName = 'dbInterface';
               before(function() {
                 updateExecutionContext.emit('error', brickName, error);
               });
@@ -247,7 +247,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
           context('when aggregateResultsContext emits reject event', function() {
             const error = new Error('mockError');
-            const brickName = 'dbinterface';
+            const brickName = 'dbInterface';
             before(function() {
               aggregateResultsContext.emit('reject', brickName, error);
             });
@@ -259,7 +259,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
           context('when aggregateResultsContext emits error event', function() {
             const error = new Error('mockError');
-            const brickName = 'dbinterface';
+            const brickName = 'dbInterface';
             before(function() {
               aggregateResultsContext.emit('error', brickName, error);
             });
@@ -284,7 +284,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
       context('when countResultsContext emits reject event', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         before(function() {
           countResultsContext.emit('reject', brickName, error);
         });
@@ -296,7 +296,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
       context('when countResultsContext emits error event', function() {
         const error = new Error('mockError');
-        const brickName = 'dbinterface';
+        const brickName = 'dbInterface';
         before(function() {
           countResultsContext.emit('error', brickName, error);
         });
@@ -309,7 +309,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
     context('when findExecutionContext emits reject event', function() {
       const error = new Error('mockError');
-      const brickName = 'dbinterface';
+      const brickName = 'dbInterface';
       before(function() {
         findExecutionContext.emit('reject', brickName, error);
       });
@@ -321,7 +321,7 @@ describe('BusinessLogics - Execution - UpdateResult - _process', function() {
 
     context('when findExecutionContext emits error event', function() {
       const error = new Error('mockError');
-      const brickName = 'dbinterface';
+      const brickName = 'dbInterface';
       before(function() {
         findExecutionContext.emit('error', brickName, error);
       });

@@ -9,12 +9,12 @@ const State = require(nodepath.join(appRootPath,
 
 const execution = new Execution({
   id: (new ObjectID()).toString(),
-  commandcount: 1,
+  commandsCount: 1,
 });
 const DEFAULTINPUTJOB = {
   nature: {
     type: 'execution',
-    quality: 'updatestate',
+    quality: 'updateState',
   },
   payload: {
     executionId: execution.id,

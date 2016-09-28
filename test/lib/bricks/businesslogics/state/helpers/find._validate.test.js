@@ -38,7 +38,7 @@ describe('BusinessLogics - State - Find - _validate', function() {
         limit: 10,
         offset: 0,
         sort: {
-          starttimestamp: -1,
+          startTimestamp: -1,
           nbstatees: 1,
         },
       },

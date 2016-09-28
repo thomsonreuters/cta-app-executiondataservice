@@ -31,6 +31,16 @@ describe('BusinessLogics - Execution - constructor', function() {
   context('when everything ok', function() {
     let Logic;
     let logic;
+    const helpersCamelCasedNames = {
+      'create.js': 'create',
+      'delete.js': 'delete',
+      'finalize.js': 'finalize',
+      'find.js': 'find',
+      'findbyid.js': 'findById',
+      'update.js': 'update',
+      'updateresult.js': 'updateResult',
+      'updatestate.js': 'updateState',
+    };
     const mockHelpers = new Map();
     before(function() {
       // stubs all helpers available in the helpers directory
@@ -61,10 +71,10 @@ describe('BusinessLogics - Execution - constructor', function() {
 
     it('should instantiate all available helpers', function() {
       mockHelpers.forEach((value, key) => {
-        const noExtName = key.endsWith('.js') ? key.slice(0, -3) : key;
+        const helperName = helpersCamelCasedNames[key];
         sinon.assert.calledWith(value.MockConstructor, logic.cementHelper, logic.logger);
-        expect(logic.helpers.has(noExtName)).to.equal(true);
-        expect(logic.helpers.get(noExtName))
+        expect(logic.helpers.has(helperName)).to.equal(true);
+        expect(logic.helpers.get(helperName))
           .to.equal(value.MockConstructor.returnValues[0]);
       });
     });
