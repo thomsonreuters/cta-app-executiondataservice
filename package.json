@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.sami.int.thomsonreuters.com:compass/cta-tool-boilerplate.git"
+    "url": "git@git.sami.int.thomsonreuters.com:compass/cta-app-executiondataservice.git"
   },
   "engines": {
     "node": "6.6.0"
