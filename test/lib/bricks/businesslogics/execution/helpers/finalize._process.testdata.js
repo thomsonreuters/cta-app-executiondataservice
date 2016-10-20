@@ -53,6 +53,9 @@ const noGapStatesIndexes = {
   machine2: {
     maxidx: 3,
   },
+  machine3: {
+    maxidx: 0,
+  },
 };
 
 const gapStatesIndexes = {
@@ -61,6 +64,9 @@ const gapStatesIndexes = {
   },
   machine2: {
     maxidx: 3,
+  },
+  machine3: {
+    maxidx: 0,
   },
 };
 
