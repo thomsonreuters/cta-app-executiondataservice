@@ -18,7 +18,10 @@ describe('Data Model - Result - Keys', function() {
         // scenarioId: { type: 'identifier' },
         // configurationId: { type: 'identifier' },
         // testsuiteId: { type: 'identifier' },
-        testId: { type: 'identifier' },
+        testId: [
+          { type: 'identifier' },
+          { type: 'string' },
+        ],
         status: { type: 'string' },
         timestamp: { type: 'number', optional: true },
         // parentId: { type: 'identifier', optional: true },

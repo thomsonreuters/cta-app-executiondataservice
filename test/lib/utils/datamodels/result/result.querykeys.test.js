@@ -18,7 +18,10 @@ describe('Data Model - Result - QueryKeys', function() {
         // scenarioId: { type: 'identifier', optional: true },
         // configurationId: { type: 'identifier', optional: true },
         // testsuiteId: { type: 'identifier', optional: true },
-        testId: { type: 'identifier', optional: true },
+        testId: [
+          { type: 'identifier', optional: true },
+          { type: 'string', optional: true },
+        ],
         timestamp: { type: 'number', optional: true },
         // parentId: { type: 'identifier', optional: true },
         status: { type: 'string', optional: true },
