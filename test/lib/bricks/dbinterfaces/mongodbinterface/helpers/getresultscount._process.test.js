@@ -62,7 +62,7 @@ describe('DatabaseInterfaces - MongoDB - GetResultsCount - _process', function()
         },
         {
           $group: {
-            _id: '$testId',
+            _id: { testId: '$testId', hostname: '$hostname' },
             doc: { $first: '$$ROOT' },
           },
         },
