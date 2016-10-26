@@ -28,6 +28,8 @@ describe('Data Model - Result', function() {
     expect(object).to.have.property('name', data.name);
     expect(object).to.have.property('description', data.description);
     expect(object).to.have.property('screenshot', data.screenshot);
+    expect(object).to.have.property('attachment', data.attachment);
+    expect(object).to.have.property('build', data.build);
     expect(object).to.have.property('custom', data.custom);
     expect(object).to.have.property('index', data.index);
   });

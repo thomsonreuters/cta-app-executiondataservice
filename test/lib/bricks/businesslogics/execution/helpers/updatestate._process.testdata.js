@@ -10,6 +10,7 @@ const State = require(nodepath.join(appRootPath,
 const execution = new Execution({
   id: (new ObjectID()).toString(),
   commandsCount: 1,
+  completed: false,
 });
 const DEFAULTINPUTJOB = {
   nature: {

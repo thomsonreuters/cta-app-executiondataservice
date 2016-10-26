@@ -30,6 +30,9 @@ describe('Data Model - Result - QueryKeys', function() {
         type: { type: 'string', optional: true },
         name: { type: 'string', optional: true },
         description: { type: 'string', optional: true },
+        screenshot: { type: 'string', optional: true },
+        attachment: { type: 'string', optional: true },
+        build: { type: 'string', optional: true },
         custom: { type: 'object', optional: true },
         index: { type: 'number', optional: true },
       };

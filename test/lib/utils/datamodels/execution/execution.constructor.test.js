@@ -21,6 +21,9 @@ describe('Data Model - Execution', function() {
     expect(object).to.have.property('startTimestamp', data.startTimestamp);
     expect(object).to.have.property('updateTimestamp', data.updateTimestamp);
 
+    expect(object).to.have.property('pendingTimeout', data.pendingTimeout);
+    expect(object).to.have.property('runningTimeout', data.runningTimeout);
+
     expect(object).to.have.property('result', data.result);
     expect(object).to.have.property('ok', data.ok || 0);
     expect(object).to.have.property('partial', data.partial || 0);

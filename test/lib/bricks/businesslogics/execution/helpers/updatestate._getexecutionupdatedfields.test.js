@@ -78,7 +78,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
     const counts = {
       pending: 4,
       running: 2,
-      finished: 1,
+      finished: 4,
       acked: 3,
       canceled: 0,
     };
