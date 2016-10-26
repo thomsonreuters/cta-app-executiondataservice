@@ -15,7 +15,10 @@ describe('Data Model - State - Keys', function() {
       const keys = {
         id: { type: 'identifier' },
         executionId: { type: 'identifier' },
+        testSuiteId: { type: 'identifier', optional: true },
+        testId: { type: 'identifier', optional: true },
         status: { type: 'string' },
+        message: { type: 'string', optional: true },
         timestamp: { type: 'number', optional: true },
         ip: { type: 'string', optional: true },
         hostname: { type: 'string', optional: true },

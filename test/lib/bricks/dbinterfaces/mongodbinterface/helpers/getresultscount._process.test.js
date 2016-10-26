@@ -58,7 +58,7 @@ describe('DatabaseInterfaces - MongoDB - GetResultsCount - _process', function()
           $match: mongoDbMatch,
         },
         {
-          $sort: { timestamp: -1 },
+          $sort: { index: -1 },
         },
         {
           $group: {

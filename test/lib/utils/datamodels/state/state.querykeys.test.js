@@ -15,8 +15,11 @@ describe('Data Model - State - QueryKeys', function() {
       const keys = {
         id: { type: 'identifier', optional: true },
         executionId: { type: 'identifier', optional: true },
+        testSuiteId: { type: 'identifier', optional: true },
+        testId: { type: 'identifier', optional: true },
         timestamp: { type: 'number', optional: true },
         status: { type: 'string', optional: true },
+        message: { type: 'string', optional: true },
         ip: { type: 'string', optional: true },
         hostname: { type: 'string', optional: true },
         index: { type: 'number', optional: true },

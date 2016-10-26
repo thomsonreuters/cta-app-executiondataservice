@@ -20,6 +20,9 @@ describe('Data Model - Execution - Keys', function() {
         // timestamps related fields
         startTimestamp: { type: 'number', optional: true },
         updateTimestamp: { type: 'number', optional: true },
+        // timeouts related fields
+        pendingTimeout: { type: 'number', optional: true },
+        runningTimeout: { type: 'number', optional: true },
         // results related fields
         result: { type: 'string', optional: true },
         ok: { type: 'number', optional: true },
