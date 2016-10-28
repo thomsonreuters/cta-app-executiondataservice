@@ -25,6 +25,11 @@ const DEFAULTCEMENTHELPER = {
   },
   createContext: function() {},
 };
+const DEFAULTAPIURLS = {
+  executionApiUrl: 'http://localhost:3010/',
+  schedulerApiUrl: 'http://localhost:3011/',
+  jobManagerApiUrl: 'http://localhost:3012/',
+};
 const SAMPLE = require('./create.sample.testdata.js');
 
 describe('BusinessLogics - Execution - Create - _validate', function() {
@@ -37,7 +42,7 @@ describe('BusinessLogics - Execution - Create - _validate', function() {
     payload: SAMPLE,
   };
   before(function() {
-    helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+    helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER, DEFAULTAPIURLS);
   });
   context('when everything ok', function() {
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, DEFAULTINPUTJOB);

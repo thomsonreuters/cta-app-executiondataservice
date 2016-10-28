@@ -25,12 +25,17 @@ const DEFAULTCEMENTHELPER = {
   },
   createContext: function() {},
 };
+const DEFAULTAPIURLS = {
+  executionApiUrl: 'http://localhost:3010/',
+  schedulerApiUrl: 'http://localhost:3011/',
+  jobManagerApiUrl: 'http://localhost:3012/',
+};
 
 describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields', function() { // eslint-disable-line max-len
   let helper;
   const now = Date.now();
   before(function() {
-    helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+    helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER, DEFAULTAPIURLS);
     sinon.stub(Date, 'now').returns(now);
   });
   after(function() {

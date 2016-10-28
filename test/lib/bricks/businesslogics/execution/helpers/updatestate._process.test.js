@@ -24,6 +24,11 @@ const DEFAULTCEMENTHELPER = {
   },
   createContext: function() {},
 };
+const DEFAULTAPIURLS = {
+  executionApiUrl: 'http://localhost:3010/',
+  schedulerApiUrl: 'http://localhost:3011/',
+  jobManagerApiUrl: 'http://localhost:3012/',
+};
 const DATA = require('./updatestate._process.testdata.js');
 
 describe('BusinessLogics - Execution - UpdateState - _process', function() {
@@ -94,7 +99,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
-      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER, DEFAULTAPIURLS);
       // sinon.stub(helper, '_getExecutionUpdatedFields').returns(DATA.updatedExecutionFields);
       sinon.stub(helper.cementHelper, 'createContext')
         .onCall(0)

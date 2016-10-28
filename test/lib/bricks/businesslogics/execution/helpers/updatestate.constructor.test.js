@@ -4,6 +4,7 @@ const appRootPath = require('app-root-path').path;
 const chai = require('chai');
 const expect = chai.expect;
 const nodepath = require('path');
+const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Base = require(nodepath.join(appRootPath,
@@ -22,12 +23,17 @@ const DEFAULTCEMENTHELPER = {
     logger: DEFAULTLOGGER,
   },
 };
+const DEFAULTAPIURLS = {
+  executionApiUrl: 'http://localhost:3010/',
+  schedulerApiUrl: 'http://localhost:3011/',
+  jobManagerApiUrl: 'http://localhost:3012/',
+};
 
 describe('BusinessLogics - Execution - UpdateState - constructor', function() {
   context('when everything ok', function() {
     let helper;
     before(function() {
-      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER, DEFAULTAPIURLS);
     });
 
     it('should extend BaseHelper', function() {
@@ -36,6 +42,51 @@ describe('BusinessLogics - Execution - UpdateState - constructor', function() {
 
     it('should return a handler instance', function() {
       expect(helper).to.be.an.instanceof(Helper);
+    });
+  });
+
+  context('when missing/incorrect executionApiUrl', function() {
+    const apiURLS = _.cloneDeep(DEFAULTAPIURLS);
+    before(function() {
+      delete apiURLS.executionApiUrl;
+    });
+
+    it('should throw an Error', function() {
+      return expect(function() {
+        return new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER, apiURLS);
+      }).to.throw(Error,
+        'missing/incorrect \'executionApiUrl\' string in application global properties'
+      );
+    });
+  });
+
+  context('when missing/incorrect schedulerApiUrl', function() {
+    const apiURLS = _.cloneDeep(DEFAULTAPIURLS);
+    before(function() {
+      delete apiURLS.schedulerApiUrl;
+    });
+
+    it('should throw an Error', function() {
+      return expect(function() {
+        return new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER, apiURLS);
+      }).to.throw(Error,
+        'missing/incorrect \'schedulerApiUrl\' string in application global properties'
+      );
+    });
+  });
+
+  context('when missing/incorrect jobManagerApiUrl', function() {
+    const apiURLS = _.cloneDeep(DEFAULTAPIURLS);
+    before(function() {
+      delete apiURLS.jobManagerApiUrl;
+    });
+
+    it('should throw an Error', function() {
+      return expect(function() {
+        return new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER, apiURLS);
+      }).to.throw(Error,
+        'missing/incorrect \'jobManagerApiUrl\' string in application global properties'
+      );
     });
   });
 });
