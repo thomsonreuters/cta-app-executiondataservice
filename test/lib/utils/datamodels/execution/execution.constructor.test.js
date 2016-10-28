@@ -20,6 +20,7 @@ describe('Data Model - Execution', function() {
 
     expect(object).to.have.property('startTimestamp', data.startTimestamp);
     expect(object).to.have.property('updateTimestamp', data.updateTimestamp);
+    expect(object).to.have.property('completedTimestamp', data.completedTimestamp);
 
     expect(object).to.have.property('pendingTimeout', data.pendingTimeout);
     expect(object).to.have.property('runningTimeout', data.runningTimeout);
@@ -35,6 +36,5 @@ describe('Data Model - Execution', function() {
     expect(object).to.have.property('commandsCount', data.commandsCount);
     expect(object).to.have.property('state', data.state);
     expect(object).to.have.property('cancelDetails', data.cancelDetails);
-    expect(object).to.have.property('completed', data.completed || false);
   });
 });

@@ -20,6 +20,7 @@ describe('Data Model - Execution - QueryKeys', function() {
         // timestamps related fields
         startTimestamp: { type: 'number', optional: true },
         updateTimestamp: { type: 'number', optional: true },
+        completedTimestamp: { type: 'number', optional: true },
         // timeouts related fields
         pendingTimeout: { type: 'number', optional: true },
         runningTimeout: { type: 'number', optional: true },
@@ -35,7 +36,6 @@ describe('Data Model - Execution - QueryKeys', function() {
         commandsCount: { type: 'number', optional: true },
         state: { type: 'string', optional: true },
         cancelDetails: { type: 'object', optional: true },
-        completed: { type: 'boolean', optional: true },
       };
       expect(_.isEqual(Model.queryKeys(), keys)).to.be.equal(true);
     });

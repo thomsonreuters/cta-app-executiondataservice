@@ -71,7 +71,7 @@ const gapStatesIndexes = {
 };
 
 const updatedExecutionFields = {
-  completed: true,
+  completedTimestamp: Date.now(),
 };
 
 module.exports = {
