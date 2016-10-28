@@ -118,7 +118,7 @@ describe('BusinessLogics - Execution - Finalize - _process', function() {
       context('when execution has already been completed', function() {
         const execution = _.cloneDeep(DATA.execution);
         before(function() {
-          execution.completed = true;
+          execution.completedTimestamp = Date.now();
           findExecutionContext.emit('done', 'dblayer', execution);
         });
 
