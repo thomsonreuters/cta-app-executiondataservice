@@ -6,12 +6,13 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const nodepath = require('path');
+const ObjectID = require('bson').ObjectID;
 const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers', 'updatestate.js'));
+  '/lib/bricks/businesslogics/execution/helpers', 'cancel.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -30,11 +31,19 @@ const DEFAULTAPIURLS = {
   schedulerApiUrl: 'http://localhost:3011/',
   jobManagerApiUrl: 'http://localhost:3012/',
 };
-const DATA = require('./updatestate._process.testdata.js');
 
-describe('BusinessLogics - Execution - UpdateState - _validate', function() {
+describe('BusinessLogics - Execution - Cancel - _validate', function() {
   let helper;
-  const DEFAULTINPUTJOB = DATA.job;
+  const mockId = new ObjectID();
+  const DEFAULTINPUTJOB = {
+    nature: {
+      type: 'execution',
+      quality: 'findById',
+    },
+    payload: {
+      id: mockId.toString(),
+    },
+  };
   before(function() {
     helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER, DEFAULTAPIURLS);
   });
@@ -53,23 +62,23 @@ describe('BusinessLogics - Execution - UpdateState - _validate', function() {
 
   context('when payload.id is not a String', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.executionId = {};
+    job.payload.id = {};
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
       return expect(validatePromise).to.eventually
-        .be.rejectedWith(Error, 'missing/incorrect \'executionId\' identifier in job payload');
+        .be.rejectedWith(Error, 'missing/incorrect \'id\' String value of ObjectID in job payload');
     });
   });
 
   context('when payload.id is not a String value of ObjectID', function() {
     const job = _.cloneDeep(DEFAULTINPUTJOB);
-    job.payload.executionId = 'sdfsdf';
+    job.payload.id = 'sdfsdf';
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, job);
     it('should reject', function() {
       const validatePromise = helper._validate(mockInputContext);
       return expect(validatePromise).to.eventually
-        .be.rejectedWith(Error, 'missing/incorrect \'executionId\' identifier in job payload');
+        .be.rejectedWith(Error, 'missing/incorrect \'id\' String value of ObjectID in job payload');
     });
   });
 });

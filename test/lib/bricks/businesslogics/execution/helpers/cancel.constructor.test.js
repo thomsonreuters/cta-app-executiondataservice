@@ -10,7 +10,7 @@ const Logger = require('cta-logger');
 const Base = require(nodepath.join(appRootPath,
   '/lib/bricks/businesslogics/base/', 'basehelper.js'));
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'create.js'));
+  '/lib/bricks/businesslogics/execution/helpers/', 'cancel.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -34,7 +34,7 @@ const DEFAULTAPIURLS = {
   jobManagerApiUrl: 'http://localhost:3012/',
 };
 
-describe('BusinessLogics - Execution - Create - constructor', function() {
+describe('BusinessLogics - Execution - Cancel - constructor', function() {
   context('when everything ok', function() {
     let helper;
     before(function() {

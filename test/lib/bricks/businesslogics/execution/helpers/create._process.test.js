@@ -4,6 +4,9 @@ const appRootPath = require('app-root-path').path;
 const sinon = require('sinon');
 const requireSubvert = require('require-subvert')(__dirname);
 const nodepath = require('path');
+const ObjectID = require('bson').ObjectID;
+const nodeUrl = require('url');
+const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
@@ -26,6 +29,11 @@ const DEFAULTCEMENTHELPER = {
   },
   createContext: function() {},
 };
+const DEFAULTAPIURLS = {
+  executionApiUrl: 'http://localhost:3010/',
+  schedulerApiUrl: 'http://localhost:3011/',
+  jobManagerApiUrl: 'http://localhost:3012/',
+};
 
 describe('BusinessLogics - Execution - Create - _process', function() {
   let helper;
@@ -38,23 +46,33 @@ describe('BusinessLogics - Execution - Create - _process', function() {
       payload: {},
     };
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, inputJOB);
-    let mockOutputContext;
-    let outputJOB;
+    let insertExecutionContext;
+    let insertExecutionJob;
+    let createScheduleContext;
+    let createScheduleJob;
+    let updateExecutionContext;
+    let updateExecutionJob;
+    let mockExecution;
+    let mockSchedule;
     before(function() {
       sinon.stub(mockInputContext, 'emit');
+      const now = Date.now();
+      sinon.stub(Date, 'now').returns(now);
 
-      const mockExecution = new Execution({
-        id: 'foo',
+      mockExecution = new Execution({
+        id: (new ObjectID()).toString(),
         scenarioId: 'bar',
         userId: 'quz',
         startTimestamp: 1231923018230123,
         instances: [],
+        pendingTimeout: 1000,
       });
       const StubExecutionConstructor = sinon.stub().returns(mockExecution);
       requireSubvert.subvert(pathToExecution, StubExecutionConstructor);
       Helper = requireSubvert.require(pathToHelper);
+      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER, DEFAULTAPIURLS);
 
-      outputJOB = {
+      insertExecutionJob = {
         nature: {
           type: 'dbInterface',
           quality: 'insertOne',
@@ -64,31 +82,150 @@ describe('BusinessLogics - Execution - Create - _process', function() {
           content: mockExecution,
         },
       };
-      mockOutputContext = new Context(DEFAULTCEMENTHELPER, outputJOB);
-      mockOutputContext.publish = sinon.stub();
+      insertExecutionContext = new Context(DEFAULTCEMENTHELPER, insertExecutionJob);
+      insertExecutionContext.publish = sinon.stub();
 
-      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+      const pendingTimestamp = now + mockExecution.pendingTimeout;
+      createScheduleJob = {
+        nature: {
+          type: 'request',
+          quality: 'post',
+        },
+        payload: {
+          url: nodeUrl.resolve(helper.schedulerApiUrl, '/schedules'),
+          body: {
+            schedule: pendingTimestamp,
+            rest: {
+              url: nodeUrl.resolve(helper.executionApiUrl,
+                `/executions/${mockExecution.id}/actions`),
+              method: 'POST',
+              headers: {},
+              body: {
+                action: 'cancel',
+              },
+            },
+            enabled: true,
+          },
+        },
+      };
+      createScheduleContext = new Context(DEFAULTCEMENTHELPER, insertExecutionJob);
+      createScheduleContext.publish = sinon.stub();
+      mockSchedule = {
+        id: (new ObjectID()).toString(),
+      };
+
+      updateExecutionJob = {
+        nature: {
+          type: 'dbInterface',
+          quality: 'updateOne',
+        },
+        payload: {
+          type: 'execution',
+          id: mockExecution.id,
+          content: {
+            pendingTimeoutScheduleId: mockSchedule.id,
+            pendingTimestamp: pendingTimestamp,
+          },
+        },
+      };
+      updateExecutionContext = new Context(DEFAULTCEMENTHELPER, updateExecutionJob);
+      updateExecutionContext.publish = sinon.stub();
+
       sinon.stub(helper.cementHelper, 'createContext')
-        .withArgs(outputJOB)
-        .returns(mockOutputContext);
+        .withArgs(insertExecutionJob)
+        .returns(insertExecutionContext)
+        .withArgs(createScheduleJob)
+        .returns(createScheduleContext)
+        .withArgs(updateExecutionJob)
+        .returns(updateExecutionContext);
       helper._process(mockInputContext);
     });
     after(function() {
       requireSubvert.cleanUp();
+      Date.now.restore();
       helper.cementHelper.createContext.restore();
     });
 
-    it('should send a new Context insertOne', function() {
-      sinon.assert.calledWith(helper.cementHelper.createContext, outputJOB);
-      sinon.assert.called(mockOutputContext.publish);
+    it('should send a new insertExecutionContext', function() {
+      sinon.assert.calledWith(helper.cementHelper.createContext, insertExecutionJob);
+      sinon.assert.called(insertExecutionContext.publish);
     });
 
-    context('when outputContext emits done event', function() {
-      it('should emit done event on inputContext', function() {
-        const response = {};
-        mockOutputContext.emit('done', 'dblayer', response);
-        sinon.assert.calledWith(mockInputContext.emit,
-          'done', helper.cementHelper.brickName, response);
+    context('when insertExecutionContext emits done event', function() {
+      before(function() {
+        insertExecutionContext.emit('done', 'dblayer', mockExecution);
+      });
+
+      it('should send a new createScheduleContext', function() {
+        sinon.assert.calledWith(helper.cementHelper.createContext, createScheduleJob);
+        sinon.assert.called(createScheduleContext.publish);
+      });
+
+      context('when createScheduleContext emits done event', function() {
+        before(function() {
+          createScheduleContext.emit('done', 'request', {
+            data: mockSchedule,
+          });
+        });
+
+        it('should send a new updateExecutionContext', function() {
+          sinon.assert.calledWith(helper.cementHelper.createContext, updateExecutionJob);
+          sinon.assert.called(updateExecutionContext.publish);
+        });
+
+        context('when updateExecutionContext emits done event', function() {
+          let updateExecution;
+          before(function() {
+            updateExecution = _.cloneDeep(mockExecution);
+            updateExecution.pendingTimeoutScheduleId = mockSchedule.id;
+            updateExecutionContext.emit('done', 'request', updateExecution);
+          });
+
+          it('should emit done event on inputContext', function() {
+            sinon.assert.calledWith(mockInputContext.emit,
+              'done', helper.cementHelper.brickName, updateExecution);
+          });
+        });
+
+        context('when updateExecutionContext emits reject event', function() {
+          it('should emit reject event on inputContext', function() {
+            const error = new Error('mockError');
+            const brickName = 'dblayer';
+            updateExecutionContext.emit('reject', brickName, error);
+            sinon.assert.calledWith(mockInputContext.emit,
+              'reject', brickName, error);
+          });
+        });
+
+        context('when updateExecutionContext emits error event', function() {
+          it('should emit error event on inputContext', function() {
+            const error = new Error('mockError');
+            const brickName = 'dblayer';
+            updateExecutionContext.emit('error', brickName, error);
+            sinon.assert.calledWith(mockInputContext.emit,
+              'error', brickName, error);
+          });
+        });
+      });
+
+      context('when createScheduleContext emits reject event', function() {
+        it('should emit reject event on inputContext', function() {
+          const error = new Error('mockError');
+          const brickName = 'request';
+          createScheduleContext.emit('reject', brickName, error);
+          sinon.assert.calledWith(mockInputContext.emit,
+            'reject', brickName, error);
+        });
+      });
+
+      context('when createScheduleContext emits error event', function() {
+        it('should emit error event on inputContext', function() {
+          const error = new Error('mockError');
+          const brickName = 'request';
+          createScheduleContext.emit('error', brickName, error);
+          sinon.assert.calledWith(mockInputContext.emit,
+            'error', brickName, error);
+        });
       });
     });
 
@@ -96,7 +233,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
       it('should emit reject event on inputContext', function() {
         const error = new Error('mockError');
         const brickName = 'dbInterface';
-        mockOutputContext.emit('reject', brickName, error);
+        insertExecutionContext.emit('reject', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'reject', brickName, error);
       });
@@ -106,7 +243,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
       it('should emit error event on inputContext', function() {
         const error = new Error('mockError');
         const brickName = 'dbInterface';
-        mockOutputContext.emit('error', brickName, error);
+        insertExecutionContext.emit('error', brickName, error);
         sinon.assert.calledWith(mockInputContext.emit,
           'error', brickName, error);
       });
