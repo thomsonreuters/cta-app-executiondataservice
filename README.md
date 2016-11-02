@@ -80,7 +80,7 @@ GET /executions/:id
 }
 ```
 
-#### Update a schedule
+#### Update an Execution
 **Request**
 ```ruby
 PATCH /executions/:id
