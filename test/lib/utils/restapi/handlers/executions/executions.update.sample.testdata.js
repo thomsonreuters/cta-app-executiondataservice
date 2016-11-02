@@ -5,7 +5,7 @@ const execution = {
   scenario: (new ObjectID()).toString(),
   configuration: (new ObjectID()).toString(),
   user: (new ObjectID()).toString(),
-  startTimestamp: new Date(),
+  requestTimestamp: new Date(),
   updateTimestamp: new Date(),
   state: 'pending', // pending,running,acked, cancelled, finished
   // cancel: {

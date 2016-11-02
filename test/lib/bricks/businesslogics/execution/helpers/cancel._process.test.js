@@ -49,7 +49,7 @@ describe('BusinessLogics - Execution - Cancel - _process', function() {
         id: (new ObjectID()).toString(),
         scenarioId: 'bar',
         userId: 'quz',
-        startTimestamp: 1231923018230123,
+        requestTimestamp: 1231923018230123,
         instances: [],
         pendingTimeout: 1000,
         state: 'pending',

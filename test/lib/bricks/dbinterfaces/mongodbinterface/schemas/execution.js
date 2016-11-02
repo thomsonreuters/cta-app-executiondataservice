@@ -19,7 +19,7 @@ describe('DatabaseInterfaces - MongoDB - Schema - Execution', function() {
       id: (new ObjectID()).toString(),
       scenarioId: (new ObjectID()).toString(),
       userId: (new ObjectID()).toString(),
-      startTimestamp: 1000,
+      requestTimestamp: 1000,
       updateTimestamp: 1000,
       state: 'pending', // pending,running,acked, cancelled, finished
     };
@@ -33,7 +33,7 @@ describe('DatabaseInterfaces - MongoDB - Schema - Execution', function() {
       expect(object.scenarioId.toString()).to.equal(execution.scenarioId);
       expect(object.userId).to.be.an.instanceof(ObjectID);
       expect(object.userId.toString()).to.equal(execution.userId);
-      expect(object.startTimestamp).to.equal(execution.startTimestamp);
+      expect(object.requestTimestamp).to.equal(execution.requestTimestamp);
       expect(object.updateTimestamp).to.equal(execution.updateTimestamp);
       expect(object.state).to.equal(execution.state);
     });
@@ -44,7 +44,7 @@ describe('DatabaseInterfaces - MongoDB - Schema - Execution', function() {
       _id: (new ObjectID()),
       scenarioId: (new ObjectID()),
       userId: (new ObjectID()),
-      startTimestamp: 1000,
+      requestTimestamp: 1000,
       updateTimestamp: 1000,
       state: 'pending', // pending,running,acked, cancelled, finished
     };
@@ -55,7 +55,7 @@ describe('DatabaseInterfaces - MongoDB - Schema - Execution', function() {
       expect(object.id).to.equal(mongodbDoc._id.toString());
       expect(object.scenarioId).to.equal(mongodbDoc.scenarioId.toString());
       expect(object.userId).to.equal(mongodbDoc.userId.toString());
-      expect(object.startTimestamp).to.equal(mongodbDoc.startTimestamp);
+      expect(object.requestTimestamp).to.equal(mongodbDoc.requestTimestamp);
       expect(object.updateTimestamp).to.equal(mongodbDoc.updateTimestamp);
       expect(object.state).to.equal(mongodbDoc.state);
     });

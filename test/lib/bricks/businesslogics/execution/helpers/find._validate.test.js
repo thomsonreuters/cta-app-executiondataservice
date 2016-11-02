@@ -38,12 +38,12 @@ describe('BusinessLogics - Execution - Find - _validate', function() {
         limit: 10,
         offset: 0,
         sort: {
-          startTimestamp: -1,
+          requestTimestamp: -1,
           nbstatuses: 1,
         },
       },
       query: {
-        startTimestamp: 10,
+        requestTimestamp: 10,
       },
     },
   };

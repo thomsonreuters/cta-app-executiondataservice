@@ -38,7 +38,7 @@ describe('BusinessLogics - Result - Find - _process', function() {
           limit: 10,
           offset: 0,
           sort: {
-            startTimestamp: -1,
+            requestTimestamp: -1,
             resultsCount: 1,
           },
         },
