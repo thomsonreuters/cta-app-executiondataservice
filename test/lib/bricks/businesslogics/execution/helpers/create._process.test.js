@@ -63,7 +63,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
         id: (new ObjectID()).toString(),
         scenarioId: 'bar',
         userId: 'quz',
-        startTimestamp: 1231923018230123,
+        requestTimestamp: 1231923018230123,
         instances: [],
         pendingTimeout: 1000,
       });
@@ -85,7 +85,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
       insertExecutionContext = new Context(DEFAULTCEMENTHELPER, insertExecutionJob);
       insertExecutionContext.publish = sinon.stub();
 
-      const pendingTimestamp = now + mockExecution.pendingTimeout;
+      const pendingTimestamp = mockExecution.requestTimestamp + mockExecution.pendingTimeout;
       createScheduleJob = {
         nature: {
           type: 'request',

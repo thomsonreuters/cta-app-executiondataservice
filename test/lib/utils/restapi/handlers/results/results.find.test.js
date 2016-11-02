@@ -42,14 +42,14 @@ describe('Utils - RESTAPI - Handlers - Results - find', function() {
       req.query = {
         limit: 10,
         offset: 0,
-        sort: '-startTimestamp,resultsCount',
+        sort: '-requestTimestamp,resultsCount',
         status: 'finished',
       };
       const filter = {
         limit: parseInt(req.query.limit, 10),
         offset: parseInt(req.query.offset, 0),
         sort: {
-          startTimestamp: -1,
+          requestTimestamp: -1,
           resultsCount: 1,
         },
       };

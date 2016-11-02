@@ -51,7 +51,7 @@ describe('BusinessLogics - State - Create - _process', function() {
         executionId: 'foobar',
         scenarioId: 'bar',
         userId: 'quz',
-        startTimestamp: 1231923018230123,
+        requestTimestamp: 1231923018230123,
         instances: [],
       });
       const StubStateConstructor = sinon.stub().returns(mockState);

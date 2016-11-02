@@ -18,9 +18,9 @@ describe('Data Model - Execution - Keys', function() {
         scenarioId: { type: 'identifier' },
         userId: { type: 'identifier' },
         // timestamps related fields
-        startTimestamp: { type: 'number', optional: true },
+        requestTimestamp: { type: 'number', optional: true },
         updateTimestamp: { type: 'number', optional: true },
-        completedTimestamp: { type: 'number', optional: true },
+        completeTimestamp: { type: 'number', optional: true },
         // timeouts related fields
         pendingTimeout: { type: 'number', optional: true },
         runningTimeout: { type: 'number', optional: true },

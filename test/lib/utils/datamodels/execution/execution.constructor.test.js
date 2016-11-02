@@ -18,9 +18,9 @@ describe('Data Model - Execution', function() {
     expect(object).to.have.property('scenarioId', data.scenarioId);
     expect(object).to.have.property('userId', data.userId);
 
-    expect(object).to.have.property('startTimestamp', data.startTimestamp);
+    expect(object).to.have.property('requestTimestamp', data.requestTimestamp);
     expect(object).to.have.property('updateTimestamp', data.updateTimestamp);
-    expect(object).to.have.property('completedTimestamp', data.completedTimestamp);
+    expect(object).to.have.property('completeTimestamp', data.completeTimestamp);
 
     expect(object).to.have.property('pendingTimeout', data.pendingTimeout);
     expect(object).to.have.property('runningTimeout', data.runningTimeout);

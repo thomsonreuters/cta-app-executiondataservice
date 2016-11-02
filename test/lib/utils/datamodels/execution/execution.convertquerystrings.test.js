@@ -15,12 +15,12 @@ describe('Data Model - Execution - ConvertQueryStrings', function() {
     it('should return converted query', function() {
       const query = {
         id: (new ObjectID()).toString(),
-        startTimestamp: '1000',
+        requestTimestamp: '1000',
         notaproperty: 'foobar',
       };
       const expected = {
         id: query.id,
-        startTimestamp: 1000,
+        requestTimestamp: 1000,
       };
       const actual = Model.convertQueryStrings(query);
       expect(_.isEqual(actual, expected)).to.be.equal(true);
@@ -31,12 +31,12 @@ describe('Data Model - Execution - ConvertQueryStrings', function() {
     it('should return converted query', function() {
       const query = {
         id: (new ObjectID()).toString(),
-        startTimestamp: 'foobar',
+        requestTimestamp: 'foobar',
         notaproperty: 'foobar',
       };
       const expected = {
         id: query.id,
-        startTimestamp: NaN,
+        requestTimestamp: NaN,
       };
       const actual = Model.convertQueryStrings(query);
       expect(_.isEqual(actual, expected)).to.be.equal(true);
