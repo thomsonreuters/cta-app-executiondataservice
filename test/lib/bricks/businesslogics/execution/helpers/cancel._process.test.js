@@ -92,7 +92,7 @@ describe('BusinessLogics - Execution - Cancel - _process', function() {
         },
         payload: {
           url: nodeUrl.resolve(
-            helper.jobManagerApiUrl, `/executions/${mockExecution.id}/actions`),
+            helper.jobManagerApiUrl, `jobmanager/executions/${mockExecution.id}/actions`),
           body: {
             action: 'cancel',
             state: mockExecution.state,
