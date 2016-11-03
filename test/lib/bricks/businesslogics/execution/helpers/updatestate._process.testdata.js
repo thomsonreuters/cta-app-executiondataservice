@@ -2,6 +2,7 @@
 const appRootPath = require('app-root-path').path;
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
+const _ = require('lodash');
 const Execution = require(nodepath.join(appRootPath,
   '/lib/utils/datamodels/', 'execution.js'));
 const State = require(nodepath.join(appRootPath,
@@ -11,6 +12,7 @@ const execution = new Execution({
   id: (new ObjectID()).toString(),
   commandsCount: 1,
   completeTimestamp: null,
+  state: 'pending',
 });
 const DEFAULTINPUTJOB = {
   nature: {
@@ -57,8 +59,13 @@ const response = statesCount;
 
 const updatedExecutionFields = {
   state: 'finished',
-  timestamp: Date.now,
+  updateTimestamp: Date.now,
 };
+
+const updatedExecution = _.cloneDeep(execution);
+updatedExecution.state = updatedExecutionFields.state;
+updatedExecution.updateTimestamp = updatedExecutionFields.updateTimestamp;
+updatedExecution.pendingTimeoutScheduleId = (new ObjectID()).toString();
 
 module.exports = {
   job: DEFAULTINPUTJOB,
@@ -67,4 +74,5 @@ module.exports = {
   statesCount: statesCount,
   response: response,
   updatedExecutionFields: updatedExecutionFields,
+  updatedExecution: updatedExecution,
 };

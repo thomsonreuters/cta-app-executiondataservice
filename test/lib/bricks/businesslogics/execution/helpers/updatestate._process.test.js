@@ -4,6 +4,7 @@ const appRootPath = require('app-root-path').path;
 const sinon = require('sinon');
 const requireSubvert = require('require-subvert')(__dirname);
 const nodepath = require('path');
+const nodeUrl = require('url');
 const _ = require('lodash');
 
 const Logger = require('cta-logger');
@@ -96,6 +97,19 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
     const finalizeExecutionContext = new Context(DEFAULTCEMENTHELPER, finalizeExecutionJob);
     finalizeExecutionContext.publish = sinon.stub();
 
+    const deleteScheduleJob = {
+      nature: {
+        type: 'request',
+        quality: 'delete',
+      },
+      payload: {
+        url: nodeUrl.resolve(DEFAULTAPIURLS.schedulerApiUrl,
+          `/schedules/${DATA.updatedExecution.pendingTimeoutScheduleId}`),
+      },
+    };
+    const deleteScheduleContext = new Context(DEFAULTCEMENTHELPER, deleteScheduleJob);
+    deleteScheduleContext.publish = sinon.stub();
+
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
@@ -109,7 +123,9 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
         .onCall(2)
         .returns(updateExecutionContext)
         .onCall(3)
-        .returns(finalizeExecutionContext);
+        .returns(finalizeExecutionContext)
+        .onCall(4)
+        .returns(deleteScheduleContext);
       helper._process(mockInputContext);
     });
     after(function() {
@@ -156,7 +172,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
           });
 
           context('when updateExecutionContext emits done event', function() {
-            const updatedExecution = _.cloneDeep(DATA.execution);
+            const updatedExecution = _.cloneDeep(DATA.updatedExecution);
             before(function() {
               updateExecutionContext.emit('done', 'dblayer', updatedExecution);
             });
@@ -165,8 +181,12 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
               sinon.assert.called(finalizeExecutionContext.publish);
             });
 
+            it('should send a finalizeExecutionContext Context', function() {
+              sinon.assert.called(finalizeExecutionContext.publish);
+            });
+
             context('when finalizeExecutionContext emits done event', function() {
-              const finalizedExecution = _.cloneDeep(DATA.execution);
+              const finalizedExecution = _.cloneDeep(DATA.updatedExecution);
               before(function() {
                 finalizeExecutionContext.emit('done', 'dblayer', finalizedExecution);
               });

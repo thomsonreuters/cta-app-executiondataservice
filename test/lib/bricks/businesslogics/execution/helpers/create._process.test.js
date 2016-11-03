@@ -124,7 +124,6 @@ describe('BusinessLogics - Execution - Create - _process', function() {
           id: mockExecution.id,
           content: {
             pendingTimeoutScheduleId: mockSchedule.id,
-            pendingTimestamp: pendingTimestamp,
           },
         },
       };
