@@ -36,6 +36,7 @@ describe('DatabaseInterfaces - MongoDB - Constructor', function() {
       'deleteone.js': 'deleteOne',
       'find.js': 'find',
       'findbyid.js': 'findById',
+      'getinstancesstates.js': 'getInstancesStates',
       'getresultscount.js': 'getResultsCount',
       'getresultsindex.js': 'getResultsIndex',
       'getstatescount.js': 'getStatesCount',
