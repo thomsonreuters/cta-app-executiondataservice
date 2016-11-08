@@ -45,9 +45,10 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
     const counts = {
       pending: 4,
       running: 3,
-      finished: 2,
+      finished: 1,
       acked: 0,
       canceled: 1,
+      timeout: 1,
     };
     const commandsCounts = 4;
     let result;
@@ -64,9 +65,10 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
     const counts = {
       pending: 4,
       running: 4,
-      finished: 3,
+      finished: 2,
       acked: 0,
       canceled: 1,
+      timeout: 1,
     };
     const commandsCounts = 4;
     let result;
@@ -79,6 +81,26 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
       expect(result).to.have.property('updateTimestamp', now);
     });
   });
+  context('when execution result should be timeout', function() {
+    const counts = {
+      pending: 4,
+      running: 4,
+      finished: 3,
+      acked: 0,
+      canceled: 0,
+      timeout: 1,
+    };
+    const commandsCounts = 4;
+    let result;
+    before(function() {
+      result = helper._getExecutionUpdatedFields(counts, commandsCounts);
+    });
+
+    it('should return execution update fields', function() {
+      expect(result).to.have.property('state', 'timeout');
+      expect(result).to.have.property('updateTimestamp', now);
+    });
+  });
   context('when execution result should be finished', function() {
     const counts = {
       pending: 4,
@@ -86,6 +108,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
       finished: 4,
       acked: 3,
       canceled: 0,
+      timeout: 0,
     };
     const commandsCounts = 4;
     let result;
@@ -105,6 +128,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
       finished: 1,
       acked: 0,
       canceled: 1,
+      timeout: 1,
     };
     const commandsCounts = 4;
     let result;

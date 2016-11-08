@@ -102,5 +102,30 @@ describe('Utils - RESTAPI - Handlers - Executions - actions', function() {
       sinon.assert.calledWith(handler.cancel, req, res);
     });
   });
-});
 
+  describe('action - timeout', function() {
+    const req = {};
+    const res = {
+      status: function() {
+        return this;
+      },
+      send: function() {
+      },
+    };
+    before(function() {
+      req.method = 'POST';
+      req.body = {
+        action: 'timeout',
+      };
+      sinon.spy(res, 'status');
+      sinon.spy(res, 'send');
+      sinon.stub(handler, 'timeout');
+      handler.actions(req, res, null);
+    });
+    after(function() {
+    });
+    it('should call handler.timeout() method', function() {
+      sinon.assert.calledWith(handler.timeout, req, res);
+    });
+  });
+});

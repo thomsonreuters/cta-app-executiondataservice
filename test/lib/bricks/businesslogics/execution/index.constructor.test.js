@@ -40,6 +40,7 @@ describe('BusinessLogics - Execution - constructor', function() {
       'finalize.js': 'finalize',
       'find.js': 'find',
       'findbyid.js': 'findById',
+      'timeout.js': 'timeout',
       'update.js': 'update',
       'updateresult.js': 'updateResult',
       'updatestate.js': 'updateState',
