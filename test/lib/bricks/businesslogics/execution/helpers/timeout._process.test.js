@@ -42,6 +42,8 @@ describe('BusinessLogics - Execution - Timeout - _process', function() {
     let mockInputContext;
     let mockFindContext;
     let findJob;
+    let mockGetInstancesStatesContext;
+    let getInstancesStatesJob;
     let mockRequestContext;
     let requestJob;
     let mockInstances;
@@ -69,9 +71,9 @@ describe('BusinessLogics - Execution - Timeout - _process', function() {
         pendingTimeout: 1000,
         state: 'pending',
       });
-      mockInstances = _.map(mockExecution.instances, function(instance) {
-        return _.pick(instance, ['hostname']);
-      });
+      mockInstances = _.cloneDeep(mockExecution.instances);
+      mockInstances[1].state = 'running';
+      mockInstances[2].state = 'finished';
 
       inputJOB = {
         nature: {
@@ -103,6 +105,20 @@ describe('BusinessLogics - Execution - Timeout - _process', function() {
       mockFindContext = new Context(DEFAULTCEMENTHELPER, findJob);
       mockFindContext.publish = sinon.stub();
 
+      getInstancesStatesJob = {
+        nature: {
+          type: 'dbInterface',
+          quality: 'getInstancesStates',
+        },
+        payload: {
+          query: {
+            executionId: mockExecution.id,
+          },
+        },
+      };
+      mockGetInstancesStatesContext = new Context(DEFAULTCEMENTHELPER, getInstancesStatesJob);
+      mockGetInstancesStatesContext.publish = sinon.stub();
+
       requestJob = {
         nature: {
           type: 'request',
@@ -123,6 +139,8 @@ describe('BusinessLogics - Execution - Timeout - _process', function() {
       sinon.stub(helper.cementHelper, 'createContext')
         .withArgs(findJob)
         .returns(mockFindContext)
+        .withArgs(getInstancesStatesJob)
+        .returns(mockGetInstancesStatesContext)
         .withArgs(requestJob)
         .returns(mockRequestContext);
       helper._process(mockInputContext);
@@ -154,38 +172,69 @@ describe('BusinessLogics - Execution - Timeout - _process', function() {
           mockFindContext.emit('done', 'dblayer', mockExecution);
         });
 
-        it('should send a new Context request', function() {
-          sinon.assert.calledWith(helper.cementHelper.createContext, requestJob);
-          sinon.assert.called(mockRequestContext.publish);
+        it('should send a new Context getInstancesStates', function() {
+          sinon.assert.calledWith(helper.cementHelper.createContext, getInstancesStatesJob);
+          sinon.assert.called(mockGetInstancesStatesContext.publish);
         });
 
-        context('when requestContext emits done event', function() {
-          const reqResponse = {};
+        context('when getInstancesStates emits done event', function() {
           before(function() {
-            mockRequestContext.emit('done', 'request', reqResponse);
+            mockGetInstancesStatesContext.emit('done', 'dblayer', mockInstances);
           });
 
-          it('should emit done event on inputContext', function() {
-            sinon.assert.calledWith(mockInputContext.emit,
-              'done', helper.cementHelper.brickName, reqResponse);
+          it('should send a new Context request', function() {
+            sinon.assert.calledWith(helper.cementHelper.createContext, requestJob);
+            sinon.assert.called(mockRequestContext.publish);
+          });
+
+          context('when requestContext emits done event', function() {
+            const reqResponse = {};
+            before(function() {
+              mockRequestContext.emit('done', 'request', reqResponse);
+            });
+
+            it('should emit done event on inputContext', function() {
+              sinon.assert.calledWith(mockInputContext.emit,
+                'done', helper.cementHelper.brickName, reqResponse);
+            });
+          });
+
+          context('when requestContext emits reject event', function() {
+            it('should emit reject event on inputContext', function() {
+              const error = new Error('mockError');
+              const brickName = 'request';
+              mockRequestContext.emit('reject', brickName, error);
+              sinon.assert.calledWith(mockInputContext.emit,
+                'reject', brickName, error);
+            });
+          });
+
+          context('when requestContext emits error event', function() {
+            it('should emit error event on inputContext', function() {
+              const error = new Error('mockError');
+              const brickName = 'request';
+              mockRequestContext.emit('error', brickName, error);
+              sinon.assert.calledWith(mockInputContext.emit,
+                'error', brickName, error);
+            });
           });
         });
 
-        context('when requestContext emits reject event', function() {
+        context('when getInstancesStates emits reject event', function() {
           it('should emit reject event on inputContext', function() {
             const error = new Error('mockError');
             const brickName = 'request';
-            mockRequestContext.emit('reject', brickName, error);
+            mockGetInstancesStatesContext.emit('reject', brickName, error);
             sinon.assert.calledWith(mockInputContext.emit,
               'reject', brickName, error);
           });
         });
 
-        context('when requestContext emits error event', function() {
+        context('when getInstancesStates emits error event', function() {
           it('should emit error event on inputContext', function() {
             const error = new Error('mockError');
             const brickName = 'request';
-            mockRequestContext.emit('error', brickName, error);
+            mockGetInstancesStatesContext.emit('error', brickName, error);
             sinon.assert.calledWith(mockInputContext.emit,
               'error', brickName, error);
           });
