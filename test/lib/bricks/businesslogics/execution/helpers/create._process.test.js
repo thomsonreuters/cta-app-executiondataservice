@@ -101,7 +101,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
               method: 'POST',
               headers: {},
               body: {
-                action: 'cancel',
+                action: 'timeout',
               },
             },
             enabled: true,
