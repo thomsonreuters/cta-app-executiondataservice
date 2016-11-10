@@ -44,11 +44,11 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
   context('when execution result should be pending', function() {
     const counts = {
       pending: 4,
-      running: 3,
+      running: 2,
       finished: 1,
       acked: 0,
       canceled: 1,
-      timeout: 1,
+      timeout: 0,
     };
     const commandsCounts = 4;
     let result;

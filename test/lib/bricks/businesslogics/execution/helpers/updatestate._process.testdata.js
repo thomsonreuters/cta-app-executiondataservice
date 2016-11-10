@@ -13,6 +13,14 @@ const execution = new Execution({
   commandsCount: 1,
   completeTimestamp: null,
   state: 'pending',
+  instances: [
+    {
+      hostname: 'machine1',
+    },
+    {
+      hostname: 'machine2',
+    },
+  ],
 });
 const DEFAULTINPUTJOB = {
   nature: {
@@ -67,6 +75,11 @@ updatedExecution.state = updatedExecutionFields.state;
 updatedExecution.updateTimestamp = updatedExecutionFields.updateTimestamp;
 updatedExecution.pendingTimeoutScheduleId = (new ObjectID()).toString();
 
+const instancesStates = _.cloneDeep(execution.instances);
+instancesStates.forEach(function(instancesState) {
+  instancesState.state = 'running'; // eslint-disable-line no-param-reassign
+});
+
 module.exports = {
   job: DEFAULTINPUTJOB,
   execution: execution,
@@ -75,4 +88,5 @@ module.exports = {
   response: response,
   updatedExecutionFields: updatedExecutionFields,
   updatedExecution: updatedExecution,
+  instancesStates: instancesStates,
 };
