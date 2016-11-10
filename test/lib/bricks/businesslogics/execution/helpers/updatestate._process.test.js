@@ -97,6 +97,20 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
     const finalizeExecutionContext = new Context(DEFAULTCEMENTHELPER, finalizeExecutionJob);
     finalizeExecutionContext.publish = sinon.stub();
 
+    const getInstancesStatesJob = {
+      nature: {
+        type: 'dbInterface',
+        quality: 'getInstancesStates',
+      },
+      payload: {
+        query: {
+          executionId: DEFAULTINPUTJOB.payload.executionId,
+        },
+      },
+    };
+    const getInstancesStatesContext = new Context(DEFAULTCEMENTHELPER, getInstancesStatesJob);
+    getInstancesStatesContext.publish = sinon.stub();
+
     const deleteScheduleJob = {
       nature: {
         type: 'request',
@@ -125,6 +139,8 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
         .onCall(3)
         .returns(finalizeExecutionContext)
         .onCall(4)
+        .returns(getInstancesStatesContext)
+        .onCall(5)
         .returns(deleteScheduleContext);
       helper._process(mockInputContext);
     });
@@ -181,10 +197,6 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
               sinon.assert.called(finalizeExecutionContext.publish);
             });
 
-            it('should send a finalizeExecutionContext Context', function() {
-              sinon.assert.called(finalizeExecutionContext.publish);
-            });
-
             context('when finalizeExecutionContext emits done event', function() {
               const finalizedExecution = _.cloneDeep(DATA.updatedExecution);
               before(function() {
@@ -214,6 +226,73 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
               const brickName = 'dbInterface';
               before(function() {
                 finalizeExecutionContext.emit('error', brickName, error);
+              });
+              it('should emit error event on inputContext', function() {
+                sinon.assert.calledWith(mockInputContext.emit,
+                  'error', brickName, error);
+              });
+            });
+
+            it('should send a getInstancesStatesContext Context', function() {
+              sinon.assert.called(getInstancesStatesContext.publish);
+            });
+
+            context('when getInstancesStatesContext emits done event', function() {
+              context('when not all instances have answered a State', function() {
+                const instancesStates = _.cloneDeep(DATA.instancesStates);
+                instancesStates.pop();
+                before(function() {
+                  getInstancesStatesContext.emit('done', 'dblayer', instancesStates);
+                });
+
+                it('should not send deleteScheduleContext context', function() {
+                  sinon.assert.notCalled(deleteScheduleContext.publish);
+                });
+              });
+
+              context('when all instances have answered a State', function() {
+                context('when at least one instance is still pending', function() {
+                  const instancesStates = _.cloneDeep(DATA.instancesStates);
+                  instancesStates[0].state = 'pending';
+                  before(function() {
+                    getInstancesStatesContext.emit('done', 'dblayer', instancesStates);
+                  });
+
+                  it('should not send deleteScheduleContext context', function() {
+                    sinon.assert.notCalled(deleteScheduleContext.publish);
+                  });
+                });
+
+                context('when no instances are still pending', function() {
+                  const instancesStates = _.cloneDeep(DATA.instancesStates);
+                  before(function() {
+                    getInstancesStatesContext.emit('done', 'dblayer', instancesStates);
+                  });
+
+                  it('should send deleteScheduleContext context', function() {
+                    sinon.assert.called(deleteScheduleContext.publish);
+                  });
+                });
+              });
+            });
+
+            context('when getInstancesStatesContext emits reject event', function() {
+              const error = new Error('mockError');
+              const brickName = 'dbInterface';
+              before(function() {
+                getInstancesStatesContext.emit('reject', brickName, error);
+              });
+              it('should emit reject event on inputContext', function() {
+                sinon.assert.calledWith(mockInputContext.emit,
+                  'reject', brickName, error);
+              });
+            });
+
+            context('when getInstancesStatesContext emits error event', function() {
+              const error = new Error('mockError');
+              const brickName = 'dbInterface';
+              before(function() {
+                getInstancesStatesContext.emit('error', brickName, error);
               });
               it('should emit error event on inputContext', function() {
                 sinon.assert.calledWith(mockInputContext.emit,
