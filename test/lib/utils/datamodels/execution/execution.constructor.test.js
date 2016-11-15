@@ -25,7 +25,6 @@ describe('Data Model - Execution', function() {
     expect(object).to.have.property('pendingTimeout', data.pendingTimeout);
     expect(object).to.have.property('runningTimeout', data.runningTimeout);
     expect(object).to.have.property('pendingTimeoutScheduleId', data.pendingTimeoutScheduleId);
-    expect(object).to.have.property('pendingTimestamp', data.pendingTimestamp);
 
     expect(object).to.have.property('result', data.result);
     expect(object).to.have.property('ok', data.ok || 0);

@@ -25,7 +25,6 @@ describe('Data Model - Execution - QueryKeys', function() {
         pendingTimeout: { type: 'number', optional: true },
         runningTimeout: { type: 'number', optional: true },
         pendingTimeoutScheduleId: { type: 'identifier', optional: true },
-        pendingTimestamp: { type: 'number', optional: true },
         // results related fields
         result: { type: 'string', optional: true },
         ok: { type: 'number', optional: true },
