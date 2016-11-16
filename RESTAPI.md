@@ -6,6 +6,7 @@
 * [Update an Execution](#update-an-execution)
 * [Delete an Execution](#delete-an-execution)
 * [Cancel an Execution](#cancel-an-execution)
+* [Timeout an Execution](#timeout-an-execution)
 * [Create a Result](#create-a-result)
 * [Create a State](#create-a-state)
 
@@ -164,6 +165,23 @@ POST /executions/:id/actions
 200
 {
   // response from JMS Cancel API
+}
+```
+
+#### Timeout an Execution
+**Request**
+```ruby
+POST /executions/:id/actions
+{
+  "action" : "timeout"
+}
+```
+
+**Response**
+```ruby
+200
+{
+  // response from JMS Timeout API
 }
 ```
 
