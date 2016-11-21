@@ -51,8 +51,8 @@ describe('BusinessLogics - State - Create - _process', function() {
     let insertJOB;
     let updateExecutionStatesContext;
     let updateExecutionStatesJOB;
-    let sendInstanceStopEventJob;
-    let sendInstanceStopEventContext;
+    let sendInstanceDoneEventJob;
+    let sendInstanceDoneEventContext;
     let sendInstanceStartEventJob;
     let sendInstanceStartEventContext;
     before(function() {
@@ -87,7 +87,7 @@ describe('BusinessLogics - State - Create - _process', function() {
       updateExecutionStatesContext = new Context(DEFAULTCEMENTHELPER, updateExecutionStatesJOB);
       updateExecutionStatesContext.publish = sinon.stub();
 
-      sendInstanceStopEventJob = {
+      sendInstanceDoneEventJob = {
         nature: {
           type: 'message',
           quality: 'produce',
@@ -95,7 +95,7 @@ describe('BusinessLogics - State - Create - _process', function() {
         payload: {
           nature: {
             type: 'instance',
-            quality: 'stop',
+            quality: 'done',
           },
           payload: {
             hostname: mockState.hostname,
@@ -103,8 +103,8 @@ describe('BusinessLogics - State - Create - _process', function() {
           },
         },
       };
-      sendInstanceStopEventContext = new Context(DEFAULTCEMENTHELPER, sendInstanceStopEventJob);
-      sendInstanceStopEventContext.publish = sinon.stub();
+      sendInstanceDoneEventContext = new Context(DEFAULTCEMENTHELPER, sendInstanceDoneEventJob);
+      sendInstanceDoneEventContext.publish = sinon.stub();
 
       sendInstanceStartEventJob = {
         nature: {
@@ -122,7 +122,7 @@ describe('BusinessLogics - State - Create - _process', function() {
           },
         },
       };
-      sendInstanceStartEventContext = new Context(DEFAULTCEMENTHELPER, sendInstanceStopEventJob);
+      sendInstanceStartEventContext = new Context(DEFAULTCEMENTHELPER, sendInstanceDoneEventJob);
       sendInstanceStartEventContext.publish = sinon.stub();
 
       helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
@@ -132,8 +132,8 @@ describe('BusinessLogics - State - Create - _process', function() {
         .returns(insertContext)
         .withArgs(updateExecutionStatesJOB)
         .returns(updateExecutionStatesContext)
-        .withArgs(sendInstanceStopEventJob)
-        .returns(sendInstanceStopEventContext)
+        .withArgs(sendInstanceDoneEventJob)
+        .returns(sendInstanceDoneEventContext)
         .withArgs(sendInstanceStartEventJob)
         .returns(sendInstanceStartEventContext);
 
@@ -179,9 +179,9 @@ describe('BusinessLogics - State - Create - _process', function() {
           insertContext.emit('done', 'dblayer', response);
         });
 
-        it('should publish sendInstanceStopEventContext context', function() {
-          sinon.assert.calledWith(helper.cementHelper.createContext, sendInstanceStopEventJob);
-          sinon.assert.called(sendInstanceStopEventContext.publish);
+        it('should publish sendInstanceDoneEventContext context', function() {
+          sinon.assert.calledWith(helper.cementHelper.createContext, sendInstanceDoneEventJob);
+          sinon.assert.called(sendInstanceDoneEventContext.publish);
         });
       });
 
