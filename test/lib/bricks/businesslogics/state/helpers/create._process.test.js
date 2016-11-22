@@ -93,13 +93,17 @@ describe('BusinessLogics - State - Create - _process', function() {
           quality: 'produce',
         },
         payload: {
-          nature: {
-            type: 'instance',
-            quality: 'done',
-          },
-          payload: {
-            hostname: mockState.hostname,
-            executionId: mockState.executionId,
+          queue: DEFAULTCONFIG.properties.instancesQueue,
+          message: {
+            nature: {
+              type: 'instances',
+              quality: 'update',
+            },
+            payload: {
+              hostname: mockState.hostname,
+              executionId: null,
+              state: null,
+            },
           },
         },
       };
@@ -112,20 +116,25 @@ describe('BusinessLogics - State - Create - _process', function() {
           quality: 'produce',
         },
         payload: {
-          nature: {
-            type: 'instance',
-            quality: 'start',
-          },
-          payload: {
-            hostname: mockState.hostname,
-            executionId: mockState.executionId,
+          queue: DEFAULTCONFIG.properties.instancesQueue,
+          message: {
+            nature: {
+              type: 'instances',
+              quality: 'update',
+            },
+            payload: {
+              hostname: mockState.hostname,
+              executionId: mockState.executionId,
+              state: mockState.status,
+            },
           },
         },
       };
       sendInstanceStartEventContext = new Context(DEFAULTCEMENTHELPER, sendInstanceDoneEventJob);
       sendInstanceStartEventContext.publish = sinon.stub();
 
-      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER,
+        DEFAULTCONFIG.properties.instancesQueue);
       sinon.stub(helper, '_ack');
       sinon.stub(helper.cementHelper, 'createContext')
         .withArgs(insertJOB)

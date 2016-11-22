@@ -3,7 +3,9 @@
 const config = {
   name: 'base-businesslogic',
   module: './bricks/businesslogics/state/index.js',
-  properties: {},
+  properties: {
+    instancesQueue: 'cta.ids',
+  },
   publish: [],
   subscribe: [
     {
