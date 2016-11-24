@@ -1,5 +1,5 @@
 'use strict';
-const appRootPath = require('app-root-path').path;
+const appRootPath = require('cta-common').root('cta-app-executiondataservice');
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
 const Execution = require(nodepath.join(appRootPath,
