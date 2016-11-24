@@ -5,8 +5,7 @@
 * [Create a Result](#create-a-result)
 
 ## Output
-* [Instance start event](#instance-start-event)
-* [Instance stop event](#instance-stop-event)
+* [Instance update event](#instance-update-event)
 * [Notification event](#notification-event)
 
 ### Create a State:
@@ -75,6 +74,36 @@ Example:
         "status": "failed",
         "index": 1,
         "hostname": "mymachine"
+    }
+}
+```
+
+### Instance Update Event:
+Contract: 
+```javascript
+{
+    "nature": {
+        "type": "instances",
+        "quality": "update"
+      },
+    "payload": {
+        "hostname": String,
+        "executionId": id(Execution),
+        "state": String,
+    }
+}
+```
+Example: 
+```javascript
+{
+    "nature": {
+        "type": "instances",
+        "quality": "update"
+      },
+    "payload": {
+        "hostname": "mymachine",
+        "executionId": "57c7edbc327a06452c50c984",
+        "state": "running",
     }
 }
 ```
