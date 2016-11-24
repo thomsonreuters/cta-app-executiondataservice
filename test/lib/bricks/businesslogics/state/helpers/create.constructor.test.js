@@ -27,11 +27,16 @@ describe('BusinessLogics - State - Create - constructor', function() {
   context('when everything ok', function() {
     let helper;
     before(function() {
-      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER,
+        DEFAULTCONFIG.properties.instancesQueue);
     });
 
     it('should extend BaseHelper', function() {
       expect(Object.getPrototypeOf(Helper)).to.equal(Base);
+    });
+
+    it('should have property instancesQueue', function() {
+      expect(helper).to.have.property('instancesQueue', DEFAULTCONFIG.properties.instancesQueue);
     });
 
     it('should return a handler instance', function() {

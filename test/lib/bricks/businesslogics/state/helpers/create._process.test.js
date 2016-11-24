@@ -4,6 +4,7 @@ const appRootPath = require('app-root-path').path;
 const sinon = require('sinon');
 const requireSubvert = require('require-subvert')(__dirname);
 const nodepath = require('path');
+const _ = require('lodash');
 
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
@@ -39,21 +40,24 @@ describe('BusinessLogics - State - Create - _process', function() {
       payload: {},
     };
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, inputJOB);
+    const mockState = new State({
+      id: 'foo',
+      executionId: 'foobar',
+      timestamp: 1231923018230123,
+      hostname: 'mymachine',
+      status: 'running',
+    });
     let insertContext;
     let insertJOB;
     let updateExecutionStatesContext;
     let updateExecutionStatesJOB;
+    let sendInstanceDoneEventJob;
+    let sendInstanceDoneEventContext;
+    let sendInstanceStartEventJob;
+    let sendInstanceStartEventContext;
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
-      const mockState = new State({
-        id: 'foo',
-        executionId: 'foobar',
-        scenarioId: 'bar',
-        userId: 'quz',
-        requestTimestamp: 1231923018230123,
-        instances: [],
-      });
       const StubStateConstructor = sinon.stub().returns(mockState);
       requireSubvert.subvert(pathToState, StubStateConstructor);
       Helper = requireSubvert.require(pathToHelper);
@@ -83,15 +87,64 @@ describe('BusinessLogics - State - Create - _process', function() {
       updateExecutionStatesContext = new Context(DEFAULTCEMENTHELPER, updateExecutionStatesJOB);
       updateExecutionStatesContext.publish = sinon.stub();
 
-      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+      sendInstanceDoneEventJob = {
+        nature: {
+          type: 'message',
+          quality: 'produce',
+        },
+        payload: {
+          queue: DEFAULTCONFIG.properties.instancesQueue,
+          message: {
+            nature: {
+              type: 'instances',
+              quality: 'update',
+            },
+            payload: {
+              hostname: mockState.hostname,
+              executionId: null,
+              state: null,
+            },
+          },
+        },
+      };
+      sendInstanceDoneEventContext = new Context(DEFAULTCEMENTHELPER, sendInstanceDoneEventJob);
+      sendInstanceDoneEventContext.publish = sinon.stub();
+
+      sendInstanceStartEventJob = {
+        nature: {
+          type: 'message',
+          quality: 'produce',
+        },
+        payload: {
+          queue: DEFAULTCONFIG.properties.instancesQueue,
+          message: {
+            nature: {
+              type: 'instances',
+              quality: 'update',
+            },
+            payload: {
+              hostname: mockState.hostname,
+              executionId: mockState.executionId,
+              state: mockState.status,
+            },
+          },
+        },
+      };
+      sendInstanceStartEventContext = new Context(DEFAULTCEMENTHELPER, sendInstanceDoneEventJob);
+      sendInstanceStartEventContext.publish = sinon.stub();
+
+      helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER,
+        DEFAULTCONFIG.properties.instancesQueue);
       sinon.stub(helper, '_ack');
       sinon.stub(helper.cementHelper, 'createContext')
-        // .withArgs(insertJOB)
-        .onFirstCall()
+        .withArgs(insertJOB)
         .returns(insertContext)
-        // .withArgs(updateExecutionStateesJOB)
-        .onSecondCall()
-        .returns(updateExecutionStatesContext);
+        .withArgs(updateExecutionStatesJOB)
+        .returns(updateExecutionStatesContext)
+        .withArgs(sendInstanceDoneEventJob)
+        .returns(sendInstanceDoneEventContext)
+        .withArgs(sendInstanceStartEventJob)
+        .returns(sendInstanceStartEventContext);
 
       helper._process(mockInputContext);
     });
@@ -110,24 +163,52 @@ describe('BusinessLogics - State - Create - _process', function() {
       sinon.assert.calledWith(helper._ack, mockInputContext);
     });
 
-    context('when outputContext emits done event', function() {
-      const response = {};
-      before(function() {
-        insertContext.emit('done', 'dblayer', response);
+    context('when insertContext emits done event', function() {
+      context('common', function() {
+        const response = _.cloneDeep(mockState);
+        before(function() {
+          insertContext.emit('done', 'dblayer', response);
+        });
+
+        it('should emit done event on inputContext', function() {
+          sinon.assert.calledWith(mockInputContext.emit,
+            'done', helper.cementHelper.brickName, response);
+        });
+
+        it('should publish UpdateExecutionStates context', function() {
+          sinon.assert.calledWith(helper.cementHelper.createContext, updateExecutionStatesJOB);
+          sinon.assert.called(updateExecutionStatesContext.publish);
+        });
       });
 
-      it('should emit done event on inputContext', function() {
-        sinon.assert.calledWith(mockInputContext.emit,
-          'done', helper.cementHelper.brickName, response);
+      context('when state is finished, canceled or timeout', function() {
+        const response = _.cloneDeep(mockState);
+        response.status = 'finished';
+        before(function() {
+          insertContext.emit('done', 'dblayer', response);
+        });
+
+        it('should publish sendInstanceDoneEventContext context', function() {
+          sinon.assert.calledWith(helper.cementHelper.createContext, sendInstanceDoneEventJob);
+          sinon.assert.called(sendInstanceDoneEventContext.publish);
+        });
       });
 
-      it('should publish updateexecutionstatees context', function() {
-        sinon.assert.calledWith(helper.cementHelper.createContext, updateExecutionStatesJOB);
-        sinon.assert.called(updateExecutionStatesContext.publish);
+      context('when state is running', function() {
+        const response = _.cloneDeep(mockState);
+        response.status = 'running';
+        before(function() {
+          insertContext.emit('done', 'dblayer', response);
+        });
+
+        it('should publish sendInstanceStartEventContext context', function() {
+          sinon.assert.calledWith(helper.cementHelper.createContext, sendInstanceStartEventJob);
+          sinon.assert.called(sendInstanceStartEventContext.publish);
+        });
       });
     });
 
-    context('when outputContext emits reject event', function() {
+    context('when insertContext context  emits reject event', function() {
       it('should emit reject event on inputContext', function() {
         const error = new Error('mockError');
         const brickName = 'dbInterface';
@@ -137,7 +218,7 @@ describe('BusinessLogics - State - Create - _process', function() {
       });
     });
 
-    context('when outputContext emits error event', function() {
+    context('when insertContext emits error event', function() {
       it('should emit error event on inputContext', function() {
         const error = new Error('mockError');
         const brickName = 'dbInterface';

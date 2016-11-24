@@ -37,7 +37,8 @@ describe('BusinessLogics - State - Create - _validate', function() {
     payload: SAMPLE,
   };
   before(function() {
-    helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER);
+    helper = new Helper(DEFAULTCEMENTHELPER, DEFAULTLOGGER,
+      DEFAULTCONFIG.properties.instancesQueue);
   });
   context('when everything ok', function() {
     const mockInputContext = new Context(DEFAULTCEMENTHELPER, DEFAULTINPUTJOB);
