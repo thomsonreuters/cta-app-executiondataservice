@@ -5,6 +5,7 @@
   "author": "CTA Team <cta@thomsonreuters.com>",
   "main": "lib/index.js",
   "scripts": {
+    "start": "cd lib && node apps/main/app.js",
     "test": "NODE_PATH=. _mocha",
     "codecoverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec",
     "lint": "eslint --quiet lib test",
