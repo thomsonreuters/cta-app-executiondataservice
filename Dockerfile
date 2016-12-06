@@ -3,7 +3,7 @@ FROM node:4.6.2
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ARG NODE_ENV
+ARG NODE_ENV=docker
 ENV NODE_ENV $NODE_ENV
 COPY package.json /usr/src/app/
 
