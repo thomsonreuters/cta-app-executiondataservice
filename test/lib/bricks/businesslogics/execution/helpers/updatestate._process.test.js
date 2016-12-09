@@ -238,6 +238,22 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
             });
 
             context('when getInstancesStatesContext emits done event', function() {
+              context('when execution was not pending', function() {
+                const instancesStates = _.cloneDeep(DATA.instancesStates);
+                instancesStates.pop();
+                before(function() {
+                  DATA.execution.state = 'running';
+                  getInstancesStatesContext.emit('done', 'dblayer', instancesStates);
+                });
+                after(function() {
+                  DATA.execution.state = 'pending';
+                });
+
+                it('should not send deleteScheduleContext context', function() {
+                  sinon.assert.notCalled(deleteScheduleContext.publish);
+                });
+              });
+
               context('when not all instances have answered a State', function() {
                 const instancesStates = _.cloneDeep(DATA.instancesStates);
                 instancesStates.pop();
