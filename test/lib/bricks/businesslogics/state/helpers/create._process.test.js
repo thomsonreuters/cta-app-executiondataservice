@@ -100,9 +100,13 @@ describe('BusinessLogics - State - Create - _process', function() {
               quality: 'update',
             },
             payload: {
-              hostname: mockState.hostname,
-              executionId: null,
-              state: null,
+              query: {
+                hostname: mockState.hostname,
+              },
+              content: {
+                executionId: null,
+                state: null,
+              },
             },
           },
         },
@@ -123,9 +127,13 @@ describe('BusinessLogics - State - Create - _process', function() {
               quality: 'update',
             },
             payload: {
-              hostname: mockState.hostname,
-              executionId: mockState.executionId,
-              state: mockState.status,
+              query: {
+                hostname: mockState.hostname,
+              },
+              content: {
+                executionId: mockState.executionId,
+                state: mockState.status,
+              },
             },
           },
         },
