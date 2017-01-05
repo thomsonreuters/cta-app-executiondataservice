@@ -89,39 +89,52 @@ describe('BusinessLogics - State - Create - _process', function() {
 
       sendInstanceDoneEventJob = {
         nature: {
-          type: 'message',
+          type: 'messages',
           quality: 'produce',
         },
         payload: {
-          queue: DEFAULTCONFIG.properties.instancesQueue,
-          message: {
-            nature: {
-              type: 'instances',
-              quality: 'update',
+          nature: {
+            type: 'instances',
+            quality: 'update',
+          },
+          payload: {
+            query: {
+              hostname: mockState.hostname,
             },
-            payload: {
-              query: {
-                hostname: mockState.hostname,
-              },
-              content: {
-                executionId: null,
-                state: null,
-              },
+            content: {
+              executionId: null,
+              state: null,
             },
           },
         },
+        // payload: {
+        //   queue: DEFAULTCONFIG.properties.instancesQueue,
+        //   message: {
+        //     nature: {
+        //       type: 'instances',
+        //       quality: 'update',
+        //     },
+        //     payload: {
+        //       query: {
+        //         hostname: mockState.hostname,
+        //       },
+        //       content: {
+        //         executionId: null,
+        //         state: null,
+        //       },
+        //     },
+        //   },
+        // },
       };
       sendInstanceDoneEventContext = new Context(DEFAULTCEMENTHELPER, sendInstanceDoneEventJob);
       sendInstanceDoneEventContext.publish = sinon.stub();
 
       sendInstanceStartEventJob = {
         nature: {
-          type: 'message',
+          type: 'messages',
           quality: 'produce',
         },
         payload: {
-          queue: DEFAULTCONFIG.properties.instancesQueue,
-          message: {
             nature: {
               type: 'instances',
               quality: 'update',
@@ -135,7 +148,22 @@ describe('BusinessLogics - State - Create - _process', function() {
                 state: mockState.status,
               },
             },
-          },
+          // queue: DEFAULTCONFIG.properties.instancesQueue,
+          // message: {
+          //   nature: {
+          //     type: 'instances',
+          //     quality: 'update',
+          //   },
+          //   payload: {
+          //     query: {
+          //       hostname: mockState.hostname,
+          //     },
+          //     content: {
+          //       executionId: mockState.executionId,
+          //       state: mockState.status,
+          //     },
+          //   },
+          // },
         },
       };
       sendInstanceStartEventContext = new Context(DEFAULTCEMENTHELPER, sendInstanceDoneEventJob);

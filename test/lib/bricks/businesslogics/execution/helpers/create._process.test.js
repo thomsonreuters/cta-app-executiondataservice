@@ -92,7 +92,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
           quality: 'post',
         },
         payload: {
-          url: nodeUrl.resolve(helper.schedulerApiUrl, '/schedules'),
+          url: nodeUrl.resolve(helper.schedulerApiUrl, '/sch/schedules'),
           body: {
             schedule: pendingTimestamp,
             rest: {
