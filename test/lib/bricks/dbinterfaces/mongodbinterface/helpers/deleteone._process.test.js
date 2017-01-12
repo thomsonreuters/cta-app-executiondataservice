@@ -34,7 +34,7 @@ describe('DatabaseInterfaces - MongoDB - DeleteOne - _process', function() {
       quality: 'deleteOne',
     },
     payload: {
-      type: 'execution',
+      type: 'executions',
       id: mockId.toString(),
     },
   };

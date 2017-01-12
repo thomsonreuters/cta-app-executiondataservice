@@ -30,7 +30,7 @@ describe('BusinessLogics - Base Helper - _process', function() {
   context('when everything ok', function() {
     const inputJOB = {
       nature: {
-        type: 'execution',
+        type: 'executions',
         quality: Helper.name.toLowerCase(),
       },
       payload: {},

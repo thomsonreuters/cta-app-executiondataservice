@@ -43,7 +43,7 @@ describe('Utils - RESTAPI - Handlers - Results - create', function() {
       req.body = _.cloneDeep(RESULT);
       data = {
         nature: {
-          type: 'result',
+          type: 'results',
           quality: 'create',
         },
         payload: req.body,
@@ -140,7 +140,7 @@ describe('Utils - RESTAPI - Handlers - Results - create', function() {
         req.body = _.cloneDeep(RESULT);
         data = {
           nature: {
-            type: 'result',
+            type: 'results',
             quality: 'create',
           },
           payload: req.body,
@@ -178,7 +178,7 @@ describe('Utils - RESTAPI - Handlers - Results - create', function() {
         req.body = _.cloneDeep(RESULT);
         data = {
           nature: {
-            type: 'result',
+            type: 'results',
             quality: 'create',
           },
           payload: req.body,

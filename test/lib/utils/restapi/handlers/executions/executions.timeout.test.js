@@ -45,7 +45,7 @@ describe('Utils - RESTAPI - Handlers - Executions - timeout', function() {
       };
       data = {
         nature: {
-          type: 'execution',
+          type: 'executions',
           quality: 'timeout',
         },
         payload: {

@@ -4,9 +4,9 @@ const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
 const _ = require('lodash');
 const Execution = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels/', 'execution.js'));
+  '/lib/utils/datamodels/', 'executions.js'));
 const State = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels/', 'state.js'));
+  '/lib/utils/datamodels/', 'states.js'));
 
 const execution = new Execution({
   id: (new ObjectID()).toString(),
@@ -24,7 +24,7 @@ const execution = new Execution({
 });
 const DEFAULTINPUTJOB = {
   nature: {
-    type: 'execution',
+    type: 'executions',
     quality: 'updateState',
   },
   payload: {

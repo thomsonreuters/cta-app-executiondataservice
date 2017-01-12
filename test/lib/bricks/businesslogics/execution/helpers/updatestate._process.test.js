@@ -10,7 +10,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const pathToHelper = nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'updatestate.js');
+  '/lib/bricks/businesslogics/executions/helpers/', 'updatestate.js');
 const Helper = require(pathToHelper);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
@@ -44,7 +44,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
         quality: 'findById',
       },
       payload: {
-        type: 'execution',
+        type: 'executions',
         id: DEFAULTINPUTJOB.payload.executionId,
       },
     };
@@ -77,7 +77,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
         quality: 'updateOne',
       },
       payload: {
-        type: 'execution',
+        type: 'executions',
         id: DEFAULTINPUTJOB.payload.executionId,
         content: DATA.updatedExecutionFields,
       },
@@ -87,7 +87,7 @@ describe('BusinessLogics - Execution - UpdateState - _process', function() {
 
     const finalizeExecutionJob = {
       nature: {
-        type: 'execution',
+        type: 'executions',
         quality: 'finalize',
       },
       payload: {

@@ -11,10 +11,10 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const pathToHelper = nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'create.js');
+  '/lib/bricks/businesslogics/executions/helpers/', 'create.js');
 let Helper = require(pathToHelper);
 const pathToExecution = nodepath.join(appRootPath,
-  '/lib/utils/datamodels', 'execution.js');
+  '/lib/utils/datamodels', 'executions.js');
 const Execution = require(pathToExecution);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
@@ -30,9 +30,9 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 const DEFAULTAPIURLS = {
-  executionApiUrl: 'http://localhost:3010/',
-  schedulerApiUrl: 'http://localhost:3011/',
-  jobManagerApiUrl: 'http://localhost:3012/',
+  executionApiUrl: 'http://localhost:3010/eds',
+  schedulerApiUrl: 'http://localhost:3011/sch',
+  jobManagerApiUrl: 'http://localhost:3012/jms',
 };
 
 describe('BusinessLogics - Execution - Create - _process', function() {
@@ -40,7 +40,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
   context('when everything ok', function() {
     const inputJOB = {
       nature: {
-        type: 'execution',
+        type: 'executions',
         quality: Helper.name.toLowerCase(),
       },
       payload: {},
@@ -78,7 +78,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
           quality: 'insertOne',
         },
         payload: {
-          type: 'execution',
+          type: 'executions',
           content: mockExecution,
         },
       };
@@ -92,7 +92,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
           quality: 'post',
         },
         payload: {
-          url: nodeUrl.resolve(helper.schedulerApiUrl, '/sch/schedules'),
+          url: nodeUrl.resolve(helper.schedulerApiUrl, '/schedules'),
           body: {
             schedule: pendingTimestamp,
             rest: {
@@ -120,7 +120,7 @@ describe('BusinessLogics - Execution - Create - _process', function() {
           quality: 'updateOne',
         },
         payload: {
-          type: 'execution',
+          type: 'executions',
           id: mockExecution.id,
           content: {
             pendingTimeoutScheduleId: mockSchedule.id,

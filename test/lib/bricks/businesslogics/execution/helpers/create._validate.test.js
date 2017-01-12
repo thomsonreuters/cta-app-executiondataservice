@@ -11,7 +11,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers', 'create.js'));
+  '/lib/bricks/businesslogics/executions/helpers', 'create.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -36,7 +36,7 @@ describe('BusinessLogics - Execution - Create - _validate', function() {
   let helper;
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'execution',
+      type: 'executions',
       quality: Helper.name.toLowerCase(),
     },
     payload: SAMPLE,

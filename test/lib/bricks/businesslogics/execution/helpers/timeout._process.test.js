@@ -11,10 +11,10 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const pathToHelper = nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'timeout.js');
+  '/lib/bricks/businesslogics/executions/helpers/', 'timeout.js');
 let Helper = require(pathToHelper);
 const pathToExecution = nodepath.join(appRootPath,
-  '/lib/utils/datamodels', 'execution.js');
+  '/lib/utils/datamodels', 'executions.js');
 const Execution = require(pathToExecution);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
@@ -77,7 +77,7 @@ describe('BusinessLogics - Execution - Timeout - _process', function() {
 
       inputJOB = {
         nature: {
-          type: 'execution',
+          type: 'executions',
           quality: Helper.name.toLowerCase(),
         },
         payload: {
@@ -98,7 +98,7 @@ describe('BusinessLogics - Execution - Timeout - _process', function() {
           quality: 'findById',
         },
         payload: {
-          type: 'execution',
+          type: 'executions',
           id: mockExecution.id,
         },
       };

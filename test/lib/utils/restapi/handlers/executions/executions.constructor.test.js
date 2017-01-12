@@ -28,7 +28,7 @@ describe('Utils - RESTAPI - Handlers - Executions - constructor', function() {
     it('should return a handler instance', function() {
       expect(handler).to.be.an.instanceof(Handler);
       expect(handler).to.have.property('cementHelper', DEFAULTCEMENTHELPER);
-      expect(handler).to.have.property('dataType', 'execution');
+      expect(handler).to.have.property('dataType', 'executions');
     });
   });
 });

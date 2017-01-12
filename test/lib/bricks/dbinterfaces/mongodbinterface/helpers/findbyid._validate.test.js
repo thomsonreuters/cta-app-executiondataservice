@@ -36,7 +36,7 @@ describe('DatabaseInterfaces - MongoDB - FindById - _validate', function() {
       quality: 'findById',
     },
     payload: {
-      type: 'execution',
+      type: 'executions',
       id: mockId.toString(),
     },
   };

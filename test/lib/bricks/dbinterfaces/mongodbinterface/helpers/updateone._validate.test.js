@@ -36,7 +36,7 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - _validate', function() {
       quality: 'insertOne',
     },
     payload: {
-      type: 'execution',
+      type: 'executions',
       id: mockId.toString(),
       content: {},
     },

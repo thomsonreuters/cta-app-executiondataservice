@@ -34,7 +34,7 @@ describe('DatabaseInterfaces - MongoDB - InsertOne - _process', function() {
       quality: 'insertOne',
     },
     payload: {
-      type: 'execution',
+      type: 'executions',
       content: {
         id: mockId.toString(),
       },

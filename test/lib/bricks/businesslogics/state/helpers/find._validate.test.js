@@ -11,7 +11,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/state/helpers', 'find.js'));
+  '/lib/bricks/businesslogics/states/helpers', 'find.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -30,7 +30,7 @@ describe('BusinessLogics - State - Find - _validate', function() {
   let helper;
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'state',
+      type: 'states',
       quality: 'find',
     },
     payload: {
