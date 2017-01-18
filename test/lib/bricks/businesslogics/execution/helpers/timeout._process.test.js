@@ -30,9 +30,9 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 const DEFAULTAPIURLS = {
-  executionApiUrl: 'http://localhost:3010/',
-  schedulerApiUrl: 'http://localhost:3011/',
-  jobManagerApiUrl: 'http://localhost:3012/',
+  executionApiUrl: 'http://localhost:3010/eds/',
+  schedulerApiUrl: 'http://localhost:3011/sch/',
+  jobManagerApiUrl: 'http://localhost:3012/jms/',
 };
 
 describe('BusinessLogics - Execution - Timeout - _process', function() {
@@ -126,7 +126,7 @@ describe('BusinessLogics - Execution - Timeout - _process', function() {
         },
         payload: {
           url: nodeUrl.resolve(
-            helper.jobManagerApiUrl, `jobmanager/executions/${mockExecution.id}/actions`),
+            helper.jobManagerApiUrl, `executions/${mockExecution.id}/actions`),
           body: {
             action: 'timeout',
             instances: mockInstances,
