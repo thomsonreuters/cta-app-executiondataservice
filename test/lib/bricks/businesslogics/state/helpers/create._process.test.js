@@ -135,19 +135,19 @@ describe('BusinessLogics - State - Create - _process', function() {
           quality: 'produce',
         },
         payload: {
-            nature: {
-              type: 'instances',
-              quality: 'update',
+          nature: {
+            type: 'instances',
+            quality: 'update',
+          },
+          payload: {
+            query: {
+              hostname: mockState.hostname,
             },
-            payload: {
-              query: {
-                hostname: mockState.hostname,
-              },
-              content: {
-                executionId: mockState.executionId,
-                state: mockState.status,
-              },
+            content: {
+              executionId: mockState.executionId,
+              state: mockState.status,
             },
+          },
           // queue: DEFAULTCONFIG.properties.instancesQueue,
           // message: {
           //   nature: {

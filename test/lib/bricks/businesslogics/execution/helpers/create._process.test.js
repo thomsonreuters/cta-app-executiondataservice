@@ -30,9 +30,9 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 const DEFAULTAPIURLS = {
-  executionApiUrl: 'http://localhost:3010/eds',
-  schedulerApiUrl: 'http://localhost:3011/sch',
-  jobManagerApiUrl: 'http://localhost:3012/jms',
+  executionApiUrl: 'http://localhost:3010/eds/',
+  schedulerApiUrl: 'http://localhost:3011/sch/',
+  jobManagerApiUrl: 'http://localhost:3012/jms/',
 };
 
 describe('BusinessLogics - Execution - Create - _process', function() {
@@ -92,12 +92,12 @@ describe('BusinessLogics - Execution - Create - _process', function() {
           quality: 'post',
         },
         payload: {
-          url: nodeUrl.resolve(helper.schedulerApiUrl, '/schedules'),
+          url: nodeUrl.resolve(helper.schedulerApiUrl, 'schedules'),
           body: {
             schedule: pendingTimestamp,
             rest: {
               url: nodeUrl.resolve(helper.executionApiUrl,
-                `/executions/${mockExecution.id}/actions`),
+                `executions/${mockExecution.id}/actions`),
               method: 'POST',
               headers: {},
               body: {
