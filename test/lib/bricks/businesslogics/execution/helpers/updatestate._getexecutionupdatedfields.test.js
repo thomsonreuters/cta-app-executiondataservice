@@ -57,7 +57,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
     });
 
     it('should return execution update fields', function() {
-      expect(result).to.have.property('states', 'pending');
+      expect(result).to.have.property('state', 'pending');
       expect(result).to.have.property('updateTimestamp', now);
     });
   });
@@ -77,7 +77,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
     });
 
     it('should return execution update fields', function() {
-      expect(result).to.have.property('states', 'canceled');
+      expect(result).to.have.property('state', 'canceled');
       expect(result).to.have.property('updateTimestamp', now);
     });
   });
@@ -97,7 +97,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
     });
 
     it('should return execution update fields', function() {
-      expect(result).to.have.property('states', 'timeout');
+      expect(result).to.have.property('state', 'timeout');
       expect(result).to.have.property('updateTimestamp', now);
     });
   });
@@ -117,7 +117,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
     });
 
     it('should return execution update fields', function() {
-      expect(result).to.have.property('states', 'finished');
+      expect(result).to.have.property('state', 'finished');
       expect(result).to.have.property('updateTimestamp', now);
     });
   });
@@ -137,7 +137,7 @@ describe('BusinessLogics - Execution - UpdateState - _getExecutionUpdatedFields'
     });
 
     it('should return execution update fields', function() {
-      expect(result).to.have.property('states', 'running');
+      expect(result).to.have.property('state', 'running');
       expect(result).to.have.property('updateTimestamp', now);
     });
   });
