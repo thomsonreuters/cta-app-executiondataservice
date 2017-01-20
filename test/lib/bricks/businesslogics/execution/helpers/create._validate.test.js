@@ -26,9 +26,9 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 const DEFAULTAPIURLS = {
-  executionApiUrl: 'http://localhost:3010/',
-  schedulerApiUrl: 'http://localhost:3011/',
-  jobManagerApiUrl: 'http://localhost:3012/',
+  executionApiUrl: 'http://localhost:3010/eds/',
+  schedulerApiUrl: 'http://localhost:3011/sch/',
+  jobManagerApiUrl: 'http://localhost:3012/jms/',
 };
 const SAMPLE = require('./create.sample.testdata.js');
 
