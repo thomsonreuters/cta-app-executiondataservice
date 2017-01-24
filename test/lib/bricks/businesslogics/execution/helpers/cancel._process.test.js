@@ -11,10 +11,10 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const pathToHelper = nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'cancel.js');
+  '/lib/bricks/businesslogics/executions/helpers/', 'cancel.js');
 let Helper = require(pathToHelper);
 const pathToExecution = nodepath.join(appRootPath,
-  '/lib/utils/datamodels', 'execution.js');
+  '/lib/utils/datamodels', 'executions.js');
 const Execution = require(pathToExecution);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
@@ -30,9 +30,9 @@ const DEFAULTCEMENTHELPER = {
   createContext: function() {},
 };
 const DEFAULTAPIURLS = {
-  executionApiUrl: 'http://localhost:3010/',
-  schedulerApiUrl: 'http://localhost:3011/',
-  jobManagerApiUrl: 'http://localhost:3012/',
+  executionApiUrl: 'http://localhost:3010/eds/',
+  schedulerApiUrl: 'http://localhost:3011/sch/',
+  jobManagerApiUrl: 'http://localhost:3012/jms/',
 };
 
 describe('BusinessLogics - Execution - Cancel - _process', function() {
@@ -77,7 +77,7 @@ describe('BusinessLogics - Execution - Cancel - _process', function() {
 
       inputJOB = {
         nature: {
-          type: 'execution',
+          type: 'executions',
           quality: Helper.name.toLowerCase(),
         },
         payload: {
@@ -98,7 +98,7 @@ describe('BusinessLogics - Execution - Cancel - _process', function() {
           quality: 'findById',
         },
         payload: {
-          type: 'execution',
+          type: 'executions',
           id: mockExecution.id,
         },
       };
@@ -126,7 +126,7 @@ describe('BusinessLogics - Execution - Cancel - _process', function() {
         },
         payload: {
           url: nodeUrl.resolve(
-            helper.jobManagerApiUrl, `jobmanager/executions/${mockExecution.id}/actions`),
+            helper.jobManagerApiUrl, `executions/${mockExecution.id}/actions`),
           body: {
             action: 'cancel',
             instances: mockInstances,

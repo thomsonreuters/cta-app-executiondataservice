@@ -36,7 +36,7 @@ describe('DatabaseInterfaces - MongoDB - DeleteOne - _validate', function() {
       quality: 'deleteOne',
     },
     payload: {
-      type: 'execution',
+      type: 'executions',
       id: mockId.toString(),
     },
   };

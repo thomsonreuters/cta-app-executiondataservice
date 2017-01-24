@@ -12,7 +12,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/result/helpers', 'delete.js'));
+  '/lib/bricks/businesslogics/results/helpers', 'delete.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -32,11 +32,11 @@ describe('BusinessLogics - Result - Delete - _validate', function() {
   const mockId = new ObjectID();
   const DEFAULTINPUTJOB = {
     nature: {
-      type: 'result',
+      type: 'results',
       quality: 'delete',
     },
     payload: {
-      type: 'result',
+      type: 'results',
       id: mockId.toString(),
     },
   };

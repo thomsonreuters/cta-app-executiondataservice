@@ -34,7 +34,7 @@ describe('DatabaseInterfaces - MongoDB - FindById - constructor', function() {
       quality: 'findById',
     },
     payload: {
-      type: 'execution',
+      type: 'executions',
       id: mockId.toString(),
     },
   };

@@ -34,7 +34,7 @@ describe('DatabaseInterfaces - MongoDB - Find - _validate', function() {
       quality: 'findById',
     },
     payload: {
-      type: 'execution',
+      type: 'executions',
       filter: {
         limit: 10,
         offset: 0,

@@ -8,7 +8,7 @@ const ObjectID = require('bson').ObjectID;
 const _ = require('lodash');
 
 const Model = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels', 'state.js'));
+  '/lib/utils/datamodels', 'states.js'));
 
 describe('Data Model - State - ConvertQueryStrings', function() {
   context('when everything ok', function() {

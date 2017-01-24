@@ -7,7 +7,7 @@ const nodepath = require('path');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'findbyid.js'));
+  '/lib/bricks/businesslogics/executions/helpers/', 'findbyid.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);
@@ -30,7 +30,7 @@ describe('BusinessLogics - Execution - FindById - _process', function() {
   context('when everything ok', function() {
     const inputJOB = {
       nature: {
-        type: 'execution',
+        type: 'executions',
         quality: Helper.name.toLowerCase(),
       },
       payload: {},
@@ -47,7 +47,7 @@ describe('BusinessLogics - Execution - FindById - _process', function() {
           quality: 'findById',
         },
         payload: {
-          type: 'execution',
+          type: 'executions',
           id: inputJOB.payload.id,
         },
       };

@@ -42,7 +42,7 @@ describe('Utils - RESTAPI - Handlers - Executions - findById', function() {
       };
       data = {
         nature: {
-          type: 'execution',
+          type: 'executions',
           quality: 'findById',
         },
         payload: {

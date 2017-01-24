@@ -36,7 +36,7 @@ describe('DatabaseInterfaces - MongoDB - UpdateOne - _process', function() {
       quality: 'updateOne',
     },
     payload: {
-      type: 'execution',
+      type: 'executions',
       id: mockId.toString(),
       filter: {
         resultsCount: { $lt: 10 },

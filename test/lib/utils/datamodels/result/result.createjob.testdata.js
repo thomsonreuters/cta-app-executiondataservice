@@ -1,7 +1,7 @@
 'use strict';
 const result = {
   nature: {
-    type: 'result',
+    type: 'results',
     quality: 'create',
   },
   payload: {

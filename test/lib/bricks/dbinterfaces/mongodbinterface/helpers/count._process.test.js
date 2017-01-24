@@ -33,7 +33,7 @@ describe('DatabaseInterfaces - MongoDB - Count - _process', function() {
       quality: 'count',
     },
     payload: {
-      type: 'result',
+      type: 'results',
       query: {
         executionId: mockExecutionId.toString(),
       },

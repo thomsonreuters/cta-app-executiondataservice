@@ -33,7 +33,7 @@ describe('DatabaseInterfaces - MongoDB - Find - _process', function() {
       quality: 'findById',
     },
     payload: {
-      type: 'execution',
+      type: 'executions',
       filter: {
         limit: 10,
         offset: 0,

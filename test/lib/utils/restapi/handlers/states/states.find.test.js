@@ -9,7 +9,7 @@ const Logger = require('cta-logger');
 const Handler = require(nodepath.join(appRootPath,
   '/lib/utils/restapi/handlers/', 'states.js'));
 const State = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels/', 'state.js'));
+  '/lib/utils/datamodels/', 'states.js'));
 
 const DEFAULTLOGGER = new Logger();
 const DEFAULTCEMENTHELPER = {
@@ -57,7 +57,7 @@ describe('Utils - RESTAPI - Handlers - States - find', function() {
       sinonCustomMatcher = sinon.match(function(data) {
         return _.isEqual(data, {
           nature: {
-            type: 'state',
+            type: 'states',
             quality: 'find',
           },
           payload: {

@@ -48,7 +48,7 @@ describe('DatabaseInterfaces - MongoDB - GetInstancesStates - _process', functio
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
-      const mongoDbCollection = 'state';
+      const mongoDbCollection = 'states';
       const mongoDbMatch = {
         executionId: mockExecutionId,
       };

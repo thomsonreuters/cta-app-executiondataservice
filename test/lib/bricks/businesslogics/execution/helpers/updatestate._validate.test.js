@@ -11,7 +11,7 @@ const _ = require('lodash');
 const Logger = require('cta-logger');
 const Context = require('cta-flowcontrol').Context;
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers', 'updatestate.js'));
+  '/lib/bricks/businesslogics/executions/helpers', 'updatestate.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);

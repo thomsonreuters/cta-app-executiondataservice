@@ -8,9 +8,9 @@ const _ = require('lodash');
 const ObjectID = require('bson').ObjectID;
 
 const Model = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels', 'result.js'));
+  '/lib/utils/datamodels', 'results.js'));
 const Schema = require(nodepath.join(appRootPath,
-  '/lib/bricks/dbinterfaces/mongodbinterface/schemas', 'result.js'));
+  '/lib/bricks/dbinterfaces/mongodbinterface/schemas', 'results.js'));
 
 
 describe('DatabaseInterfaces - MongoDB - Schema - Result', function() {

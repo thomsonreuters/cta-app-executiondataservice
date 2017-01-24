@@ -10,7 +10,7 @@ const nodepath = require('path');
 
 const Logger = require('cta-logger');
 const pathToHelper = nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'updatestate.js');
+  '/lib/bricks/businesslogics/executions/helpers/', 'updatestate.js');
 const Helper = require(pathToHelper);
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');

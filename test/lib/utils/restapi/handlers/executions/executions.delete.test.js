@@ -42,7 +42,7 @@ describe('Utils - RESTAPI - Handlers - Executions - delete', function() {
       };
       data = {
         nature: {
-          type: 'execution',
+          type: 'executions',
           quality: 'delete',
         },
         payload: {

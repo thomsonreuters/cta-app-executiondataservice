@@ -7,7 +7,7 @@ const nodepath = require('path');
 const _ = require('lodash');
 
 const Model = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels', 'result.js'));
+  '/lib/utils/datamodels', 'results.js'));
 
 describe('Data Model - Result - Keys', function() {
   context('when everything ok', function() {

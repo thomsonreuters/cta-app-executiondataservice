@@ -49,7 +49,7 @@ describe('DatabaseInterfaces - MongoDB - GetResultsIndex - _process', function()
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
-      const mongoDbCollection = 'result';
+      const mongoDbCollection = 'results';
       const mongoDbMatch = {
         executionId: mockExecutionId,
       };

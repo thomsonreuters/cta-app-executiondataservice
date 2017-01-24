@@ -3,9 +3,9 @@ const appRootPath = require('cta-common').root('cta-app-executiondataservice');
 const nodepath = require('path');
 const ObjectID = require('bson').ObjectID;
 const Execution = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels/', 'execution.js'));
+  '/lib/utils/datamodels/', 'executions.js'));
 const Result = require(nodepath.join(appRootPath,
-  '/lib/utils/datamodels/', 'result.js'));
+  '/lib/utils/datamodels/', 'results.js'));
 
 const execution = new Execution({
   id: (new ObjectID()).toString(),
@@ -13,7 +13,7 @@ const execution = new Execution({
 });
 const DEFAULTINPUTJOB = {
   nature: {
-    type: 'execution',
+    type: 'executions',
     quality: 'updateResult',
   },
   payload: {

@@ -2,7 +2,7 @@
 
 const config = {
   name: 'base-businesslogic',
-  module: './bricks/businesslogics/result/index.js',
+  module: './bricks/businesslogics/results/index.js',
   properties: {},
   publish: [],
   subscribe: [

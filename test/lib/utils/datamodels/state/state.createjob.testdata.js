@@ -1,7 +1,7 @@
 'use strict';
 const state = {
   nature: {
-    type: 'state',
+    type: 'states',
     quality: 'create',
   },
   payload: {

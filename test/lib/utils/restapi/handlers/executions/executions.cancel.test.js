@@ -45,7 +45,7 @@ describe('Utils - RESTAPI - Handlers - Executions - cancel', function() {
       };
       data = {
         nature: {
-          type: 'execution',
+          type: 'executions',
           quality: 'cancel',
         },
         payload: {

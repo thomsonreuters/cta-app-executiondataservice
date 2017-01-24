@@ -9,7 +9,7 @@ const Logger = require('cta-logger');
 const Base = require(nodepath.join(appRootPath,
   '/lib/bricks/businesslogics/base/', 'basehelper.js'));
 const Helper = require(nodepath.join(appRootPath,
-  '/lib/bricks/businesslogics/execution/helpers/', 'finalize.js'));
+  '/lib/bricks/businesslogics/executions/helpers/', 'finalize.js'));
 
 const DEFAULTCONFIG = require('../index.config.testdata.js');
 const DEFAULTLOGGER = new Logger(null, null, DEFAULTCONFIG.name);

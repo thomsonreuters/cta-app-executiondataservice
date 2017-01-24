@@ -47,7 +47,7 @@ describe('Utils - RESTAPI - Handlers - Executions - update', function() {
       };
       data = {
         nature: {
-          type: 'execution',
+          type: 'executions',
           quality: 'update',
         },
         payload: req.body,
