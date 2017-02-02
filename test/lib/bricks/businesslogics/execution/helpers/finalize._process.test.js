@@ -87,6 +87,19 @@ describe('BusinessLogics - Execution - Finalize - _process', function() {
     const updateExecutionContext = new Context(DEFAULTCEMENTHELPER, updateExecutionJob);
     updateExecutionContext.publish = sinon.stub();
 
+    const completeExecutionJob = {
+      nature: {
+        type: 'executions',
+        quality: 'complete',
+      },
+      payload: {
+        id: DEFAULTINPUTJOB.payload.executionId,
+        content: DATA.updatedExecutionFields,
+      },
+    };
+    const completeExecutionContext = new Context(DEFAULTCEMENTHELPER, completeExecutionJob);
+    completeExecutionContext.publish = sinon.stub();
+
     before(function() {
       sinon.stub(mockInputContext, 'emit');
 
@@ -100,7 +113,9 @@ describe('BusinessLogics - Execution - Finalize - _process', function() {
         .onCall(2)
         .returns(getStatesIndexContext)
         .onCall(3)
-        .returns(updateExecutionContext);
+        .returns(updateExecutionContext)
+        .onCall(4)
+        .returns(completeExecutionContext);
       helper._process(mockInputContext);
     });
     after(function() {
