@@ -6,7 +6,6 @@
   * [What are the features that Execution Data Service provide?](#what-are-the-features-that-execution-data-service-provide)
   * [What is technology stack for Execution Data Service?](#what-is-technology-stack-for-execution-data-service)
 * Development Guide
-  * [What is Execution Data Service's configuration and how can I find it?](#what-is-execution-data-services-configuration-and-how-can-i-find-it)
   * [How I can contribute to my code?](#how-i-can-contribute-to-my-code)
   * [Where can I find information about Execution Data Service component?](#where-can-i-find-information-about-execution-data-service-component)
 
@@ -27,9 +26,6 @@ Please check the [feature guide](https://git.sami.int.thomsonreuters.com/compass
 ------
 
 ### Development Guide
-
-#### What is Execution Data Service's configuration and how can I find it?
-A [Configuration](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/wikis/configuration) is the agreement of functional units according to their nature.
 
 #### How I can contribute to my code?
 You can follow [these steps](https://git.sami.int.thomsonreuters.com/compass/cta/blob/master/contributing.md) to contribute.
