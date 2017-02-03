@@ -18,7 +18,7 @@
 Please tell me a little about Execution Data Service
 
 #### What are the features that Execution Data Service provide?
-Please check the feature guide for a list of all features provided by CTA.
+Please check the [feature guide](https://git.sami.int.thomsonreuters.com/compass/cta/blob/master/features.md) for a list of all features provided by CTA.
 
 #### What is technology stack for Execution Data Service?
  1. Front End skills required include `HTML`, `CSS`, `JavaScript`, `JSON`. 
