@@ -1,36 +1,39 @@
-# Execution Data Service for Compass Test Automation
+Execution Data Service for Compass Test Automation
+======
 [![build status](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/badges/master/build.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/commits/master)[![coverage report](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/badges/master/coverage.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/commits/master)
 ------
 * General Overview
-  * [Overview of Execution Data Service ](#overview-of-execution-data-service)
-  * [What are the features that Execution Data Service provide?](#what-are-the-features-that-execution-data-service-provide)
-  * [What is technology stack for Execution Data Service?](#what-is-technology-stack-for-execution-data-service)
+  * [Overview](#overview)
+  * [Features](#features)
+* Getting Started
+  * A
+  * A
 * Development Guide
-  * [How I can contribute to my code?](#how-i-can-contribute-to-my-code)
-  * [Where can I find information about Execution Data Service component?](#where-can-i-find-information-about-execution-data-service-component)
+  * [Contributing](#contributing)
+  * [More Information](#more-information)
 
 ------
 
-### General Overview
+# General Overview
 
-#### Overview of Execution Data Service
+## Overview
 Please tell me a little about Execution Data Service
 
-#### What are the features that Execution Data Service provide?
+## Features
 Please check the [feature guide](https://git.sami.int.thomsonreuters.com/compass/cta/blob/master/features.md) for a list of all features provided by CTA.
 
-#### What is technology stack for Execution Data Service?
- 1. Front End skills required include `HTML`, `CSS`, `JavaScript`, `JSON`. 
- 2. Back End development using `Node.js`, `Express,` and `MongoDB`. It also important concept of source control using `Git`.
-  
 ------
 
-### Development Guide
+# Getting Started
+* npm lib/app.js
+* config
 
-#### How I can contribute to my code?
+# Development Guide
+
+## Contributing
 You can follow [these steps](https://git.sami.int.thomsonreuters.com/compass/cta/blob/master/contributing.md) to contribute.
 
-#### Where can I find information about Execution Data Service component?
+## More Information
 Our service is composed of different components working together to schedule, run, collect tests results and more. You can find additional information for more understand in Execution Data Service.
 We also cover in detail :
 * The [Rest API](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/wikis/restapi) is composed of multiple REST service to perform actions on CTA.
@@ -41,4 +44,3 @@ We also cover in detail :
 ------
 
 This code is running live at [CTA-OSS](https://www.). We also have [CTA Central Document](https://git.sami.int.thomsonreuters.com/compass/cta) 
-
