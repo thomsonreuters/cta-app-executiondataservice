@@ -44,4 +44,3 @@ We also cover in detail :
 ------
 
 This code is running live at [CTA-OSS](https://www.). We also have [CTA Central Document](https://git.sami.int.thomsonreuters.com/compass/cta) 
-
