@@ -1,0 +1,31 @@
+version: '2'
+services:
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "15672:15672"
+  mongodb:
+    image: "mongo"
+  sch:
+    image: cta-oss/cta-app-schedulerdataservice:compose
+    depends_on:
+      - rabbitmq
+      - mongodb
+  jms:
+    image: cta-oss/cta-app-jobmanagerdataservice:compose
+    depends_on:
+      - rabbitmq
+      - mongodb
+  eds:
+    build: .
+    image: cta-oss/cta-app-executiondataservice:compose
+    ports:
+      - "3010:3010"
+    environment:
+      NODE_ENV: docker
+    depends_on: 
+      - rabbitmq
+      - mongodb
+      - sch
+      - jms
+

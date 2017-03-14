@@ -1,10 +1,8 @@
-FROM node:4.6.2
+FROM node:boron-alpine
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ARG NODE_ENV=docker
-ENV NODE_ENV $NODE_ENV
 COPY package.json /usr/src/app/
 
 # note that "npm install" must be executed outside Dockerfile
@@ -13,7 +11,8 @@ COPY package.json /usr/src/app/
 COPY node_modules /usr/src/app/node_modules/
 
 # we separate the commands above&below to have benefit of docker cache
-COPY bin /usr/src/app/bin/
-COPY lib /usr/src/app/lib/
+COPY . /usr/src/app
+
+EXPOSE 3010
 
 CMD [ "npm", "start" ]
