@@ -15,7 +15,11 @@ Execution Data Service for Compass Test Automation
 ------
 
 # General Overview
+Execution Data Service (EDS) provides the service to register the instance which run the cta-client to CTA system. When the instance is registered, CTA system will assign the matched execution test to the cta-client. Any CTA’s services need IDS to check the information then IDS will provides the instance’s status (available or being executing the test) and the test script result base on the test script logics.
 
+EDS provides the services to matching message between cta-instance and test suite of each scenario. When the scenario request to test    
+
+The Instance Matching tool is a function that can be used to queue your character in a selected dungeon. To access the instance matching tool, 
 ## Overview
 Please tell me a little about Execution Data Service
 
