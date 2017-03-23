@@ -13,10 +13,11 @@
   
 ------
 
-## Overview
+## General Overview
+### Overview
 Execution Data Service (EDS) is an intermediary brick between JobManager and Instance Data Service, which provides the services to matching message. When the scenario request test to cta-client, EDS will assign the matched execution test to the cta-client.
 
-## Features
+### Features
   * Create,update and delete an execution.
   * Update test result of cta-client.
   * Matching between test case and cta-client.
@@ -41,11 +42,10 @@ To build, be sure you have [node](https://nodejs.org/en/) installed.
 ------
 
 ## Development Guide
-
-#### Contributing
+### Contributing
 You can follow [these steps](https://git.sami.int.thomsonreuters.com/compass/cta/blob/master/contributing.md) to contribute.
 
-#### More Information
+### More Information
 Our service is composed of different components working together to schedule, run, collect tests results and more. You can find additional information for more understand in Execution Data Service.
 We also cover in detail :
 * The [Rest API](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/wikis/restapi) is composed of multiple REST service to perform actions on CTA.
