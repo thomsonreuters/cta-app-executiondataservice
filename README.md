@@ -7,7 +7,7 @@ Execution Data Service for Compass Test Automation
   * [Features](#features)
 * Getting Started
   * [Install](#Getting-Started)
-  * A
+  
 * Development Guide
   * [Contributing](#contributing)
   * [More Information](#more-information)
@@ -23,15 +23,15 @@ Please check the [feature guide](https://git.sami.int.thomsonreuters.com/compass
 ------
 
 # Getting Started
-To build, be sure you have [node](https://nodejs.org/en/) installed. Clone the project:
+The easiest way to get started is to clone the repository:
 ```ruby
 git clone git@git.sami.int.thomsonreuters.com:compass/cta-app-executiondataservice.git
 ```
-Then in the cloned directory, simply run:
+Then install NPM dependencies:
 ```ruby
 npm install
 ```
-And you will have the boilerplate example running on http://localhost:8000
+To build, be sure you have [node](https://nodejs.org/en/) installed.
 
 # Development Guide
 
