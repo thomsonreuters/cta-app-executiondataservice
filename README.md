@@ -1,5 +1,5 @@
 # Execution Data Service for Compass Test Automation
-======
+
 [![build status](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/badges/master/build.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/commits/master)[![coverage report](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/badges/master/coverage.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/commits/master)
 ------
 * General Overview
