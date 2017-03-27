@@ -15,7 +15,7 @@
 
 ## General Overview
 ### Overview
-Execution Data Service (EDS) is an intermediary brick between JobManager and Instance Data Service, which provides the services to matching message. When the scenario request test to cta-client, EDS will assign the matched execution test to the cta-client.
+Execution Data Service (EDS) performing as a brick between Job Manager and Instance Data Service. EDS will send test request from Job Manager Data Service to cta – client, in the other round, EDS will be hub in receiving test result from cta-client and pass to Job Manager Data Service for test evaluation.
 
 ### Features
   * Create,update and delete an execution.
