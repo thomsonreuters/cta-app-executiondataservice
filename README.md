@@ -6,8 +6,8 @@
   * [Overview](#overview)
   * [Features](#features)
 * Getting Started
-  * [Prerequisites](prerequisites) 
-  * [Installation & Startup](#installation)
+  * [Prerequisites](#prerequisites) 
+  * [Installation & Startup](#installation-&-startup)
 * Development Guide
   * [Contributing](#contributing)
   * [More Information](#more-information)
