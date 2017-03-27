@@ -6,7 +6,8 @@
   * [Overview](#overview)
   * [Features](#features)
 * Getting Started
-  * [Install](#Getting-Started)
+  * [Prerequisites](prerequisites) 
+  * [Installation & Startup](#installation)
 * Development Guide
   * [Contributing](#contributing)
   * [More Information](#more-information)
@@ -29,6 +30,11 @@ You can check more [feature guide](https://git.sami.int.thomsonreuters.com/compa
 ------
 
 ## Getting Started
+### Prerequisites
+ 1. Front End skills required include `HTML`, `CSS`, `JavaScript`, `JSON`. 
+ 2. Back End development using `Node.js`, `Express,` and `MongoDB`. It also important concept of source control using `Git`.
+
+### Installation & Startup
 The easiest way to get started is to clone the repository:
 ```ruby
 git clone git@git.sami.int.thomsonreuters.com:compass/cta-app-executiondataservice.git
@@ -38,6 +44,7 @@ Then install NPM dependencies:
 npm install
 ```
 To build, be sure you have [node](https://nodejs.org/en/) installed.
+To start the application, browse to the project directory and type: $ npm run into the terminal window. Point a browser to localhost:3000 and you're up and running!
 
 ------
 
@@ -55,4 +62,4 @@ We also cover in detail :
 
 ------
 
-This code is running live at [CTA-OSS](https://www.). We also have [CTA Central Document](https://git.sami.int.thomsonreuters.com/compass/cta) 
+This code is running live at [CTA-OSS](https://.). We also have [CTA Central Document](https://git.sami.int.thomsonreuters.com/compass/cta) 
