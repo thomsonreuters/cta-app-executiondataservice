@@ -7,7 +7,7 @@
   * [Features](#features)
 * Getting Started
   * [Prerequisites](#prerequisites) 
-  * [Installation & Startup](#installation-&-startup)
+  * [Installation & Startup](#installation-startup)
 * Development Guide
   * [Contributing](#contributing)
   * [More Information](#more-information)
