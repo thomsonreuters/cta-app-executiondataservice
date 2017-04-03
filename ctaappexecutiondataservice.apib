@@ -1,0 +1,162 @@
+FORMAT: 1A
+HOST: http://localhost:3010/
+
+# cta-app-executiondataservice
+
+Execution Data Service (EDS) api allowing users to manage execution.
+
+# Group Executions [/eds/executions]
+
+## Executions
+
+### List All Executions [GET /eds/executions{?limit,offset}]
+
++ Parameters
+    + limit: `2` (number, optional) - Maximun number of executions to retrieve.
+        + Default: `20`
+    + offset: `0` (number, optional) - Starting record order.
+        + Default: `0`
+
+
++ Response 200 (application/json)
+    + Attributes (array)
+        + (Execution object)
+
+    
+### Create a new execution [POST /eds/executions]
+
++ Request 
+    + Attributes
+        + scenarioId: `580dd766810970de88fe7201` (string, required)
+        + userId: `580dd766810970de88fe7202` (string, required)
+        + requestTimestamp: `1478071735679` (number, required)
+
++ Response 201 
+    + Attributes (Execution object)
+
+### Find an execution by id [GET /eds/executions/{id}]
+
++ Parameters
+    + id: `58ca8aa67ee39200100fe65b` (string) - Execution id
+
++ Response 200
+    + Attributes (Execution object)
+    
+### Update an execution by id [PATCH /eds/executions/{id}]
+
++ Parameters
+    + id: `58ca8aa67ee39200100fe65b` (string) - Execution id
+
++ Response 200
+    + Attributes (Execution object)
+    
+### Delete an execution by id [DELETE /eds/executions/{id}]
+
++ Parameters
+    + id: `58ca8aa67ee39200100fe65b` (string) - Execution id
+
++ Response 200
+    + Attributes (Execution object)
+    
+## Execution Action [/eds/executions/{id}/actions]
+
++ Parameters
+    + id: `58ca8aa67ee39200100fe65b` (string) - Execution id
+    
+### Cancel or Timeout an execution [POST]
+
++ Attributes (object)
+    + action: `cancel, timeout` (string, required)
+
++ Response 200
+    
+
+## Results [/eds/results]
+
+### Create a result [POST]
+
++ Attributes (Result object)
+
++ Response 201
+    + Attributes (Result object)
+
+
+### Get results [GET]
+
++ Response 200
+    + Attributes (array[Result object])
+    
+## States [/eds/states]
+
+### Create a state [POST]
+
++ Attributes ( State object)
+
++ Response 201
+    + Attributes (State object)
+
+### Get states [GET]
+
++ Response 200
+    + Attributes (array[State object])
+
+
+
+# Data Structures
+
+## Execution object (object)
++ id: `58ca8aa67ee39200100fe65b` (string, required) - Executions id
++ scenarioId: `5848e4e4f6523cbab4d2d4e5` (string, required) - Scenario id
++ userId: `5848e4e4f6523cbab4d2d4e5` (string, required) - User id
++ requestTimestamp: `1489668774598` (number, nullable)
++ updateTimestamp: `1489668775076` (number, nullable)
++ completeTimestamp: `1489668775089` (number, nullable)
++ pendingTimeout: `300000` (number) - executon pending timeout in second.
++ runningTimeout: `300000` (number) - executon running timeout in second.
++ pendingTimeoutScheduleId: `58ca8aa6de565f00117f67a4` (string)
++ result: `ok`, `partial`, `inconclusive`, `failed` (enum)
++ ok: `2` (number)
++ partial: `0` (number)
++ inconclusive: `0` (number)
++ failed: `0` (number)
++ resultsCount: `7` (number)
++ instances (array)
+    + (object)
+        + id: `58ca8aa67ee39200100fe65b` (string) - instance's id
+        + hostname: `agt-docker` (string)
+        + ip: `172.24.0.5` (string)
+        + properties (object)
+            + platform: `linux` (string)
+            + hostname: `agt-docker` (string)
+        + executionId
+        + state
++ commandsCount: `1` (number)
++ state: `finished` (string)
++ cancelDetails (string, nullable)
+
+## Result object (object)
++ id: `58ca89db7ee39200100fe64e` (string, required) - Result id
++ executionId: `58ca89da7ee39200100fe645` (string, required) - Execution id
++ testId: `57e0e3ff7f256e3368cc4ecc` (string, required) - Test id
++ timestamp: `1489668571470` (number, required) - created timestamp
++ status: `ok`, `partial`, `inconclusive`, `failed` (enum, required) - result status
++ index: `7` (number, required) - result index
++ ip: `172.24.0.5` (string, required) - Test instance ip address
++ hostname: `agt-docker` (string, required) - Test instance hostname
++ type (string, nullable) - Status Type
++ name (string, nullable) 
++ description (string, nullable) 
++ screenshot (string, nullable) 
++ attachment (string, nullable)
++ build (string, nullable)
++ custom (string, nullable)
+
+## State object (object)
++ id: `58ca89db7ee39200100fe64e` (string, required) - State id
++ executionId: `58ca89da7ee39200100fe645` (string, required) - Execution id
++ testId: `57e0e3ff7f256e3368cc4ecc` (string, required) - Test id
++ timestamp: `1489668571470` (number, required) - created timestamp
++ status: `pending`, `running`, `finished`, `canceled`, `timeout` (enum, required) - State status
++ index: `7` (number, required) - state index
++ ip: `172.24.0.5` (string, required) - Test instance ip address
++ hostname: `agt-docker` (string, required) - Test instance hostname
