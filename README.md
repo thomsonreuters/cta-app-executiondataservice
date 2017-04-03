@@ -16,7 +16,7 @@
 
 ## General Overview
 ### Overview
-Execution Data Service (EDS) performing as a service for manage an execution. EDS will received request from Job Manager Service such as create, update and cancel an execution, in the other round EDS will be provide state and status back to the requestor.
+Execution Data Service (EDS) performing as a service. EDS will be hub in managing an execution and pass an transition back to Job Manager Service for test evaluation.
 
 ### Features
   * Create,update and delete an execution.

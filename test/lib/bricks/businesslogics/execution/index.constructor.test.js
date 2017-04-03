@@ -44,6 +44,7 @@ describe('BusinessLogics - Execution - constructor', function() {
       'update.js': 'update',
       'updateresult.js': 'updateResult',
       'updatestate.js': 'updateState',
+      'complete.js': 'complete',
     };
     const mockHelpers = new Map();
     before(function() {
