@@ -16,13 +16,12 @@
 
 ## General Overview
 ### Overview
-Execution Data Service (EDS) performing as a brick between Job Manager Service and Instance Data Service. EDS will send test request from Job Manager Data Service to cta – client, in the other round, EDS will be hub in receiving test result from cta-client and pass to Job Manager Data Service for test evaluation.
+Execution Data Service (EDS) performing as a service for manage an execution. EDS will received request from Job Manager Service such as create, update and cancel an execution, in the other round EDS will be provide state and status back to the requestor.
 
 ### Features
   * Create,update and delete an execution.
-  * Update test result of cta-client.
-  * Matching between test case and cta-client.
-  * Cancel an execution.
+  * Cancel and Timeout an execution procress.
+  * Status and State Management
   
 
 You can check more [feature guide](https://git.sami.int.thomsonreuters.com/compass/cta/blob/master/features.md) for a list of all features provided by CTA-OSS.
@@ -36,15 +35,15 @@ You can check more [feature guide](https://git.sami.int.thomsonreuters.com/compa
 
 ### Installation & Startup
 The easiest way to get started is to clone the repository:
-```ruby
+```bash
 git clone git@git.sami.int.thomsonreuters.com:compass/cta-app-executiondataservice.git
 ```
 Then install NPM dependencies:
-```ruby
+```bash
 npm install
 ```
 To build, be sure you have [node](https://nodejs.org/en/) installed.
-To start the application, browse to the project directory and type: $ npm run into the terminal window. Point a browser to localhost:3000 and you're up and running!
+To start the application, browse to the project directory and type: `npm run start` into the terminal window. Point a browser to localhost:3010 and you're up and running!
 
 ------
 
@@ -62,4 +61,4 @@ We also cover in detail :
 
 ------
 
-This code is running live at [CTA-OSS](https://.). We also have [CTA Central Document](https://git.sami.int.thomsonreuters.com/compass/cta) 
+We also have [CTA Central Document](https://git.sami.int.thomsonreuters.com/compass/cta) 
