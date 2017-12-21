@@ -18,6 +18,8 @@ describe('Data Model - Result - QueryKeys', function() {
         // scenarioId: { type: 'identifier', optional: true },
         // configurationId: { type: 'identifier', optional: true },
         // testsuiteId: { type: 'identifier', optional: true },
+        testName: { type: 'string', optional: true },
+        testDescription: { type: 'string', optional: true },
         testId: [
           { type: 'identifier', optional: true },
           { type: 'string', optional: true },
