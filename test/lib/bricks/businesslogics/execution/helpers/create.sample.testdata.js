@@ -4,6 +4,7 @@ const ObjectID = require('bson').ObjectID;
 const data = {
   id: (new ObjectID()).toString(),
   scenarioId: (new ObjectID()).toString(),
+  scenarioData: {},
   // configuration: (new ObjectID()).toString(),
   userId: (new ObjectID()).toString(),
   requestTimestamp: 1000,
