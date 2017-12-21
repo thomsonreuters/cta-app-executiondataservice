@@ -40,7 +40,7 @@
     "cta-brick-request": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-brick-request.git#1.0.0",
     "cta-common": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-common.git#1.0.0",
     "cta-dblayer": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-dblayer.git#1.0.0",
-    "cta-expresswrapper": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-expresswrapper.git#1.0.0",
+    "cta-expresswrapper": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-expresswrapper.git#1.0.1",
     "cta-flowcontrol": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-flowcontrol.git#1.0.0",
     "cta-healthcheck": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-healthcheck.git#1.0.0",
     "cta-io": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-io.git#1.0.0",
