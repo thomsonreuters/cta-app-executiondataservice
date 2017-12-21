@@ -16,6 +16,7 @@ describe('Data Model - Execution - Keys', function() {
         id: { type: 'identifier' },
         // references to other objects
         scenarioId: { type: 'identifier' },
+        scenarioData: { type: 'object' },
         userId: { type: 'identifier' },
         // timestamps related fields
         requestTimestamp: { type: 'number', optional: true },
