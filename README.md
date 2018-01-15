@@ -1,6 +1,7 @@
-# cta-app-executiondataservice [![build status](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/badges/master/build.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/commits/master) [![coverage report](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/badges/master/coverage.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/commits/master)
+# cta-app-executiondataservice
+[![build status](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/badges/master/build.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/commits/master) [![coverage report](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/badges/master/coverage.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/commits/master)
 
-Execution Data Service Application for Compass Test Automation, implementing CTA-OSS Framework
+**Execution Data Service Application (EDS)**  for Compass Test Automation, implementing CTA-OSS Framework
 
 ## General Overview
 
@@ -39,6 +40,7 @@ Then install NPM dependencies:
 npm install
 ```
 To build, be sure you have [node](https://nodejs.org/en/) installed.
+
 To start the application, browse to the project directory and type: `npm run start` into the terminal window. Point a browser to localhost:3010 and you're up and running!
 
 ## Development Guide
