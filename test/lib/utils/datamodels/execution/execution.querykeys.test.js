@@ -16,6 +16,7 @@ describe('Data Model - Execution - QueryKeys', function() {
         id: { type: 'identifier', optional: true },
         // references to other objects
         scenarioId: { type: 'identifier', optional: true },
+        scenarioData: { type: 'object', optional: true  },
         userId: { type: 'identifier', optional: true },
         // timestamps related fields
         requestTimestamp: { type: 'number', optional: true },
