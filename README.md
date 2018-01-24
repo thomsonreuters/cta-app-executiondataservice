@@ -1,5 +1,7 @@
 # cta-app-executiondataservice
-[![build status](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/badges/master/build.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/commits/master) [![coverage report](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/badges/master/coverage.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-app-executiondataservice/commits/master)
+[![Build Status](https://travis-ci.org/thomsonreuters/cta-app-executiondataservice.svg?branch=master)](https://travis-ci.org/thomsonreuters/cta-app-executiondataservice)
+[![Coverage Status](https://coveralls.io/repos/github/thomsonreuters/cta-app-executiondataservice/badge.svg?branch=master)](https://coveralls.io/github/thomsonreuters/cta-app-executiondataservice?branch=master)
+[![codecov](https://codecov.io/gh/thomsonreuters/cta-app-executiondataservice/branch/master/graph/badge.svg)](https://codecov.io/gh/thomsonreuters/cta-app-executiondataservice)
 
 **Execution Data Service Application (EDS)**  for Compass Test Automation, implementing CTA-OSS Framework
 
